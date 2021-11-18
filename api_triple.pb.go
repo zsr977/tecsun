@@ -7415,7 +7415,7 @@ type QuestionnaireApiClient interface {
 	AddAnswerByUN(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*AnswerInfo, common.ErrorWithAttachment)
 	UpdateAnswerByAU(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	GetIAnswerByQUuid(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*AnswerList, common.ErrorWithAttachment)
-	GetQNAnswerBYQN(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*AnswerList, common.ErrorWithAttachment)
+	GetQNAnswerBYQN(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*QuestionList, common.ErrorWithAttachment)
 	DeleteUAnswerByQN(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 }
 
@@ -7439,7 +7439,7 @@ type QuestionnaireApiClientImpl struct {
 	AddAnswerByUN        func(ctx context.Context, in *AnswerInfo) (*AnswerInfo, error)
 	UpdateAnswerByAU     func(ctx context.Context, in *AnswerInfo) (*Null, error)
 	GetIAnswerByQUuid    func(ctx context.Context, in *AnswerInfo) (*AnswerList, error)
-	GetQNAnswerBYQN      func(ctx context.Context, in *AnswerInfo) (*AnswerList, error)
+	GetQNAnswerBYQN      func(ctx context.Context, in *AnswerInfo) (*QuestionList, error)
 	DeleteUAnswerByQN    func(ctx context.Context, in *AnswerInfo) (*Null, error)
 }
 
@@ -7541,8 +7541,8 @@ func (c *questionnaireApiClient) GetIAnswerByQUuid(ctx context.Context, in *Answ
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetIAnswerByQUuid", in, out)
 }
 
-func (c *questionnaireApiClient) GetQNAnswerBYQN(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*AnswerList, common.ErrorWithAttachment) {
-	out := new(AnswerList)
+func (c *questionnaireApiClient) GetQNAnswerBYQN(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*QuestionList, common.ErrorWithAttachment) {
+	out := new(QuestionList)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetQNAnswerBYQN", in, out)
 }
@@ -7572,7 +7572,7 @@ type QuestionnaireApiServer interface {
 	AddAnswerByUN(context.Context, *AnswerInfo) (*AnswerInfo, error)
 	UpdateAnswerByAU(context.Context, *AnswerInfo) (*Null, error)
 	GetIAnswerByQUuid(context.Context, *AnswerInfo) (*AnswerList, error)
-	GetQNAnswerBYQN(context.Context, *AnswerInfo) (*AnswerList, error)
+	GetQNAnswerBYQN(context.Context, *AnswerInfo) (*QuestionList, error)
 	DeleteUAnswerByQN(context.Context, *AnswerInfo) (*Null, error)
 	mustEmbedUnimplementedQuestionnaireApiServer()
 }
@@ -7627,7 +7627,7 @@ func (UnimplementedQuestionnaireApiServer) UpdateAnswerByAU(context.Context, *An
 func (UnimplementedQuestionnaireApiServer) GetIAnswerByQUuid(context.Context, *AnswerInfo) (*AnswerList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetIAnswerByQUuid not implemented")
 }
-func (UnimplementedQuestionnaireApiServer) GetQNAnswerBYQN(context.Context, *AnswerInfo) (*AnswerList, error) {
+func (UnimplementedQuestionnaireApiServer) GetQNAnswerBYQN(context.Context, *AnswerInfo) (*QuestionList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQNAnswerBYQN not implemented")
 }
 func (UnimplementedQuestionnaireApiServer) DeleteUAnswerByQN(context.Context, *AnswerInfo) (*Null, error) {
