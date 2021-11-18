@@ -1,7 +1,7 @@
 syntax = 'proto3';
 import "google/protobuf/any.proto";
 import "google/protobuf/timestamp.proto";
-package tecsun;
+package main;
 option go_package = "./;api";
 
 message BillboardNull {
@@ -152,6 +152,7 @@ service ClientApi {
   rpc GetUserOrgByPhone(userInfo) returns (ClientCompanyList){}
   rpc GetVisitorOrgByPhone(userInfo) returns (ClientCompanyList){}
   rpc GetOrgByName(ClientCompanyInfo) returns (ClientCompanyList){}
+  rpc GetClientIds(clientInfo) returns (OrgRes){}
 }
 
 message DeviceNull {
@@ -221,8 +222,8 @@ message trafficInfo {
   int32 temp = 18;
   int32 status = 19;
   int32 type = 20;
-  float page = 21;
-  float size = 22;
+  double page = 21;
+  double size = 22;
   string uuid = 23;
 }
 
@@ -255,10 +256,10 @@ message deviceInfo {
   string visitorCompany = 26;
   string visitorName = 27;
   string visitorPhone = 28;
-  float status = 29;
-  float visitedSex = 30;
-  float visitorCount = 31;
-  float visitorSex = 32;
+  double status = 29;
+  double visitedSex = 30;
+  double visitorCount = 31;
+  double visitorSex = 32;
   string deviceName = 33;
   string leaveTime = 34;
 }
@@ -567,8 +568,8 @@ message OrgReq {
   string phone = 2;
   string title = 3;
   string unitUuid = 4;
-  float gender = 5;
-  float isLeader = 6;
+  double gender = 5;
+  double isLeader = 6;
   string tenant = 7;
   string ticket = 8;
   string company = 9;
@@ -578,8 +579,8 @@ message OrgReq {
   string userUuid = 13;
   string ranks = 14;
   string work = 15;
-  float pageNum = 16;
-  float sizeNum = 17;
+  double pageNum = 16;
+  double sizeNum = 17;
   string avatar = 18;
   string city = 19;
   string country = 20;
@@ -740,10 +741,10 @@ message PassageReq {
   string tenant = 1;
   string userUuid = 2;
   string insideUuid = 3;
-  float pageNum = 4;
-  float sizeNum = 5;
+  double pageNum = 4;
+  double sizeNum = 5;
   bool status = 6;
-  float statusFloat = 7;
+  double statusFloat = 7;
   string uuid = 8;
   string reason = 9;
   string note = 10;
@@ -778,7 +779,7 @@ message PassageReq {
   string catchPhoto = 39;
   string deviceNo = 40;
   string deviceName = 41;
-  float arrive = 42;
+  double arrive = 42;
   string visitNo = 43;
   string visitorName = 44;
   string certNumber = 45;
@@ -1192,20 +1193,20 @@ message TenantReq {
   string larkVerificationToken = 44;
   string aiAppId = 45;
   string aiAppSecret = 46;
-  float client = 47;
-  float isDebug = 48;
-  float isIdCard = 49;
-  float sync = 50;
-  float isFast = 51;
-  float isFace = 52;
-  float isSkip = 53;
-  float isGFast = 54;
-  float isGFace = 55;
-  float isGSkip = 56;
-  float isGIdCard = 57;
-  float certStyle = 58;
-  float bookNum = 59;
-  float inviteNum = 60;
+  double client = 47;
+  double isDebug = 48;
+  double isIdCard = 49;
+  double sync = 50;
+  double isFast = 51;
+  double isFace = 52;
+  double isSkip = 53;
+  double isGFast = 54;
+  double isGFace = 55;
+  double isGSkip = 56;
+  double isGIdCard = 57;
+  double certStyle = 58;
+  double bookNum = 59;
+  double inviteNum = 60;
   string regionId = 61;
   string accessKeyId = 62;
   string accessKeySecret = 63;
@@ -1382,14 +1383,14 @@ message WorkflowNull {
 message requestInfo {
   string uuid = 1;
   string tenant = 2;
-  float type = 3;
+  double type = 3;
   string name = 4;
   string title = 5;
   string default = 6;
   string  list = 7;
   bool required = 8;
-  float sort = 9;
-  float multiple = 10;
+  double sort = 9;
+  double multiple = 10;
   string node_uuid = 11;
   string approval_uuid = 12;
   string recipients = 13;
@@ -1397,10 +1398,10 @@ message requestInfo {
   bool notify_sponsor_in = 15;
   bool notify_sponsor_over = 16;
   bool notify_contact_over = 17;
-  float notify_guest_out = 18;
-  float notify_msg = 19;
+  double notify_guest_out = 18;
+  double notify_msg = 19;
   string remark = 20;
-  float status = 21;
+  double status = 21;
   bool notify_contact_in = 22;
   repeated responseInfo nodes = 23;
 }
@@ -1452,7 +1453,7 @@ message recordInfo {
 }
 
 message recordDetail{
-  float type = 1;
+  double type = 1;
   string contact = 2;
   string sponsor = 3;
   string approval_uuid = 4;

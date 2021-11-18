@@ -161,7 +161,7 @@ func _BillboardApi_CreateBillboard_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.BillboardApi/CreateBillboard",
+		FullMethod: "/main.BillboardApi/CreateBillboard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillboardApiServer).CreateBillboard(ctx, req.(*OneBillboard))
@@ -189,7 +189,7 @@ func _BillboardApi_DeleteBillboard_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.BillboardApi/DeleteBillboard",
+		FullMethod: "/main.BillboardApi/DeleteBillboard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillboardApiServer).DeleteBillboard(ctx, req.(*OneBillboard))
@@ -217,7 +217,7 @@ func _BillboardApi_GetBillboardList_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.BillboardApi/GetBillboardList",
+		FullMethod: "/main.BillboardApi/GetBillboardList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillboardApiServer).GetBillboardList(ctx, req.(*BillboardNull))
@@ -245,7 +245,7 @@ func _BillboardApi_CreateBillboardItem_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.BillboardApi/CreateBillboardItem",
+		FullMethod: "/main.BillboardApi/CreateBillboardItem",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillboardApiServer).CreateBillboardItem(ctx, req.(*OneBillboard))
@@ -273,7 +273,7 @@ func _BillboardApi_UpdateBillboardItem_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.BillboardApi/UpdateBillboardItem",
+		FullMethod: "/main.BillboardApi/UpdateBillboardItem",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillboardApiServer).UpdateBillboardItem(ctx, req.(*OneBillboard))
@@ -285,7 +285,7 @@ func _BillboardApi_UpdateBillboardItem_Handler(srv interface{}, ctx context.Cont
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var BillboardApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.BillboardApi",
+	ServiceName: "main.BillboardApi",
 	HandlerType: (*BillboardApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -337,6 +337,7 @@ type ClientApiClient interface {
 	GetUserOrgByPhone(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*ClientCompanyList, common.ErrorWithAttachment)
 	GetVisitorOrgByPhone(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*ClientCompanyList, common.ErrorWithAttachment)
 	GetOrgByName(ctx context.Context, in *ClientCompanyInfo, opts ...grpc_go.CallOption) (*ClientCompanyList, common.ErrorWithAttachment)
+	GetClientIds(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
 }
 
 type clientApiClient struct {
@@ -364,6 +365,7 @@ type ClientApiClientImpl struct {
 	GetUserOrgByPhone       func(ctx context.Context, in *UserInfo) (*ClientCompanyList, error)
 	GetVisitorOrgByPhone    func(ctx context.Context, in *UserInfo) (*ClientCompanyList, error)
 	GetOrgByName            func(ctx context.Context, in *ClientCompanyInfo) (*ClientCompanyList, error)
+	GetClientIds            func(ctx context.Context, in *ClientInfo) (*OrgRes, error)
 }
 
 func (c *ClientApiClientImpl) GetDubboStub(cc *triple.TripleConn) ClientApiClient {
@@ -494,6 +496,12 @@ func (c *clientApiClient) GetOrgByName(ctx context.Context, in *ClientCompanyInf
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetOrgByName", in, out)
 }
 
+func (c *clientApiClient) GetClientIds(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment) {
+	out := new(OrgRes)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetClientIds", in, out)
+}
+
 // ClientApiServer is the server API for ClientApi service.
 // All implementations must embed UnimplementedClientApiServer
 // for forward compatibility
@@ -518,6 +526,7 @@ type ClientApiServer interface {
 	GetUserOrgByPhone(context.Context, *UserInfo) (*ClientCompanyList, error)
 	GetVisitorOrgByPhone(context.Context, *UserInfo) (*ClientCompanyList, error)
 	GetOrgByName(context.Context, *ClientCompanyInfo) (*ClientCompanyList, error)
+	GetClientIds(context.Context, *ClientInfo) (*OrgRes, error)
 	mustEmbedUnimplementedClientApiServer()
 }
 
@@ -586,6 +595,9 @@ func (UnimplementedClientApiServer) GetVisitorOrgByPhone(context.Context, *UserI
 func (UnimplementedClientApiServer) GetOrgByName(context.Context, *ClientCompanyInfo) (*ClientCompanyList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrgByName not implemented")
 }
+func (UnimplementedClientApiServer) GetClientIds(context.Context, *ClientInfo) (*OrgRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClientIds not implemented")
+}
 func (s *UnimplementedClientApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
 	s.proxyImpl = impl
 }
@@ -630,7 +642,7 @@ func _ClientApi_GetClientAuth_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientAuth",
+		FullMethod: "/main.ClientApi/GetClientAuth",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientAuth(ctx, req.(*ClientInfo))
@@ -658,7 +670,7 @@ func _ClientApi_GetClientAuthCallback_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientAuthCallback",
+		FullMethod: "/main.ClientApi/GetClientAuthCallback",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientAuthCallback(ctx, req.(*ClientInfo))
@@ -686,7 +698,7 @@ func _ClientApi_GetClientCallback_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientCallback",
+		FullMethod: "/main.ClientApi/GetClientCallback",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientCallback(ctx, req.(*MessageInfo))
@@ -714,7 +726,7 @@ func _ClientApi_GetJssdkConfig_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetJssdkConfig",
+		FullMethod: "/main.ClientApi/GetJssdkConfig",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetJssdkConfig(ctx, req.(*ClientInfo))
@@ -742,7 +754,7 @@ func _ClientApi_GetClientWorkTest_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientWorkTest",
+		FullMethod: "/main.ClientApi/GetClientWorkTest",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientWorkTest(ctx, req.(*MessageInfo))
@@ -770,7 +782,7 @@ func _ClientApi_GetClientMedia_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientMedia",
+		FullMethod: "/main.ClientApi/GetClientMedia",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientMedia(ctx, req.(*MediaInfo))
@@ -798,7 +810,7 @@ func _ClientApi_GetClientOrganization_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientOrganization",
+		FullMethod: "/main.ClientApi/GetClientOrganization",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientOrganization(ctx, req.(*ClientInfo))
@@ -826,7 +838,7 @@ func _ClientApi_AsyncClientOrganization_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/AsyncClientOrganization",
+		FullMethod: "/main.ClientApi/AsyncClientOrganization",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).AsyncClientOrganization(ctx, req.(*ClientInfo))
@@ -854,7 +866,7 @@ func _ClientApi_GetClientUserInfo_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientUserInfo",
+		FullMethod: "/main.ClientApi/GetClientUserInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientUserInfo(ctx, req.(*UserInfo))
@@ -882,7 +894,7 @@ func _ClientApi_UnbindWCClient_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/UnbindWCClient",
+		FullMethod: "/main.ClientApi/UnbindWCClient",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).UnbindWCClient(ctx, req.(*ClientInfo))
@@ -910,7 +922,7 @@ func _ClientApi_WeChatMessage_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/WeChatMessage",
+		FullMethod: "/main.ClientApi/WeChatMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).WeChatMessage(ctx, req.(*ClientInfo))
@@ -938,7 +950,7 @@ func _ClientApi_WorkMessage_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/WorkMessage",
+		FullMethod: "/main.ClientApi/WorkMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).WorkMessage(ctx, req.(*ClientInfo))
@@ -966,7 +978,7 @@ func _ClientApi_DingTalkMessage_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/DingTalkMessage",
+		FullMethod: "/main.ClientApi/DingTalkMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).DingTalkMessage(ctx, req.(*ClientInfo))
@@ -994,7 +1006,7 @@ func _ClientApi_LarkMessage_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/LarkMessage",
+		FullMethod: "/main.ClientApi/LarkMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).LarkMessage(ctx, req.(*ClientInfo))
@@ -1022,7 +1034,7 @@ func _ClientApi_SendIMessage_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/SendIMessage",
+		FullMethod: "/main.ClientApi/SendIMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).SendIMessage(ctx, req.(*ClientInfo))
@@ -1050,7 +1062,7 @@ func _ClientApi_GetIUserBaseInfo_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetIUserBaseInfo",
+		FullMethod: "/main.ClientApi/GetIUserBaseInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetIUserBaseInfo(ctx, req.(*ClientInfo))
@@ -1078,7 +1090,7 @@ func _ClientApi_GetInitCode_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetInitCode",
+		FullMethod: "/main.ClientApi/GetInitCode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetInitCode(ctx, req.(*ClientNull))
@@ -1106,7 +1118,7 @@ func _ClientApi_GetUserOrgByPhone_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetUserOrgByPhone",
+		FullMethod: "/main.ClientApi/GetUserOrgByPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetUserOrgByPhone(ctx, req.(*UserInfo))
@@ -1134,7 +1146,7 @@ func _ClientApi_GetVisitorOrgByPhone_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetVisitorOrgByPhone",
+		FullMethod: "/main.ClientApi/GetVisitorOrgByPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetVisitorOrgByPhone(ctx, req.(*UserInfo))
@@ -1162,10 +1174,38 @@ func _ClientApi_GetOrgByName_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetOrgByName",
+		FullMethod: "/main.ClientApi/GetOrgByName",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetOrgByName(ctx, req.(*ClientCompanyInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ClientApi_GetClientIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClientInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("GetClientIds", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.ClientApi/GetClientIds",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientApiServer).GetClientIds(ctx, req.(*ClientInfo))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1174,7 +1214,7 @@ func _ClientApi_GetOrgByName_Handler(srv interface{}, ctx context.Context, dec f
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ClientApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.ClientApi",
+	ServiceName: "main.ClientApi",
 	HandlerType: (*ClientApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -1256,6 +1296,10 @@ var ClientApi_ServiceDesc = grpc_go.ServiceDesc{
 		{
 			MethodName: "GetOrgByName",
 			Handler:    _ClientApi_GetOrgByName_Handler,
+		},
+		{
+			MethodName: "GetClientIds",
+			Handler:    _ClientApi_GetClientIds_Handler,
 		},
 	},
 	Streams:  []grpc_go.StreamDesc{},
@@ -1627,7 +1671,7 @@ func _DeviceApi_CreateCompany_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/CreateCompany",
+		FullMethod: "/main.DeviceApi/CreateCompany",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).CreateCompany(ctx, req.(*CompanyInfo))
@@ -1655,7 +1699,7 @@ func _DeviceApi_DeleteCompany_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DeleteCompany",
+		FullMethod: "/main.DeviceApi/DeleteCompany",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DeleteCompany(ctx, req.(*CompanyInfo))
@@ -1683,7 +1727,7 @@ func _DeviceApi_UpdateCompany_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/UpdateCompany",
+		FullMethod: "/main.DeviceApi/UpdateCompany",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).UpdateCompany(ctx, req.(*CompanyInfo))
@@ -1711,7 +1755,7 @@ func _DeviceApi_SearchCompany_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/SearchCompany",
+		FullMethod: "/main.DeviceApi/SearchCompany",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).SearchCompany(ctx, req.(*CompanyInfo))
@@ -1739,7 +1783,7 @@ func _DeviceApi_CreateArea_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/CreateArea",
+		FullMethod: "/main.DeviceApi/CreateArea",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).CreateArea(ctx, req.(*CompanyInfo))
@@ -1767,7 +1811,7 @@ func _DeviceApi_DeleteArea_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DeleteArea",
+		FullMethod: "/main.DeviceApi/DeleteArea",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DeleteArea(ctx, req.(*CompanyInfo))
@@ -1795,7 +1839,7 @@ func _DeviceApi_UpdateArea_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/UpdateArea",
+		FullMethod: "/main.DeviceApi/UpdateArea",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).UpdateArea(ctx, req.(*CompanyInfo))
@@ -1823,7 +1867,7 @@ func _DeviceApi_SearchArea_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/SearchArea",
+		FullMethod: "/main.DeviceApi/SearchArea",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).SearchArea(ctx, req.(*CompanyInfo))
@@ -1851,7 +1895,7 @@ func _DeviceApi_Prepare_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/Prepare",
+		FullMethod: "/main.DeviceApi/Prepare",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).Prepare(ctx, req.(*CompanyInfo))
@@ -1879,7 +1923,7 @@ func _DeviceApi_CreateMec_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/CreateMec",
+		FullMethod: "/main.DeviceApi/CreateMec",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).CreateMec(ctx, req.(*MecInfo))
@@ -1907,7 +1951,7 @@ func _DeviceApi_UpdateMec_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/UpdateMec",
+		FullMethod: "/main.DeviceApi/UpdateMec",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).UpdateMec(ctx, req.(*CompanyInfo))
@@ -1935,7 +1979,7 @@ func _DeviceApi_RemoveMec_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/RemoveMec",
+		FullMethod: "/main.DeviceApi/RemoveMec",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).RemoveMec(ctx, req.(*CompanyInfo))
@@ -1963,7 +2007,7 @@ func _DeviceApi_DeleteMec_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DeleteMec",
+		FullMethod: "/main.DeviceApi/DeleteMec",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DeleteMec(ctx, req.(*CompanyInfo))
@@ -1991,7 +2035,7 @@ func _DeviceApi_SearchMec_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/SearchMec",
+		FullMethod: "/main.DeviceApi/SearchMec",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).SearchMec(ctx, req.(*CompanyInfo))
@@ -2019,7 +2063,7 @@ func _DeviceApi_KeepAlive_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/KeepAlive",
+		FullMethod: "/main.DeviceApi/KeepAlive",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).KeepAlive(ctx, req.(*CompanyInfo))
@@ -2047,7 +2091,7 @@ func _DeviceApi_AddDeviceVisitor_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/AddDeviceVisitor",
+		FullMethod: "/main.DeviceApi/AddDeviceVisitor",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).AddDeviceVisitor(ctx, req.(*DeviceInfo))
@@ -2075,7 +2119,7 @@ func _DeviceApi_DeviceVisitorLeave_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DeviceVisitorLeave",
+		FullMethod: "/main.DeviceApi/DeviceVisitorLeave",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DeviceVisitorLeave(ctx, req.(*DeviceInfo))
@@ -2103,7 +2147,7 @@ func _DeviceApi_AddDeviceTraffic_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/AddDeviceTraffic",
+		FullMethod: "/main.DeviceApi/AddDeviceTraffic",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).AddDeviceTraffic(ctx, req.(*TrafficInfo))
@@ -2131,7 +2175,7 @@ func _DeviceApi_GetDashboardDevicePassagePages_Handler(srv interface{}, ctx cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/GetDashboardDevicePassagePages",
+		FullMethod: "/main.DeviceApi/GetDashboardDevicePassagePages",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).GetDashboardDevicePassagePages(ctx, req.(*TrafficInfo))
@@ -2159,7 +2203,7 @@ func _DeviceApi_GetDevicePassageDetail_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/GetDevicePassageDetail",
+		FullMethod: "/main.DeviceApi/GetDevicePassageDetail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).GetDevicePassageDetail(ctx, req.(*CompanyInfo))
@@ -2187,7 +2231,7 @@ func _DeviceApi_DevicePassage_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DevicePassage",
+		FullMethod: "/main.DeviceApi/DevicePassage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DevicePassage(ctx, req.(*PassageInfo))
@@ -2215,7 +2259,7 @@ func _DeviceApi_DevicePassageIssue_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DevicePassageIssue",
+		FullMethod: "/main.DeviceApi/DevicePassageIssue",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DevicePassageIssue(ctx, req.(*CompanyInfo))
@@ -2243,7 +2287,7 @@ func _DeviceApi_DevicePassageSearch_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DevicePassageSearch",
+		FullMethod: "/main.DeviceApi/DevicePassageSearch",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DevicePassageSearch(ctx, req.(*DeviceUserInfo))
@@ -2271,7 +2315,7 @@ func _DeviceApi_DevicePassageCallback_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DevicePassageCallback",
+		FullMethod: "/main.DeviceApi/DevicePassageCallback",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DevicePassageCallback(ctx, req.(*CompanyInfo))
@@ -2283,7 +2327,7 @@ func _DeviceApi_DevicePassageCallback_Handler(srv interface{}, ctx context.Conte
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var DeviceApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.DeviceApi",
+	ServiceName: "main.DeviceApi",
 	HandlerType: (*DeviceApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -2512,7 +2556,7 @@ func _HelperApi_CreateOneHelp_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.HelperApi/CreateOneHelp",
+		FullMethod: "/main.HelperApi/CreateOneHelp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(HelperApiServer).CreateOneHelp(ctx, req.(*Faq))
@@ -2540,7 +2584,7 @@ func _HelperApi_UpdateOneHelp_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.HelperApi/UpdateOneHelp",
+		FullMethod: "/main.HelperApi/UpdateOneHelp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(HelperApiServer).UpdateOneHelp(ctx, req.(*Faq))
@@ -2568,7 +2612,7 @@ func _HelperApi_DeleteOneHelp_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.HelperApi/DeleteOneHelp",
+		FullMethod: "/main.HelperApi/DeleteOneHelp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(HelperApiServer).DeleteOneHelp(ctx, req.(*Faq))
@@ -2596,7 +2640,7 @@ func _HelperApi_GetHelpCenterList_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.HelperApi/GetHelpCenterList",
+		FullMethod: "/main.HelperApi/GetHelpCenterList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(HelperApiServer).GetHelpCenterList(ctx, req.(*Faqs))
@@ -2608,7 +2652,7 @@ func _HelperApi_GetHelpCenterList_Handler(srv interface{}, ctx context.Context, 
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var HelperApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.HelperApi",
+	ServiceName: "main.HelperApi",
 	HandlerType: (*HelperApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -2845,7 +2889,7 @@ func _ManagerApi_RegisterManager_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/RegisterManager",
+		FullMethod: "/main.ManagerApi/RegisterManager",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).RegisterManager(ctx, req.(*RegisterManagerReq))
@@ -2873,7 +2917,7 @@ func _ManagerApi_ChangeName_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/ChangeName",
+		FullMethod: "/main.ManagerApi/ChangeName",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).ChangeName(ctx, req.(*ChangeNameReq))
@@ -2901,7 +2945,7 @@ func _ManagerApi_ChangeTFA_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/ChangeTFA",
+		FullMethod: "/main.ManagerApi/ChangeTFA",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).ChangeTFA(ctx, req.(*ChangeTFAReq))
@@ -2929,7 +2973,7 @@ func _ManagerApi_ChangePhone_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/ChangePhone",
+		FullMethod: "/main.ManagerApi/ChangePhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).ChangePhone(ctx, req.(*ChangePhoneReq))
@@ -2957,7 +3001,7 @@ func _ManagerApi_ChangePassword_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/ChangePassword",
+		FullMethod: "/main.ManagerApi/ChangePassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).ChangePassword(ctx, req.(*ChangePasswordReq))
@@ -2985,7 +3029,7 @@ func _ManagerApi_ChangeAccountAndPassword_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/ChangeAccountAndPassword",
+		FullMethod: "/main.ManagerApi/ChangeAccountAndPassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).ChangeAccountAndPassword(ctx, req.(*ChangeAccountAndPasswordReq))
@@ -3013,7 +3057,7 @@ func _ManagerApi_ChangePasswordByPhone_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/ChangePasswordByPhone",
+		FullMethod: "/main.ManagerApi/ChangePasswordByPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).ChangePasswordByPhone(ctx, req.(*ChangePasswordByPhoneReq))
@@ -3041,7 +3085,7 @@ func _ManagerApi_LoginByPhone_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/LoginByPhone",
+		FullMethod: "/main.ManagerApi/LoginByPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).LoginByPhone(ctx, req.(*LoginByPhoneReq))
@@ -3069,7 +3113,7 @@ func _ManagerApi_GetLoginManager_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/GetLoginManager",
+		FullMethod: "/main.ManagerApi/GetLoginManager",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).GetLoginManager(ctx, req.(*GetLoginManagerReq))
@@ -3097,7 +3141,7 @@ func _ManagerApi_DeleteAccount_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/DeleteAccount",
+		FullMethod: "/main.ManagerApi/DeleteAccount",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).DeleteAccount(ctx, req.(*DeleteAccountReq))
@@ -3125,7 +3169,7 @@ func _ManagerApi_CreateTeam_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/CreateTeam",
+		FullMethod: "/main.ManagerApi/CreateTeam",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).CreateTeam(ctx, req.(*CreateTeamReq))
@@ -3137,7 +3181,7 @@ func _ManagerApi_CreateTeam_Handler(srv interface{}, ctx context.Context, dec fu
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ManagerApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.ManagerApi",
+	ServiceName: "main.ManagerApi",
 	HandlerType: (*ManagerApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -3314,7 +3358,7 @@ func _MessageApi_GenerateAndroidMsg_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.MessageApi/GenerateAndroidMsg",
+		FullMethod: "/main.MessageApi/GenerateAndroidMsg",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MessageApiServer).GenerateAndroidMsg(ctx, req.(*AndroidMsg))
@@ -3342,7 +3386,7 @@ func _MessageApi_GenerateCheckCode_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.MessageApi/GenerateCheckCode",
+		FullMethod: "/main.MessageApi/GenerateCheckCode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MessageApiServer).GenerateCheckCode(ctx, req.(*CheckCode))
@@ -3370,7 +3414,7 @@ func _MessageApi_VerifyCheckCode_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.MessageApi/VerifyCheckCode",
+		FullMethod: "/main.MessageApi/VerifyCheckCode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MessageApiServer).VerifyCheckCode(ctx, req.(*CheckCode))
@@ -3398,7 +3442,7 @@ func _MessageApi_TotalMessage_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.MessageApi/TotalMessage",
+		FullMethod: "/main.MessageApi/TotalMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MessageApiServer).TotalMessage(ctx, req.(*TotalMsg))
@@ -3410,7 +3454,7 @@ func _MessageApi_TotalMessage_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var MessageApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.MessageApi",
+	ServiceName: "main.MessageApi",
 	HandlerType: (*MessageApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -4111,7 +4155,7 @@ func _OrganizationApi_OneUser_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/OneUser",
+		FullMethod: "/main.OrganizationApi/OneUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).OneUser(ctx, req.(*OrgReq))
@@ -4139,7 +4183,7 @@ func _OrganizationApi_GetVisitorTicketInfo_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/GetVisitorTicketInfo",
+		FullMethod: "/main.OrganizationApi/GetVisitorTicketInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).GetVisitorTicketInfo(ctx, req.(*OrgReq))
@@ -4167,7 +4211,7 @@ func _OrganizationApi_OneTenantUser_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/OneTenantUser",
+		FullMethod: "/main.OrganizationApi/OneTenantUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).OneTenantUser(ctx, req.(*OrgReq))
@@ -4195,7 +4239,7 @@ func _OrganizationApi_DeleteUser_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/DeleteUser",
+		FullMethod: "/main.OrganizationApi/DeleteUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).DeleteUser(ctx, req.(*OrgReq))
@@ -4223,7 +4267,7 @@ func _OrganizationApi_UserBase_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserBase",
+		FullMethod: "/main.OrganizationApi/UserBase",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserBase(ctx, req.(*OrgReq))
@@ -4251,7 +4295,7 @@ func _OrganizationApi_UserBaseContainsIdCard_Handler(srv interface{}, ctx contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserBaseContainsIdCard",
+		FullMethod: "/main.OrganizationApi/UserBaseContainsIdCard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserBaseContainsIdCard(ctx, req.(*OrgReq))
@@ -4279,7 +4323,7 @@ func _OrganizationApi_UnitUserBase_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitUserBase",
+		FullMethod: "/main.OrganizationApi/UnitUserBase",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitUserBase(ctx, req.(*OrgReq))
@@ -4307,7 +4351,7 @@ func _OrganizationApi_UnitMemberIds_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitMemberIds",
+		FullMethod: "/main.OrganizationApi/UnitMemberIds",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitMemberIds(ctx, req.(*OrgReq))
@@ -4335,7 +4379,7 @@ func _OrganizationApi_UserIds_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserIds",
+		FullMethod: "/main.OrganizationApi/UserIds",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserIds(ctx, req.(*OrgReq))
@@ -4363,7 +4407,7 @@ func _OrganizationApi_LeaderUuid_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/LeaderUuid",
+		FullMethod: "/main.OrganizationApi/LeaderUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).LeaderUuid(ctx, req.(*OrgReq))
@@ -4391,7 +4435,7 @@ func _OrganizationApi_EmpIndistinct_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/EmpIndistinct",
+		FullMethod: "/main.OrganizationApi/EmpIndistinct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).EmpIndistinct(ctx, req.(*OrgReq))
@@ -4419,7 +4463,7 @@ func _OrganizationApi_EmpByNameAndPhoneIndistinct_Handler(srv interface{}, ctx c
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/EmpByNameAndPhoneIndistinct",
+		FullMethod: "/main.OrganizationApi/EmpByNameAndPhoneIndistinct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).EmpByNameAndPhoneIndistinct(ctx, req.(*OrgReq))
@@ -4447,7 +4491,7 @@ func _OrganizationApi_EmpByNameAndPhoneAndDepName_Handler(srv interface{}, ctx c
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/EmpByNameAndPhoneAndDepName",
+		FullMethod: "/main.OrganizationApi/EmpByNameAndPhoneAndDepName",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).EmpByNameAndPhoneAndDepName(ctx, req.(*OrgReq))
@@ -4475,7 +4519,7 @@ func _OrganizationApi_UnitUser_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitUser",
+		FullMethod: "/main.OrganizationApi/UnitUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitUser(ctx, req.(*OrgReq))
@@ -4503,7 +4547,7 @@ func _OrganizationApi_VisitorsUser_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/VisitorsUser",
+		FullMethod: "/main.OrganizationApi/VisitorsUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).VisitorsUser(ctx, req.(*OrgReq))
@@ -4531,7 +4575,7 @@ func _OrganizationApi_UserByNameAndPhoneIndistinct_Handler(srv interface{}, ctx 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserByNameAndPhoneIndistinct",
+		FullMethod: "/main.OrganizationApi/UserByNameAndPhoneIndistinct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserByNameAndPhoneIndistinct(ctx, req.(*OrgReq))
@@ -4559,7 +4603,7 @@ func _OrganizationApi_GetUserByNameAndPhoneIndistinct_Handler(srv interface{}, c
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/GetUserByNameAndPhoneIndistinct",
+		FullMethod: "/main.OrganizationApi/GetUserByNameAndPhoneIndistinct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).GetUserByNameAndPhoneIndistinct(ctx, req.(*OrgReq))
@@ -4587,7 +4631,7 @@ func _OrganizationApi_UserUuidByPhone_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserUuidByPhone",
+		FullMethod: "/main.OrganizationApi/UserUuidByPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserUuidByPhone(ctx, req.(*OrgReq))
@@ -4615,7 +4659,7 @@ func _OrganizationApi_UserMark_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserMark",
+		FullMethod: "/main.OrganizationApi/UserMark",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserMark(ctx, req.(*OrgReq))
@@ -4643,7 +4687,7 @@ func _OrganizationApi_UserModify_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserModify",
+		FullMethod: "/main.OrganizationApi/UserModify",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserModify(ctx, req.(*OrgReq))
@@ -4671,7 +4715,7 @@ func _OrganizationApi_UserFaceRedirect_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserFaceRedirect",
+		FullMethod: "/main.OrganizationApi/UserFaceRedirect",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserFaceRedirect(ctx, req.(*OrgReq))
@@ -4699,7 +4743,7 @@ func _OrganizationApi_OneUserTenant_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/OneUserTenant",
+		FullMethod: "/main.OrganizationApi/OneUserTenant",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).OneUserTenant(ctx, req.(*OrgReq))
@@ -4727,7 +4771,7 @@ func _OrganizationApi_RootUnit_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/RootUnit",
+		FullMethod: "/main.OrganizationApi/RootUnit",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).RootUnit(ctx, req.(*OrgReq))
@@ -4755,7 +4799,7 @@ func _OrganizationApi_ChildUnit_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ChildUnit",
+		FullMethod: "/main.OrganizationApi/ChildUnit",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ChildUnit(ctx, req.(*OrgReq))
@@ -4783,7 +4827,7 @@ func _OrganizationApi_RootUnitModify_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/RootUnitModify",
+		FullMethod: "/main.OrganizationApi/RootUnitModify",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).RootUnitModify(ctx, req.(*OrgReq))
@@ -4811,7 +4855,7 @@ func _OrganizationApi_ChildUnitModify_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ChildUnitModify",
+		FullMethod: "/main.OrganizationApi/ChildUnitModify",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ChildUnitModify(ctx, req.(*OrgReq))
@@ -4839,7 +4883,7 @@ func _OrganizationApi_DeleteUnit_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/DeleteUnit",
+		FullMethod: "/main.OrganizationApi/DeleteUnit",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).DeleteUnit(ctx, req.(*OrgReq))
@@ -4867,7 +4911,7 @@ func _OrganizationApi_UnitRootTree_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitRootTree",
+		FullMethod: "/main.OrganizationApi/UnitRootTree",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitRootTree(ctx, req.(*OrgReq))
@@ -4895,7 +4939,7 @@ func _OrganizationApi_UnitTreeByParUuid_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitTreeByParUuid",
+		FullMethod: "/main.OrganizationApi/UnitTreeByParUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitTreeByParUuid(ctx, req.(*OrgReq))
@@ -4923,7 +4967,7 @@ func _OrganizationApi_UnitRootTreeJson_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitRootTreeJson",
+		FullMethod: "/main.OrganizationApi/UnitRootTreeJson",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitRootTreeJson(ctx, req.(*OrgReq))
@@ -4951,7 +4995,7 @@ func _OrganizationApi_ParentUnitTree_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ParentUnitTree",
+		FullMethod: "/main.OrganizationApi/ParentUnitTree",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ParentUnitTree(ctx, req.(*OrgReq))
@@ -4979,7 +5023,7 @@ func _OrganizationApi_IsLeader_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/IsLeader",
+		FullMethod: "/main.OrganizationApi/IsLeader",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).IsLeader(ctx, req.(*OrgReq))
@@ -5007,7 +5051,7 @@ func _OrganizationApi_ChildUnitPagesList_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ChildUnitPagesList",
+		FullMethod: "/main.OrganizationApi/ChildUnitPagesList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ChildUnitPagesList(ctx, req.(*OrgReq))
@@ -5035,7 +5079,7 @@ func _OrganizationApi_RootUnitPagesList_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/RootUnitPagesList",
+		FullMethod: "/main.OrganizationApi/RootUnitPagesList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).RootUnitPagesList(ctx, req.(*OrgReq))
@@ -5063,7 +5107,7 @@ func _OrganizationApi_UnitMemberByUnitUuid_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitMemberByUnitUuid",
+		FullMethod: "/main.OrganizationApi/UnitMemberByUnitUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitMemberByUnitUuid(ctx, req.(*OrgReq))
@@ -5091,7 +5135,7 @@ func _OrganizationApi_UnitByUserUuid_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitByUserUuid",
+		FullMethod: "/main.OrganizationApi/UnitByUserUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitByUserUuid(ctx, req.(*OrgReq))
@@ -5119,7 +5163,7 @@ func _OrganizationApi_SameUnitMemberList_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/SameUnitMemberList",
+		FullMethod: "/main.OrganizationApi/SameUnitMemberList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).SameUnitMemberList(ctx, req.(*OrgReq))
@@ -5147,7 +5191,7 @@ func _OrganizationApi_UnitMemberModify_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitMemberModify",
+		FullMethod: "/main.OrganizationApi/UnitMemberModify",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitMemberModify(ctx, req.(*OrgReq))
@@ -5175,7 +5219,7 @@ func _OrganizationApi_DeleteUnitMember_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/DeleteUnitMember",
+		FullMethod: "/main.OrganizationApi/DeleteUnitMember",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).DeleteUnitMember(ctx, req.(*OrgReq))
@@ -5203,7 +5247,7 @@ func _OrganizationApi_ExcelFileImport_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ExcelFileImport",
+		FullMethod: "/main.OrganizationApi/ExcelFileImport",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ExcelFileImport(ctx, req.(*OrgReq))
@@ -5231,7 +5275,7 @@ func _OrganizationApi_ImportVisitors_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ImportVisitors",
+		FullMethod: "/main.OrganizationApi/ImportVisitors",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ImportVisitors(ctx, req.(*OrgReq))
@@ -5259,7 +5303,7 @@ func _OrganizationApi_AddOneVisitor_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/AddOneVisitor",
+		FullMethod: "/main.OrganizationApi/AddOneVisitor",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).AddOneVisitor(ctx, req.(*OrgReq))
@@ -5287,7 +5331,7 @@ func _OrganizationApi_GetImportOrgResult_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/GetImportOrgResult",
+		FullMethod: "/main.OrganizationApi/GetImportOrgResult",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).GetImportOrgResult(ctx, req.(*OrgReq))
@@ -5315,7 +5359,7 @@ func _OrganizationApi_GetImportVisitorOrgResult_Handler(srv interface{}, ctx con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/GetImportVisitorOrgResult",
+		FullMethod: "/main.OrganizationApi/GetImportVisitorOrgResult",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).GetImportVisitorOrgResult(ctx, req.(*OrgReq))
@@ -5343,7 +5387,7 @@ func _OrganizationApi_BaseInfoByBindPhone_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/BaseInfoByBindPhone",
+		FullMethod: "/main.OrganizationApi/BaseInfoByBindPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).BaseInfoByBindPhone(ctx, req.(*OrgReq))
@@ -5371,7 +5415,7 @@ func _OrganizationApi_ClientIds_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ClientIds",
+		FullMethod: "/main.OrganizationApi/ClientIds",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ClientIds(ctx, req.(*OrgReq))
@@ -5399,7 +5443,7 @@ func _OrganizationApi_WeChatUnBind_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/WeChatUnBind",
+		FullMethod: "/main.OrganizationApi/WeChatUnBind",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).WeChatUnBind(ctx, req.(*OrgReq))
@@ -5427,7 +5471,7 @@ func _OrganizationApi_UserTenantByUserUuid_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserTenantByUserUuid",
+		FullMethod: "/main.OrganizationApi/UserTenantByUserUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserTenantByUserUuid(ctx, req.(*OrgReq))
@@ -5455,7 +5499,7 @@ func _OrganizationApi_IsBlacklist_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/IsBlacklist",
+		FullMethod: "/main.OrganizationApi/IsBlacklist",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).IsBlacklist(ctx, req.(*OrgReq))
@@ -5483,7 +5527,7 @@ func _OrganizationApi_UpdateIsBlacklist_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UpdateIsBlacklist",
+		FullMethod: "/main.OrganizationApi/UpdateIsBlacklist",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UpdateIsBlacklist(ctx, req.(*OrgReq))
@@ -5495,7 +5539,7 @@ func _OrganizationApi_UpdateIsBlacklist_Handler(srv interface{}, ctx context.Con
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var OrganizationApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.OrganizationApi",
+	ServiceName: "main.OrganizationApi",
 	HandlerType: (*OrganizationApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -6212,7 +6256,7 @@ func _PassageApi_PassageAddMyEmp_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageAddMyEmp",
+		FullMethod: "/main.PassageApi/PassageAddMyEmp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageAddMyEmp(ctx, req.(*PassageReq))
@@ -6240,7 +6284,7 @@ func _PassageApi_PassageMyEmpPages_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyEmpPages",
+		FullMethod: "/main.PassageApi/PassageMyEmpPages",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyEmpPages(ctx, req.(*PassageReq))
@@ -6268,7 +6312,7 @@ func _PassageApi_PassageMyEmp_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyEmp",
+		FullMethod: "/main.PassageApi/PassageMyEmp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyEmp(ctx, req.(*PassageReq))
@@ -6296,7 +6340,7 @@ func _PassageApi_PassageMyEmpLists_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyEmpLists",
+		FullMethod: "/main.PassageApi/PassageMyEmpLists",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyEmpLists(ctx, req.(*PassageReq))
@@ -6324,7 +6368,7 @@ func _PassageApi_PassageBooking_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageBooking",
+		FullMethod: "/main.PassageApi/PassageBooking",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageBooking(ctx, req.(*PassageReq))
@@ -6352,7 +6396,7 @@ func _PassageApi_BatchPassageInvite_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/BatchPassageInvite",
+		FullMethod: "/main.PassageApi/BatchPassageInvite",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).BatchPassageInvite(ctx, req.(*PassageReq))
@@ -6380,7 +6424,7 @@ func _PassageApi_GetInviteBatchPassageResult_Handler(srv interface{}, ctx contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/GetInviteBatchPassageResult",
+		FullMethod: "/main.PassageApi/GetInviteBatchPassageResult",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).GetInviteBatchPassageResult(ctx, req.(*PassageReq))
@@ -6408,7 +6452,7 @@ func _PassageApi_PassageInvite_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageInvite",
+		FullMethod: "/main.PassageApi/PassageInvite",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageInvite(ctx, req.(*PassageReq))
@@ -6436,7 +6480,7 @@ func _PassageApi_DeletePassage_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/DeletePassage",
+		FullMethod: "/main.PassageApi/DeletePassage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).DeletePassage(ctx, req.(*PassageReq))
@@ -6464,7 +6508,7 @@ func _PassageApi_DeletePassageByPersonUuid_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/DeletePassageByPersonUuid",
+		FullMethod: "/main.PassageApi/DeletePassageByPersonUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).DeletePassageByPersonUuid(ctx, req.(*PassageReq))
@@ -6492,7 +6536,7 @@ func _PassageApi_PassageLists_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageLists",
+		FullMethod: "/main.PassageApi/PassageLists",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageLists(ctx, req.(*PassageReq))
@@ -6520,7 +6564,7 @@ func _PassageApi_PassageBookingAll_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageBookingAll",
+		FullMethod: "/main.PassageApi/PassageBookingAll",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageBookingAll(ctx, req.(*PassageReq))
@@ -6548,7 +6592,7 @@ func _PassageApi_PassageInviteAll_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageInviteAll",
+		FullMethod: "/main.PassageApi/PassageInviteAll",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageInviteAll(ctx, req.(*PassageReq))
@@ -6576,7 +6620,7 @@ func _PassageApi_PassageBookingArrival_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageBookingArrival",
+		FullMethod: "/main.PassageApi/PassageBookingArrival",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageBookingArrival(ctx, req.(*PassageReq))
@@ -6604,7 +6648,7 @@ func _PassageApi_PassageBookingStatus_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageBookingStatus",
+		FullMethod: "/main.PassageApi/PassageBookingStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageBookingStatus(ctx, req.(*PassageReq))
@@ -6632,7 +6676,7 @@ func _PassageApi_PassageBookingStatusPass_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageBookingStatusPass",
+		FullMethod: "/main.PassageApi/PassageBookingStatusPass",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageBookingStatusPass(ctx, req.(*PassageReq))
@@ -6660,7 +6704,7 @@ func _PassageApi_PassageInviteArrival_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageInviteArrival",
+		FullMethod: "/main.PassageApi/PassageInviteArrival",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageInviteArrival(ctx, req.(*PassageReq))
@@ -6688,7 +6732,7 @@ func _PassageApi_PassageInviteStatus_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageInviteStatus",
+		FullMethod: "/main.PassageApi/PassageInviteStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageInviteStatus(ctx, req.(*PassageReq))
@@ -6716,7 +6760,7 @@ func _PassageApi_PassageInviteStatusPass_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageInviteStatusPass",
+		FullMethod: "/main.PassageApi/PassageInviteStatusPass",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageInviteStatusPass(ctx, req.(*PassageReq))
@@ -6744,7 +6788,7 @@ func _PassageApi_OneDetail_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/OneDetail",
+		FullMethod: "/main.PassageApi/OneDetail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).OneDetail(ctx, req.(*PassageReq))
@@ -6772,7 +6816,7 @@ func _PassageApi_VisitorTodayPass_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/VisitorTodayPass",
+		FullMethod: "/main.PassageApi/VisitorTodayPass",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).VisitorTodayPass(ctx, req.(*PassageReq))
@@ -6800,7 +6844,7 @@ func _PassageApi_EmpTodayPass_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/EmpTodayPass",
+		FullMethod: "/main.PassageApi/EmpTodayPass",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).EmpTodayPass(ctx, req.(*PassageReq))
@@ -6828,7 +6872,7 @@ func _PassageApi_PassageAddMyVisitor_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageAddMyVisitor",
+		FullMethod: "/main.PassageApi/PassageAddMyVisitor",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageAddMyVisitor(ctx, req.(*PassageReq))
@@ -6856,7 +6900,7 @@ func _PassageApi_PassageMyVisitorTop_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyVisitorTop",
+		FullMethod: "/main.PassageApi/PassageMyVisitorTop",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyVisitorTop(ctx, req.(*PassageReq))
@@ -6884,7 +6928,7 @@ func _PassageApi_PassageMyVisitorPages_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyVisitorPages",
+		FullMethod: "/main.PassageApi/PassageMyVisitorPages",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyVisitorPages(ctx, req.(*PassageReq))
@@ -6912,7 +6956,7 @@ func _PassageApi_PassageMyVisitor_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyVisitor",
+		FullMethod: "/main.PassageApi/PassageMyVisitor",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyVisitor(ctx, req.(*PassageReq))
@@ -6940,7 +6984,7 @@ func _PassageApi_PassageMyVisitorByUuid_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyVisitorByUuid",
+		FullMethod: "/main.PassageApi/PassageMyVisitorByUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyVisitorByUuid(ctx, req.(*PassageReq))
@@ -6968,7 +7012,7 @@ func _PassageApi_PassageMyVisitorLists_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyVisitorLists",
+		FullMethod: "/main.PassageApi/PassageMyVisitorLists",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyVisitorLists(ctx, req.(*PassageReq))
@@ -6996,7 +7040,7 @@ func _PassageApi_WorkFlow_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/WorkFlow",
+		FullMethod: "/main.PassageApi/WorkFlow",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).WorkFlow(ctx, req.(*PassageReq))
@@ -7024,7 +7068,7 @@ func _PassageApi_PassagePageLists_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassagePageLists",
+		FullMethod: "/main.PassageApi/PassagePageLists",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassagePageLists(ctx, req.(*PassageReq))
@@ -7052,7 +7096,7 @@ func _PassageApi_PassageExcel_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageExcel",
+		FullMethod: "/main.PassageApi/PassageExcel",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageExcel(ctx, req.(*PassageReq))
@@ -7080,7 +7124,7 @@ func _PassageApi_DevicePassage_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/DevicePassage",
+		FullMethod: "/main.PassageApi/DevicePassage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).DevicePassage(ctx, req.(*PassageReq))
@@ -7108,7 +7152,7 @@ func _PassageApi_BasePassage_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/BasePassage",
+		FullMethod: "/main.PassageApi/BasePassage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).BasePassage(ctx, req.(*PassageReq))
@@ -7136,7 +7180,7 @@ func _PassageApi_SpotVisitorDetail_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/SpotVisitorDetail",
+		FullMethod: "/main.PassageApi/SpotVisitorDetail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).SpotVisitorDetail(ctx, req.(*PassageReq))
@@ -7164,7 +7208,7 @@ func _PassageApi_PassageSpotVisitorPages_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageSpotVisitorPages",
+		FullMethod: "/main.PassageApi/PassageSpotVisitorPages",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageSpotVisitorPages(ctx, req.(*PassageReq))
@@ -7192,7 +7236,7 @@ func _PassageApi_PassageSpotVisitor_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageSpotVisitor",
+		FullMethod: "/main.PassageApi/PassageSpotVisitor",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageSpotVisitor(ctx, req.(*PassageReq))
@@ -7204,7 +7248,7 @@ func _PassageApi_PassageSpotVisitor_Handler(srv interface{}, ctx context.Context
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PassageApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.PassageApi",
+	ServiceName: "main.PassageApi",
 	HandlerType: (*PassageApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -7637,7 +7681,7 @@ func _QuestionnaireApi_InitQuestionnaire_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/InitQuestionnaire",
+		FullMethod: "/main.QuestionnaireApi/InitQuestionnaire",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).InitQuestionnaire(ctx, req.(*NaireInfo))
@@ -7665,7 +7709,7 @@ func _QuestionnaireApi_AddQuestionnaire_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/AddQuestionnaire",
+		FullMethod: "/main.QuestionnaireApi/AddQuestionnaire",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).AddQuestionnaire(ctx, req.(*NaireInfo))
@@ -7693,7 +7737,7 @@ func _QuestionnaireApi_UpdateQuestionnaire_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/UpdateQuestionnaire",
+		FullMethod: "/main.QuestionnaireApi/UpdateQuestionnaire",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).UpdateQuestionnaire(ctx, req.(*NaireInfo))
@@ -7721,7 +7765,7 @@ func _QuestionnaireApi_GetQuestionnaire_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetQuestionnaire",
+		FullMethod: "/main.QuestionnaireApi/GetQuestionnaire",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetQuestionnaire(ctx, req.(*NaireInfo))
@@ -7749,7 +7793,7 @@ func _QuestionnaireApi_DeleteQuestionnaire_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/DeleteQuestionnaire",
+		FullMethod: "/main.QuestionnaireApi/DeleteQuestionnaire",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).DeleteQuestionnaire(ctx, req.(*NaireInfo))
@@ -7777,7 +7821,7 @@ func _QuestionnaireApi_GetQuestionnaireList_Handler(srv interface{}, ctx context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetQuestionnaireList",
+		FullMethod: "/main.QuestionnaireApi/GetQuestionnaireList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetQuestionnaireList(ctx, req.(*NaireInfo))
@@ -7805,7 +7849,7 @@ func _QuestionnaireApi_GetQuestionInfo_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetQuestionInfo",
+		FullMethod: "/main.QuestionnaireApi/GetQuestionInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetQuestionInfo(ctx, req.(*NaireInfo))
@@ -7833,7 +7877,7 @@ func _QuestionnaireApi_AddOneQuestion_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/AddOneQuestion",
+		FullMethod: "/main.QuestionnaireApi/AddOneQuestion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).AddOneQuestion(ctx, req.(*QuestionInfo))
@@ -7861,7 +7905,7 @@ func _QuestionnaireApi_UpdateOneQuestion_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/UpdateOneQuestion",
+		FullMethod: "/main.QuestionnaireApi/UpdateOneQuestion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).UpdateOneQuestion(ctx, req.(*QuestionInfo))
@@ -7889,7 +7933,7 @@ func _QuestionnaireApi_DeleteQuestionByUuid_Handler(srv interface{}, ctx context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/DeleteQuestionByUuid",
+		FullMethod: "/main.QuestionnaireApi/DeleteQuestionByUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).DeleteQuestionByUuid(ctx, req.(*QuestionInfo))
@@ -7917,7 +7961,7 @@ func _QuestionnaireApi_GetQuestionList_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetQuestionList",
+		FullMethod: "/main.QuestionnaireApi/GetQuestionList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetQuestionList(ctx, req.(*NaireInfo))
@@ -7945,7 +7989,7 @@ func _QuestionnaireApi_GetAnswerByUN_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetAnswerByUN",
+		FullMethod: "/main.QuestionnaireApi/GetAnswerByUN",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetAnswerByUN(ctx, req.(*AnswerInfo))
@@ -7973,7 +8017,7 @@ func _QuestionnaireApi_AddAnswerByUN_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/AddAnswerByUN",
+		FullMethod: "/main.QuestionnaireApi/AddAnswerByUN",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).AddAnswerByUN(ctx, req.(*AnswerInfo))
@@ -8001,7 +8045,7 @@ func _QuestionnaireApi_UpdateAnswerByAU_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/UpdateAnswerByAU",
+		FullMethod: "/main.QuestionnaireApi/UpdateAnswerByAU",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).UpdateAnswerByAU(ctx, req.(*AnswerInfo))
@@ -8029,7 +8073,7 @@ func _QuestionnaireApi_GetIAnswerByQUuid_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetIAnswerByQUuid",
+		FullMethod: "/main.QuestionnaireApi/GetIAnswerByQUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetIAnswerByQUuid(ctx, req.(*AnswerInfo))
@@ -8057,7 +8101,7 @@ func _QuestionnaireApi_GetQNAnswerBYQN_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetQNAnswerBYQN",
+		FullMethod: "/main.QuestionnaireApi/GetQNAnswerBYQN",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetQNAnswerBYQN(ctx, req.(*AnswerInfo))
@@ -8085,7 +8129,7 @@ func _QuestionnaireApi_DeleteUAnswerByQN_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/DeleteUAnswerByQN",
+		FullMethod: "/main.QuestionnaireApi/DeleteUAnswerByQN",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).DeleteUAnswerByQN(ctx, req.(*AnswerInfo))
@@ -8097,7 +8141,7 @@ func _QuestionnaireApi_DeleteUAnswerByQN_Handler(srv interface{}, ctx context.Co
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var QuestionnaireApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.QuestionnaireApi",
+	ServiceName: "main.QuestionnaireApi",
 	HandlerType: (*QuestionnaireApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -8286,7 +8330,7 @@ func _SecureApi_GenerateToken_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.SecureApi/GenerateToken",
+		FullMethod: "/main.SecureApi/GenerateToken",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SecureApiServer).GenerateToken(ctx, req.(*Jwt))
@@ -8314,7 +8358,7 @@ func _SecureApi_ParseToken_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.SecureApi/ParseToken",
+		FullMethod: "/main.SecureApi/ParseToken",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SecureApiServer).ParseToken(ctx, req.(*Jwt))
@@ -8342,7 +8386,7 @@ func _SecureApi_RefreshToken_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.SecureApi/RefreshToken",
+		FullMethod: "/main.SecureApi/RefreshToken",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SecureApiServer).RefreshToken(ctx, req.(*Jwt))
@@ -8354,7 +8398,7 @@ func _SecureApi_RefreshToken_Handler(srv interface{}, ctx context.Context, dec f
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var SecureApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.SecureApi",
+	ServiceName: "main.SecureApi",
 	HandlerType: (*SecureApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -8547,7 +8591,7 @@ func _TaskApi_RegisterUser_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/RegisterUser",
+		FullMethod: "/main.TaskApi/RegisterUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).RegisterUser(ctx, req.(*Amqp))
@@ -8575,7 +8619,7 @@ func _TaskApi_CreateVhost_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/CreateVhost",
+		FullMethod: "/main.TaskApi/CreateVhost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).CreateVhost(ctx, req.(*Amqp))
@@ -8603,7 +8647,7 @@ func _TaskApi_DestroyVhost_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/DestroyVhost",
+		FullMethod: "/main.TaskApi/DestroyVhost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).DestroyVhost(ctx, req.(*Amqp))
@@ -8631,7 +8675,7 @@ func _TaskApi_CreateExchange_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/CreateExchange",
+		FullMethod: "/main.TaskApi/CreateExchange",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).CreateExchange(ctx, req.(*Amqp))
@@ -8659,7 +8703,7 @@ func _TaskApi_DestroyExchange_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/DestroyExchange",
+		FullMethod: "/main.TaskApi/DestroyExchange",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).DestroyExchange(ctx, req.(*Amqp))
@@ -8687,7 +8731,7 @@ func _TaskApi_CreateQueue_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/CreateQueue",
+		FullMethod: "/main.TaskApi/CreateQueue",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).CreateQueue(ctx, req.(*Amqp))
@@ -8715,7 +8759,7 @@ func _TaskApi_DestroyQueue_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/DestroyQueue",
+		FullMethod: "/main.TaskApi/DestroyQueue",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).DestroyQueue(ctx, req.(*Amqp))
@@ -8743,7 +8787,7 @@ func _TaskApi_Task_Handler(srv interface{}, ctx context.Context, dec func(interf
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/Task",
+		FullMethod: "/main.TaskApi/Task",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).Task(ctx, req.(*AmqpTask))
@@ -8755,7 +8799,7 @@ func _TaskApi_Task_Handler(srv interface{}, ctx context.Context, dec func(interf
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var TaskApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.TaskApi",
+	ServiceName: "main.TaskApi",
 	HandlerType: (*TaskApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -9256,7 +9300,7 @@ func _TenantApi_RefTenantReshRedis_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/RefTenantReshRedis",
+		FullMethod: "/main.TenantApi/RefTenantReshRedis",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).RefTenantReshRedis(ctx, req.(*TenantNull))
@@ -9284,7 +9328,7 @@ func _TenantApi_ClientByUuid_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ClientByUuid",
+		FullMethod: "/main.TenantApi/ClientByUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ClientByUuid(ctx, req.(*TenantReq))
@@ -9312,7 +9356,7 @@ func _TenantApi_ClientByOrgId_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ClientByOrgId",
+		FullMethod: "/main.TenantApi/ClientByOrgId",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ClientByOrgId(ctx, req.(*TenantReq))
@@ -9340,7 +9384,7 @@ func _TenantApi_SettingByUuid_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SettingByUuid",
+		FullMethod: "/main.TenantApi/SettingByUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SettingByUuid(ctx, req.(*TenantReq))
@@ -9368,7 +9412,7 @@ func _TenantApi_AccountByPhone_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/AccountByPhone",
+		FullMethod: "/main.TenantApi/AccountByPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).AccountByPhone(ctx, req.(*TenantReq))
@@ -9396,7 +9440,7 @@ func _TenantApi_AuthByDevice_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/AuthByDevice",
+		FullMethod: "/main.TenantApi/AuthByDevice",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).AuthByDevice(ctx, req.(*TenantReq))
@@ -9424,7 +9468,7 @@ func _TenantApi_PhoneByAccount_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/PhoneByAccount",
+		FullMethod: "/main.TenantApi/PhoneByAccount",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).PhoneByAccount(ctx, req.(*TenantReq))
@@ -9452,7 +9496,7 @@ func _TenantApi_InfoByUuid_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/InfoByUuid",
+		FullMethod: "/main.TenantApi/InfoByUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).InfoByUuid(ctx, req.(*TenantReq))
@@ -9480,7 +9524,7 @@ func _TenantApi_InfoByOrgId_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/InfoByOrgId",
+		FullMethod: "/main.TenantApi/InfoByOrgId",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).InfoByOrgId(ctx, req.(*TenantReq))
@@ -9508,7 +9552,7 @@ func _TenantApi_InfoByPassword_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/InfoByPassword",
+		FullMethod: "/main.TenantApi/InfoByPassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).InfoByPassword(ctx, req.(*TenantReq))
@@ -9536,7 +9580,7 @@ func _TenantApi_ListTenant_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ListTenant",
+		FullMethod: "/main.TenantApi/ListTenant",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ListTenant(ctx, req.(*TenantReq))
@@ -9564,7 +9608,7 @@ func _TenantApi_RegisterTenant_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/RegisterTenant",
+		FullMethod: "/main.TenantApi/RegisterTenant",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).RegisterTenant(ctx, req.(*TenantReq))
@@ -9592,7 +9636,7 @@ func _TenantApi_GenerateTenant_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/GenerateTenant",
+		FullMethod: "/main.TenantApi/GenerateTenant",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).GenerateTenant(ctx, req.(*TenantReq))
@@ -9620,7 +9664,7 @@ func _TenantApi_TenantResetPassword_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/TenantResetPassword",
+		FullMethod: "/main.TenantApi/TenantResetPassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).TenantResetPassword(ctx, req.(*TenantReq))
@@ -9648,7 +9692,7 @@ func _TenantApi_ChangePassword_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangePassword",
+		FullMethod: "/main.TenantApi/ChangePassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangePassword(ctx, req.(*TenantReq))
@@ -9676,7 +9720,7 @@ func _TenantApi_RecoveryPassword_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/RecoveryPassword",
+		FullMethod: "/main.TenantApi/RecoveryPassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).RecoveryPassword(ctx, req.(*TenantReq))
@@ -9704,7 +9748,7 @@ func _TenantApi_ChangeDevice_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangeDevice",
+		FullMethod: "/main.TenantApi/ChangeDevice",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangeDevice(ctx, req.(*TenantReq))
@@ -9732,7 +9776,7 @@ func _TenantApi_ChangeContact_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangeContact",
+		FullMethod: "/main.TenantApi/ChangeContact",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangeContact(ctx, req.(*TenantReq))
@@ -9760,7 +9804,7 @@ func _TenantApi_ChangeSelf_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangeSelf",
+		FullMethod: "/main.TenantApi/ChangeSelf",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangeSelf(ctx, req.(*TenantReq))
@@ -9788,7 +9832,7 @@ func _TenantApi_ChangeBanner_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangeBanner",
+		FullMethod: "/main.TenantApi/ChangeBanner",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangeBanner(ctx, req.(*TenantReq))
@@ -9816,7 +9860,7 @@ func _TenantApi_ChangePhone_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangePhone",
+		FullMethod: "/main.TenantApi/ChangePhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangePhone(ctx, req.(*TenantReq))
@@ -9844,7 +9888,7 @@ func _TenantApi_ChangeExpireIn_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangeExpireIn",
+		FullMethod: "/main.TenantApi/ChangeExpireIn",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangeExpireIn(ctx, req.(*TenantReq))
@@ -9872,7 +9916,7 @@ func _TenantApi_IsAdmin_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/IsAdmin",
+		FullMethod: "/main.TenantApi/IsAdmin",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).IsAdmin(ctx, req.(*TenantReq))
@@ -9900,7 +9944,7 @@ func _TenantApi_SetWeChat_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SetWeChat",
+		FullMethod: "/main.TenantApi/SetWeChat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SetWeChat(ctx, req.(*TenantReq))
@@ -9928,7 +9972,7 @@ func _TenantApi_SetWork_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SetWork",
+		FullMethod: "/main.TenantApi/SetWork",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SetWork(ctx, req.(*TenantReq))
@@ -9956,7 +10000,7 @@ func _TenantApi_SetDingTalk_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SetDingTalk",
+		FullMethod: "/main.TenantApi/SetDingTalk",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SetDingTalk(ctx, req.(*TenantReq))
@@ -9984,7 +10028,7 @@ func _TenantApi_SetLark_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SetLark",
+		FullMethod: "/main.TenantApi/SetLark",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SetLark(ctx, req.(*TenantReq))
@@ -10012,7 +10056,7 @@ func _TenantApi_SetSetting_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SetSetting",
+		FullMethod: "/main.TenantApi/SetSetting",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SetSetting(ctx, req.(*TenantReq))
@@ -10040,7 +10084,7 @@ func _TenantApi_DebugSetting_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/DebugSetting",
+		FullMethod: "/main.TenantApi/DebugSetting",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).DebugSetting(ctx, req.(*TenantReq))
@@ -10068,7 +10112,7 @@ func _TenantApi_SystemBase_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SystemBase",
+		FullMethod: "/main.TenantApi/SystemBase",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SystemBase(ctx, req.(*TenantReq))
@@ -10096,7 +10140,7 @@ func _TenantApi_SystemInfo_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SystemInfo",
+		FullMethod: "/main.TenantApi/SystemInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SystemInfo(ctx, req.(*TenantReq))
@@ -10124,7 +10168,7 @@ func _TenantApi_UpgradeSystem_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/UpgradeSystem",
+		FullMethod: "/main.TenantApi/UpgradeSystem",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).UpgradeSystem(ctx, req.(*TenantReq))
@@ -10136,7 +10180,7 @@ func _TenantApi_UpgradeSystem_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var TenantApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.TenantApi",
+	ServiceName: "main.TenantApi",
 	HandlerType: (*TenantApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -10469,7 +10513,7 @@ func _ToolApi_ShortUrl_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/ShortUrl",
+		FullMethod: "/main.ToolApi/ShortUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).ShortUrl(ctx, req.(*Url))
@@ -10497,7 +10541,7 @@ func _ToolApi_LongUrl_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/LongUrl",
+		FullMethod: "/main.ToolApi/LongUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).LongUrl(ctx, req.(*Url))
@@ -10525,7 +10569,7 @@ func _ToolApi_GetDomainUrl_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/GetDomainUrl",
+		FullMethod: "/main.ToolApi/GetDomainUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).GetDomainUrl(ctx, req.(*Req))
@@ -10553,7 +10597,7 @@ func _ToolApi_GetCallbackUrl_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/GetCallbackUrl",
+		FullMethod: "/main.ToolApi/GetCallbackUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).GetCallbackUrl(ctx, req.(*Req))
@@ -10581,7 +10625,7 @@ func _ToolApi_QrCode_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/QrCode",
+		FullMethod: "/main.ToolApi/QrCode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).QrCode(ctx, req.(*Req))
@@ -10609,7 +10653,7 @@ func _ToolApi_CreateBinaryFile_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/CreateBinaryFile",
+		FullMethod: "/main.ToolApi/CreateBinaryFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).CreateBinaryFile(ctx, req.(*File))
@@ -10637,7 +10681,7 @@ func _ToolApi_CreateBase64File_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/CreateBase64File",
+		FullMethod: "/main.ToolApi/CreateBase64File",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).CreateBase64File(ctx, req.(*File))
@@ -10665,7 +10709,7 @@ func _ToolApi_CreateRemoteFile_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/CreateRemoteFile",
+		FullMethod: "/main.ToolApi/CreateRemoteFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).CreateRemoteFile(ctx, req.(*File))
@@ -10693,7 +10737,7 @@ func _ToolApi_GetFile_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/GetFile",
+		FullMethod: "/main.ToolApi/GetFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).GetFile(ctx, req.(*File))
@@ -10721,7 +10765,7 @@ func _ToolApi_DeleteFile_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/DeleteFile",
+		FullMethod: "/main.ToolApi/DeleteFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).DeleteFile(ctx, req.(*File))
@@ -10733,7 +10777,7 @@ func _ToolApi_DeleteFile_Handler(srv interface{}, ctx context.Context, dec func(
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ToolApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.ToolApi",
+	ServiceName: "main.ToolApi",
 	HandlerType: (*ToolApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -11134,7 +11178,7 @@ func _WorkflowApi_GetAvoidWorkFlowNode_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/GetAvoidWorkFlowNode",
+		FullMethod: "/main.workflowApi/GetAvoidWorkFlowNode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).GetAvoidWorkFlowNode(ctx, req.(*RequestInfo))
@@ -11162,7 +11206,7 @@ func _WorkflowApi_FormIndex_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/FormIndex",
+		FullMethod: "/main.workflowApi/FormIndex",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).FormIndex(ctx, req.(*RequestInfo))
@@ -11190,7 +11234,7 @@ func _WorkflowApi_AddFormIndex_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/AddFormIndex",
+		FullMethod: "/main.workflowApi/AddFormIndex",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).AddFormIndex(ctx, req.(*RequestInfo))
@@ -11218,7 +11262,7 @@ func _WorkflowApi_UpdateFormIndex_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/UpdateFormIndex",
+		FullMethod: "/main.workflowApi/UpdateFormIndex",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).UpdateFormIndex(ctx, req.(*RequestInfo))
@@ -11246,7 +11290,7 @@ func _WorkflowApi_FormIndexDelete_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/FormIndexDelete",
+		FullMethod: "/main.workflowApi/FormIndexDelete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).FormIndexDelete(ctx, req.(*RequestInfo))
@@ -11274,7 +11318,7 @@ func _WorkflowApi_CreateNode_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/CreateNode",
+		FullMethod: "/main.workflowApi/CreateNode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).CreateNode(ctx, req.(*FormInfo))
@@ -11302,7 +11346,7 @@ func _WorkflowApi_ModifyNode_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/ModifyNode",
+		FullMethod: "/main.workflowApi/ModifyNode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).ModifyNode(ctx, req.(*RequestInfo))
@@ -11330,7 +11374,7 @@ func _WorkflowApi_DeleteNode_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/DeleteNode",
+		FullMethod: "/main.workflowApi/DeleteNode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).DeleteNode(ctx, req.(*RequestInfo))
@@ -11358,7 +11402,7 @@ func _WorkflowApi_CreateTask_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/CreateTask",
+		FullMethod: "/main.workflowApi/CreateTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).CreateTask(ctx, req.(*RequestInfo))
@@ -11386,7 +11430,7 @@ func _WorkflowApi_DeleteTask_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/DeleteTask",
+		FullMethod: "/main.workflowApi/DeleteTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).DeleteTask(ctx, req.(*RequestInfo))
@@ -11414,7 +11458,7 @@ func _WorkflowApi_SetRecipient_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/SetRecipient",
+		FullMethod: "/main.workflowApi/SetRecipient",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).SetRecipient(ctx, req.(*RequestInfo))
@@ -11442,7 +11486,7 @@ func _WorkflowApi_SetSetting_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/SetSetting",
+		FullMethod: "/main.workflowApi/SetSetting",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).SetSetting(ctx, req.(*RequestInfo))
@@ -11470,7 +11514,7 @@ func _WorkflowApi_FlowInfo_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/FlowInfo",
+		FullMethod: "/main.workflowApi/FlowInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).FlowInfo(ctx, req.(*RequestInfo))
@@ -11498,7 +11542,7 @@ func _WorkflowApi_RecordInfo_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/RecordInfo",
+		FullMethod: "/main.workflowApi/RecordInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).RecordInfo(ctx, req.(*RequestInfo))
@@ -11526,7 +11570,7 @@ func _WorkflowApi_ModifyRecord_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/ModifyRecord",
+		FullMethod: "/main.workflowApi/ModifyRecord",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).ModifyRecord(ctx, req.(*RequestInfo))
@@ -11554,7 +11598,7 @@ func _WorkflowApi_RecipientByPk_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/RecipientByPk",
+		FullMethod: "/main.workflowApi/RecipientByPk",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).RecipientByPk(ctx, req.(*RequestInfo))
@@ -11582,7 +11626,7 @@ func _WorkflowApi_DefaultRecipients_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/DefaultRecipients",
+		FullMethod: "/main.workflowApi/DefaultRecipients",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).DefaultRecipients(ctx, req.(*RequestInfo))
@@ -11610,7 +11654,7 @@ func _WorkflowApi_ModifyRecipient_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/ModifyRecipient",
+		FullMethod: "/main.workflowApi/ModifyRecipient",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).ModifyRecipient(ctx, req.(*RequestInfo))
@@ -11638,7 +11682,7 @@ func _WorkflowApi_TotalTodo_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/TotalTodo",
+		FullMethod: "/main.workflowApi/TotalTodo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).TotalTodo(ctx, req.(*RequestInfo))
@@ -11666,7 +11710,7 @@ func _WorkflowApi_IsApproval_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/IsApproval",
+		FullMethod: "/main.workflowApi/IsApproval",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).IsApproval(ctx, req.(*RequestInfo))
@@ -11694,7 +11738,7 @@ func _WorkflowApi_InitFlow_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/InitFlow",
+		FullMethod: "/main.workflowApi/InitFlow",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).InitFlow(ctx, req.(*RequestInfo))
@@ -11722,7 +11766,7 @@ func _WorkflowApi_CreateRecord_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/CreateRecord",
+		FullMethod: "/main.workflowApi/CreateRecord",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).CreateRecord(ctx, req.(*RecordInfo))
@@ -11750,7 +11794,7 @@ func _WorkflowApi_GetWorkflowSetting_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/GetWorkflowSetting",
+		FullMethod: "/main.workflowApi/GetWorkflowSetting",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).GetWorkflowSetting(ctx, req.(*RequestInfo))
@@ -11762,7 +11806,7 @@ func _WorkflowApi_GetWorkflowSetting_Handler(srv interface{}, ctx context.Contex
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var WorkflowApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.workflowApi",
+	ServiceName: "main.workflowApi",
 	HandlerType: (*WorkflowApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
