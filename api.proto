@@ -1,0 +1,1490 @@
+syntax = 'proto3';
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+package tecsun;
+option go_package = "./;api";
+
+message BillboardNull {
+}
+
+message OneBillboard {
+  string uuid = 1;
+  string title = 2;
+  string content = 3;
+  int32 count  =4;
+  int32 read_num = 5;
+  int32 unread_num = 6;
+  int32 useful_num = 7;
+  int32 useless_num = 8;
+  int32 skip_num = 9;
+  string create_time = 10;
+  int32 status = 11;
+  string page = 12;
+  string size = 13;
+  string tenant = 14;
+}
+
+message BillboardList {
+  repeated OneBillboard rows= 1;
+  int32  total = 2;
+  int32 size =3;
+  int32  pages= 4;
+}
+
+
+
+service BillboardApi {
+  rpc CreateBillboard(OneBillboard) returns (BillboardNull){}
+  rpc DeleteBillboard(OneBillboard) returns (BillboardNull){}
+  rpc GetBillboardList(BillboardNull) returns (BillboardList){}
+  rpc CreateBillboardItem(OneBillboard) returns (BillboardNull){}
+  rpc UpdateBillboardItem(OneBillboard) returns (BillboardNull){}
+
+}
+
+message ClientNull {
+
+}
+
+message ClientCompanyList {
+  google.protobuf.Any data = 1;
+}
+message ClientCompanyInfo {
+  string name = 1;
+  string orgId = 2;
+  string page = 3;
+  string size = 4;
+}
+
+message clientInfo {
+  string tenant = 1;
+  string type = 2;
+  string url = 3;
+  string code = 4;
+  string state = 5;
+  string key = 6;
+  string templateId = 7;
+  string content = 8;
+  string title = 9;
+  string params = 10;
+  string templateMId = 11;
+  string recievers = 12;
+  string initCode = 13;
+  string appId = 14;
+
+}
+message userClientInfo {
+  string phone = 1;
+  string uuid = 2;
+  string name = 3;
+  int32 isModify = 4;
+  int32 isBind = 5;
+  string idCard = 6;
+  string icCard = 7;
+  string gender = 8;
+  string email = 9;
+  bool disabled = 10;
+  repeated string department = 11;
+  string company = 12;
+  string avatarUuid = 13;
+  string avatar = 14;
+}
+message userInfo {
+  string phone = 1;
+  string key = 2;
+  string url = 3;
+  string userid = 4;
+  string mobile = 5;
+  string type = 6;
+  string tenant = 7;
+  string mobileNo = 8;
+  string userName = 9;
+  string iDcard = 10;
+  string openId =11;
+
+}
+message messageInfo {
+  string tenant = 1;
+  string signature = 2;
+  string timestamp = 3;
+  string nonceStr = 4;
+  string type = 5;
+  string encrypt = 6;
+  string appId = 7;
+  string url = 8;
+  bool debug = 9;
+  bool beta = 10;
+  repeated string jsApiList = 11;
+  string ticket = 12;
+  string corpId = 13;
+  string agentId = 14;
+  string msg =15;
+}
+
+message mediaInfo {
+  string tenant = 1;
+  string type = 2;
+  string mediaId = 3;
+  string uuid = 4;
+  string url = 5;
+  string name = 6;
+  string expireTime = 7;
+}
+
+service ClientApi {
+  rpc GetClientAuth(clientInfo) returns (clientInfo){}
+  rpc GetClientAuthCallback(clientInfo) returns (userInfo){}
+  rpc GetClientCallback(messageInfo) returns (ClientNull){}
+  rpc GetJssdkConfig(clientInfo) returns (messageInfo){}
+  rpc GetClientWorkTest(messageInfo) returns (messageInfo){}
+  rpc GetClientMedia(mediaInfo) returns (mediaInfo){}
+  rpc GetClientOrganization(clientInfo) returns (clientInfo){}
+  rpc AsyncClientOrganization(clientInfo) returns (ClientNull){}
+  rpc GetClientUserInfo(userInfo) returns (userClientInfo){}
+  rpc UnbindWCClient(clientInfo) returns (ClientNull){}
+  rpc WeChatMessage(clientInfo) returns (ClientNull){}
+  rpc WorkMessage(clientInfo) returns (ClientNull){}
+  rpc DingTalkMessage(clientInfo) returns (ClientNull){}
+  rpc LarkMessage(clientInfo) returns (ClientNull){}
+  rpc SendIMessage(clientInfo) returns (ClientNull){}
+  rpc GetIUserBaseInfo(clientInfo) returns (userInfo){}
+  rpc GetInitCode(ClientNull) returns (clientInfo){}
+  rpc GetUserOrgByPhone(userInfo) returns (ClientCompanyList){}
+  rpc GetVisitorOrgByPhone(userInfo) returns (ClientCompanyList){}
+  rpc GetOrgByName(ClientCompanyInfo) returns (ClientCompanyList){}
+}
+
+message DeviceNull {
+}
+
+message companyList {
+  int64 page = 1;
+  int64 size = 2;
+  int64 total = 3;
+  repeated companyInfo rows = 4;
+}
+
+message mecList {
+  int64 page = 1;
+  int64 size = 2;
+  int64 total = 3;
+  repeated mecInfo rows = 4;
+}
+message DeviceUserInfo {
+  string uuid  =1 ;
+  string code = 2 ;
+  string phone = 3;
+  string card = 4;
+  string Tenant = 5;
+}
+message companyInfo {
+  string uuid = 1;
+  string tenant = 2;
+  string name = 3;
+  string remark = 4;
+  string address = 5;
+  string company = 6;
+  string directions = 7;
+  string area = 8;
+  string  url = 9;
+  int64 page = 10;
+  int64 size = 11;
+  string create_time = 12;
+  string update_time = 13;
+  string passage = 14;
+}
+message trafficList {
+  int64 pages = 1;
+  int64 size = 2;
+  int64 total = 3;
+  repeated trafficInfo rows = 4;
+  int64 current = 5;
+}
+message trafficInfo {
+  string tenant = 1;
+  string catchPhoto = 2;
+  string certNumber = 3;
+  string depName = 4;
+  string deviceName = 5;
+  string deviceNo = 6;
+  string faceScore = 7;
+  string icCard = 8;
+  string matchPhoto = 9;
+  string name = 10;
+  string park = 11;
+  string plateColor = 12;
+  string plateNumber = 13;
+  string recordId = 14;
+  string visitTime = 15;
+  int32 certKind = 16;
+  int32 people = 17;
+  int32 temp = 18;
+  int32 status = 19;
+  int32 type = 20;
+  float page = 21;
+  float size = 22;
+  string uuid = 23;
+}
+
+message deviceInfo {
+  string tenant = 1;
+  string belongsList = 2;
+  string carKind = 3;
+  string carNumber = 4;
+  string cardNo = 5;
+  string catchPhoto = 6;
+  string certKind = 7;
+  string certNumber = 8;
+  string certPhoto = 9;
+  string deviceNo = 10;
+  string extend = 11;
+  string faceScore = 12;
+  string inDoorName = 13;
+  string outDoorName = 14;
+  string reason = 15;
+  string visitNo = 16;
+  string visitTime = 17;
+  string visitedCompany = 18;
+  string visitedDept = 19;
+  string visitedMobilePhone = 20;
+  string visitedName = 21;
+  string visitedPost = 22;
+  string visitedRoomNum = 23;
+  string visitedTel = 24;
+  string visitorAddress = 25;
+  string visitorCompany = 26;
+  string visitorName = 27;
+  string visitorPhone = 28;
+  float status = 29;
+  float visitedSex = 30;
+  float visitorCount = 31;
+  float visitorSex = 32;
+  string deviceName = 33;
+  string leaveTime = 34;
+}
+
+
+message mecInfo {
+  string company = 1;
+  string area = 2;
+  string cert = 3;
+  string remark = 4;
+  string name = 5;
+  string signature = 6;
+  string mac = 7;
+  string uuid = 8;
+  string create_time = 9;
+  string onlineTime = 10;
+}
+message passageInfo {
+  string tenant = 1;
+  string no = 2;
+  string face = 3;
+  string idCard = 4;
+  string qrCode = 5;
+  string guestUuid = 6;
+  string guestName = 7;
+  string guestSex = 8;
+  string guestPhone = 9;
+  string guestCompany = 10;
+  string staffUuid = 11;
+  string staffName = 12;
+  string staffSex = 13;
+  string staffPhone = 14;
+  string staffCompany = 15;
+  string staffUnit = 16;
+  string area = 17;
+  string startTime = 18;
+  string endTime = 19;
+  string carNumber = 20;
+  string reason = 21;
+  string note = 22;
+  string uuid = 23;
+}
+message recordList {
+  int64 pages = 1;
+  int64 size = 2;
+  int64 total = 3;
+  repeated DeviceRecordInfo rows = 4;
+  int64 current = 5;
+}
+message DeviceRecordInfo {
+  string tenant = 1;
+  string personId = 2;
+  string name = 3;
+  string cardNo = 4;
+  string visitorCompany = 5;
+  string visitorSex = 6;
+  string icCode = 7;
+  string qrCode = 8;
+  string carNumber = 9;
+  string time = 10;
+  string endTime = 11;
+  string imgUrl = 12;
+  string keyWord = 13;
+  string visitorPhone = 14;
+  string visitedPhone = 15;
+  string visitedName = 16;
+  string visitedCompany = 17;
+  string visitedSex = 18;
+  string visitedUnit = 19;
+  string reason = 20;
+  string passport = 21;
+  string driverLicense = 22;
+  string socialCard = 23;
+  string hkPass = 24;
+  string icCard = 25;
+}
+
+service DeviceApi {
+  rpc CreateCompany(companyInfo) returns (DeviceNull){}
+  rpc DeleteCompany(companyInfo) returns (DeviceNull){}
+  rpc UpdateCompany(companyInfo) returns (DeviceNull){}
+  rpc SearchCompany(companyInfo) returns (companyList){}
+  rpc CreateArea(companyInfo) returns (DeviceNull){}
+  rpc DeleteArea(companyInfo) returns (DeviceNull){}
+  rpc UpdateArea(companyInfo) returns (DeviceNull){}
+  rpc SearchArea(companyInfo) returns (companyList){}
+  rpc Prepare(companyInfo) returns (companyInfo){}
+  rpc CreateMec(mecInfo) returns (DeviceNull){}
+  rpc UpdateMec(companyInfo) returns (DeviceNull){}
+  rpc RemoveMec(companyInfo) returns (DeviceNull){}
+  rpc DeleteMec(companyInfo) returns (DeviceNull){}
+  rpc SearchMec(companyInfo) returns (mecList){}
+  rpc KeepAlive(companyInfo) returns (DeviceNull){}
+  rpc AddDeviceVisitor(deviceInfo) returns (DeviceNull){}
+  rpc DeviceVisitorLeave(deviceInfo) returns (DeviceNull){}
+  rpc AddDeviceTraffic(trafficInfo) returns (DeviceNull){}
+  rpc GetDashboardDevicePassagePages(trafficInfo) returns (trafficList){}
+  rpc GetDevicePassageDetail(companyInfo) returns (trafficInfo){}
+  rpc DevicePassage(passageInfo) returns (DeviceNull){}
+  rpc DevicePassageIssue(companyInfo) returns (recordList){}
+  rpc DevicePassageSearch(DeviceUserInfo) returns (recordList){}
+  rpc DevicePassageCallback(companyInfo) returns (DeviceNull){}
+}
+
+service HelperApi {
+  rpc CreateOneHelp (faq) returns (HelperNull){}
+  rpc UpdateOneHelp (faq) returns (HelperNull){}
+  rpc DeleteOneHelp (faq) returns (HelperNull){}
+  rpc GetHelpCenterList (faqs) returns (faqs){}
+}
+
+
+message HelperNull {}
+
+message faq {
+  string uuid = 1;
+  string question = 2;
+  string answer = 3;
+  bool status = 4;
+  string createTime = 5;
+}
+
+message faqs {
+  int32 total = 1;
+  int64 pages = 2;
+  string page = 3;
+  string size = 4;
+  repeated faq rows = 5;
+}
+
+// The greeting service definition.
+service ManagerApi {
+  // Sends a greeting
+  rpc RegisterManager (RegisterManagerReq) returns (RegisterManagerRes) {}
+  // Sends a greeting via stream
+  rpc ChangeName (ChangeNameReq)returns (Empty) {}
+  rpc ChangeTFA (ChangeTFAReq)returns (Empty) {}
+  rpc ChangePhone (ChangePhoneReq)returns (Empty) {}
+  rpc ChangePassword (ChangePasswordReq)returns (Empty) {}
+  rpc ChangeAccountAndPassword (ChangeAccountAndPasswordReq)returns (Empty) {}
+  rpc ChangePasswordByPhone (ChangePasswordByPhoneReq)returns (Empty) {}
+  rpc LoginByPhone (LoginByPhoneReq)returns (LoginByPhoneRes) {}
+  rpc GetLoginManager (GetLoginManagerReq)returns (GetLoginManagerRes) {}
+  rpc DeleteAccount (DeleteAccountReq)returns (Empty) {}
+  rpc CreateTeam (CreateTeamReq)returns (Empty) {}
+}
+
+// The request message containing the user's name.
+message RegisterManagerReq {
+  string phone = 1;
+}
+
+message RegisterManagerRes {
+  string rid = 1;
+}
+
+message ChangeNameReq {
+  string rid = 1;
+  string name = 2;
+}
+message ChangeTFAReq {
+  string rid = 1;
+  bool tfa = 2;
+}
+message ChangePhoneReq {
+  string rid = 1;
+  string phone = 2;
+}
+message ChangePasswordReq {
+  string rid = 1;
+  string password = 2;
+  string newPassword = 3;
+}
+message ChangeAccountAndPasswordReq {
+  string rid = 1;
+  string account = 2;
+  string password = 3;
+}
+
+message ChangePasswordByPhoneReq {
+  string phone = 1;
+  string newPassword = 2;
+}
+message LoginByPhoneReq {
+  string phone = 1;
+}
+
+message LoginByPhoneRes {
+  string rid = 1;
+  string name = 2;
+  string phone = 3;
+  string account = 4;
+  bool tfa = 5;
+}
+message GetLoginManagerReq {
+  string account = 1;
+}
+message GetLoginManagerRes {
+  string rid = 1;
+  string name = 2;
+  string phone = 3;
+  string password = 4;
+  string account = 5;
+  bool tfa = 6;
+}
+
+message DeleteAccountReq {
+  string rid = 1;
+}
+message CreateTeamReq {
+  string mRid = 1;
+  string uuid = 2;
+}
+// The response message containing the greetings
+message Empty {
+
+}
+
+service MessageApi {
+  rpc GenerateAndroidMsg (androidMsg) returns (MessageNull){}
+  rpc GenerateCheckCode (checkCode) returns (MessageNull){}
+  rpc VerifyCheckCode (checkCode) returns (MessageNull){}
+  rpc TotalMessage (totalMsg) returns (totalMsg){}
+}
+
+message MessageNull {}
+
+
+message androidMsg {
+  string phone = 1;
+  string name = 2;
+  string time = 3;
+  double type = 4;
+}
+
+message checkCode {
+  string phone = 1;
+  string code = 2;
+}
+
+message totalMsg{
+  string tenant = 1;
+  int64 total = 2;
+}
+
+service OrganizationApi {
+  rpc OneUser (OrgReq) returns (OrgNull){}
+  rpc GetVisitorTicketInfo (OrgReq) returns (OrgRes){}
+  rpc OneTenantUser (OrgReq) returns (OrgRes){}
+  rpc DeleteUser (OrgReq) returns (OrgNull){}
+  rpc UserBase (OrgReq) returns (OrgRes){}
+  rpc UserBaseContainsIdCard (OrgReq) returns (OrgRes){}
+  rpc UnitUserBase (OrgReq) returns (OrgRes){}
+  rpc UnitMemberIds (OrgReq) returns (OrgRes){}
+  rpc UserIds (OrgReq) returns (OrgRes){}
+  rpc LeaderUuid (OrgReq) returns (OrgRes){}
+  rpc EmpIndistinct (OrgReq) returns (OrgRes){}
+  rpc EmpByNameAndPhoneIndistinct (OrgReq) returns (OrgRes){}
+  rpc EmpByNameAndPhoneAndDepName (OrgReq) returns (OrgRes){}
+  rpc UnitUser (OrgReq) returns (AllUserMap){}
+  rpc VisitorsUser (OrgReq) returns (AllUserMap){}
+  rpc UserByNameAndPhoneIndistinct (OrgReq) returns (OrgRes){}
+  rpc GetUserByNameAndPhoneIndistinct (OrgReq) returns (OrgRes){}
+  rpc UserUuidByPhone (OrgReq) returns (OrgRes){}
+  rpc UserMark (OrgReq) returns (OrgNull){}
+  rpc UserModify (OrgReq) returns (OrgNull){}
+  rpc UserFaceRedirect (OrgReq) returns (OrgRes){}
+  rpc OneUserTenant (OrgReq) returns (OrgNull){}
+  rpc RootUnit (OrgReq) returns (OrgNull){}
+  rpc ChildUnit (OrgReq) returns (OrgNull){}
+  rpc RootUnitModify (OrgReq) returns (OrgNull){}
+  rpc ChildUnitModify (OrgReq) returns (OrgNull){}
+  rpc DeleteUnit (OrgReq) returns (OrgNull){}
+  rpc UnitRootTree (OrgReq) returns (Any){}
+  rpc UnitTreeByParUuid (OrgReq) returns (Any){}
+  rpc UnitRootTreeJson (OrgReq) returns (Any){}
+  rpc ParentUnitTree (OrgReq) returns (Any){}
+  rpc IsLeader (OrgReq) returns (OrgRes){}
+  rpc ChildUnitPagesList (OrgReq) returns (ChildUnitMap){}
+  rpc RootUnitPagesList (OrgReq) returns (ChildUnitMap){}
+  rpc UnitMemberByUnitUuid (OrgReq) returns (OrgRes){}
+  rpc UnitByUserUuid (OrgReq) returns (OrgRes){}
+  rpc SameUnitMemberList (OrgReq) returns (OrgRes){}
+  rpc UnitMemberModify (OrgReq) returns (OrgNull){}
+  rpc DeleteUnitMember (OrgReq) returns (OrgNull){}
+  rpc ExcelFileImport (OrgReq) returns (OrgRes){}
+  rpc ImportVisitors (OrgReq) returns (OrgRes){}
+  rpc AddOneVisitor (OrgReq) returns (OrgNull){}
+  rpc GetImportOrgResult (OrgReq) returns (Any){}
+  rpc GetImportVisitorOrgResult (OrgReq) returns (Any){}
+  rpc BaseInfoByBindPhone (OrgReq) returns (OrgRes){}
+  rpc ClientIds (OrgReq) returns (OrgRes){}
+  rpc WeChatUnBind (OrgReq) returns (OrgNull){}
+  rpc UserTenantByUserUuid (OrgReq) returns (OrgRes){}
+  rpc IsBlacklist (OrgReq) returns (OrgRes){}
+  rpc UpdateIsBlacklist (OrgReq) returns (OrgNull){}
+
+}
+
+message OrgNull {}
+message Any {
+  google.protobuf.Any data = 1;
+}
+message OrgReq {
+  string name = 1;
+  string phone = 2;
+  string title = 3;
+  string unitUuid = 4;
+  float gender = 5;
+  float isLeader = 6;
+  string tenant = 7;
+  string ticket = 8;
+  string company = 9;
+  string uuid = 10;
+  bool status = 11;
+  string idCard = 12;
+  string userUuid = 13;
+  string ranks = 14;
+  string work = 15;
+  float pageNum = 16;
+  float sizeNum = 17;
+  string avatar = 18;
+  string city = 19;
+  string country = 20;
+  string province = 21;
+  string data = 22;
+  string parUuid = 23;
+  string insideUuid = 24;
+  string pageNumStr = 25;
+  string sizeNumStr = 26;
+  string statusStr = 27;
+  string unitUuidModify = 28;
+  string fileName = 29;
+  string fileType = 30;
+  bytes fileData = 31;
+  string types = 32;
+  string key = 33;
+}
+message OrgRes {
+  string uuid = 1;
+  User user = 2;
+  repeated User users = 3;
+  AllUser allUser = 4;
+  repeated  string  ids = 5;
+  string js = 6;
+  bool IsLeader = 7;
+  repeated UnitMemberAndUser unitMemberAndUser = 8;
+  repeated UserUnit userUnit = 9;
+  string data = 10;
+  ClientIds clientIds = 11;
+  string company = 12;
+  int32 modify = 13;
+  bool isBlacklist = 14;
+
+}
+message AllUserMap {
+  int64 total = 1;
+  int64 size = 2;
+  int64 pages = 3;
+  int64 current = 4;
+  repeated AllUser  records = 5;
+}
+
+message ChildUnitMap {
+  int64 total = 1;
+  int64 size = 2;
+  int64 pages = 3;
+  int64 current = 4;
+  repeated ChildUnit  records = 5;
+}
+
+message User {
+  string uuid = 1;
+  string phone = 2;
+  string name = 3;
+  string avatar = 4;
+  string avatarUuid = 5;
+  string gender = 6;
+  string idCard = 7;
+  int32 isModify = 8;
+  int32 isBind = 9;
+  string email = 10;
+  string icCard = 11;
+  repeated string department = 12;
+  string company = 13;
+  bool disabled = 14;
+}
+
+message AllUser {
+  string uuid = 1;
+  string avatar = 2;
+  string name = 3;
+  repeated string unitName = 4;
+  string idCard = 5;
+  string phone = 6;
+  string email = 7;
+  string gender = 8;
+  string country = 9;
+  string province = 10;
+  string city = 11;
+  string isBind = 12;
+  string company = 13;
+  int32 blacklist = 14;
+}
+
+message ChildUnit {
+  string uuid = 1;
+  string name = 2;
+  string parentUuid = 3;
+  repeated string leader = 4;
+}
+
+message UnitMemberAndUser {
+  string uuid = 1;
+  string unitUuid = 2;
+  string insideUuid = 3;
+  string name = 4;
+  int32 gender = 5;
+  string phone = 6;
+  string avatar = 7;
+  string title = 8;
+  int32 isLeader = 9;
+}
+message UserUnit {
+  string name = 1;
+  string unitUuid = 2;
+}
+
+message ClientIds {
+  string wechatId = 1;
+  string workId = 2;
+  string dingTalkId = 3;
+  string larkId = 4;
+  string iId = 5;
+  string phone = 6;
+}
+service PassageApi {
+  rpc PassageAddMyEmp (PassageReq) returns (PassageRes){}
+  rpc PassageMyEmpPages (PassageReq) returns (PassageResMap){}
+  rpc PassageMyEmp (PassageReq) returns (PassageNull){}
+  rpc PassageMyEmpLists (PassageReq) returns (PassageRes){}
+  rpc PassageBooking (PassageReq) returns (PassageRes){}
+  rpc BatchPassageInvite (PassageReq) returns (PassageRes){}
+  rpc GetInviteBatchPassageResult (PassageReq) returns (PassageResMap){}
+  rpc PassageInvite (PassageReq) returns (PassageResMap){}
+  rpc DeletePassage (PassageReq) returns (PassageRes){}
+  rpc DeletePassageByPersonUuid (PassageReq) returns (PassageRes){}
+  rpc PassageLists (PassageReq) returns (PassageResMap){}
+  rpc PassageBookingAll (PassageReq) returns (PassageMap){}
+  rpc PassageInviteAll (PassageReq) returns (PassageMap){}
+  rpc PassageBookingArrival (PassageReq) returns (PassageMap){}
+  rpc PassageBookingStatus (PassageReq) returns (PassageMap){}
+  rpc PassageBookingStatusPass (PassageReq) returns (PassageMap){}
+  rpc PassageInviteArrival (PassageReq) returns (PassageMap){}
+  rpc PassageInviteStatus (PassageReq) returns (PassageMap){}
+  rpc PassageInviteStatusPass (PassageReq) returns (PassageMap){}
+  rpc OneDetail (PassageReq) returns (PassageRes){}
+  rpc VisitorTodayPass (PassageReq) returns (PassageRes){}
+  rpc EmpTodayPass (PassageReq) returns (PassageRes){}
+  rpc PassageAddMyVisitor (PassageReq) returns (PassageRes){}
+  rpc PassageMyVisitorTop (PassageReq) returns (PassageNull){}
+  rpc PassageMyVisitorPages (PassageReq) returns (PassageResMap){}
+  rpc PassageMyVisitor (PassageReq) returns (PassageResMap){}
+  rpc PassageMyVisitorByUuid (PassageReq) returns (PassageRes){}
+  rpc PassageMyVisitorLists (PassageReq) returns (PassageRes){}
+  rpc WorkFlow (PassageReq) returns (PassageNull){}
+  rpc PassagePageLists (PassageReq) returns (PassageMap){}
+  rpc PassageExcel (PassageReq) returns (PassageRes){}
+  rpc DevicePassage (PassageReq) returns (PassageNull){}
+  rpc BasePassage (PassageReq) returns (PassageNull){}
+  rpc SpotVisitorDetail (PassageReq) returns (PassageRes){}
+  rpc PassageSpotVisitorPages (PassageReq) returns (PassageSpotMap){}
+  rpc PassageSpotVisitor (PassageReq) returns (PassageSpotMap){}
+}
+
+message PassageNull {}
+
+message PassageReq {
+  string tenant = 1;
+  string userUuid = 2;
+  string insideUuid = 3;
+  float pageNum = 4;
+  float sizeNum = 5;
+  bool status = 6;
+  float statusFloat = 7;
+  string uuid = 8;
+  string reason = 9;
+  string note = 10;
+  string address = 11;
+  string visitAddress = 12;
+  string unit = 13;
+  string carNumber = 14;
+  string healthCode = 15;
+  string extendField = 16;
+  string childCompany = 17;
+  string childCompanyCache = 18;
+  string childCompanyArea = 19;
+  string childCompanyAreaCache = 20;
+  google.protobuf.Timestamp startTime = 21;
+  google.protobuf.Timestamp endTime = 22;
+  string tabType = 23;
+  string userList = 24;
+  string idss = 25;
+  bool nTypes = 26;
+  string name = 27;
+  string company = 28;
+  string phone = 29;
+  bool top = 30;
+  string pk = 31;
+  string idCard = 32;
+  string arriveStr = 33;
+  string statusStr = 34;
+  string nTypeStr = 35;
+  string startTimeStr = 36;
+  string endTimeStr = 37;
+  string visitTimeStr = 38;
+  string catchPhoto = 39;
+  string deviceNo = 40;
+  string deviceName = 41;
+  float arrive = 42;
+  string visitNo = 43;
+  string visitorName = 44;
+  string certNumber = 45;
+  string visitedName = 46;
+  string inDoorName = 47;
+  string visitorPhone = 48;
+  string visitStartTime = 49;
+  string visitEndTime = 50;
+  string insideName = 51;
+  string outDoorName = 52;
+}
+
+
+
+message PassageRes {
+  string uuid = 1;
+  string userUuid = 2;
+  string tenantUuid = 3;
+  string insideUuid = 4;
+  string phone = 5;
+  string avatar = 6;
+  string name = 7;
+  string company = 8;
+  string department = 9;
+  string gender = 10;
+  string ids = 11;
+  string data = 12;
+  repeated string msg = 13;
+  string message = 14;
+  Passage passage = 15;
+  int64  count = 16;
+  bytes  stream = 17;
+  PassageSpot passageSpot = 18;
+}
+
+message PassageResMap {
+  int64 total = 1;
+  int64 size = 2;
+  int64 pages = 3;
+  int64 current = 4;
+  repeated MemberRecords records = 5;
+  repeated InviteBatchResult  msg = 6;
+  repeated  PassageUser userMap = 7;
+  repeated Passage  passage = 8;
+}
+
+
+message PassageMap {
+  int64 total = 1;
+  int64 size = 2;
+  int64 pages = 3;
+  int64 current = 4;
+  repeated Passage  records = 8;
+}
+
+message PassageSpotMap {
+  int64 total = 1;
+  int64 size = 2;
+  int64 pages = 3;
+  int64 current = 4;
+  repeated PassageSpot  records = 8;
+}
+
+message MemberRecords {
+  string uuid = 1;
+  string userUuid = 2;
+  string insideUuid = 3;
+  string phone = 4;
+  string avatar = 5;
+  string name = 6;
+  string company = 7;
+  repeated string department = 8;
+  string gender = 9;
+  bool top = 10;
+}
+
+message InviteBatchResult {
+  string uuid = 1;
+  string name = 2;
+  string phone = 3;
+  string resReason = 4;
+  string res = 5;
+  string end = 6;
+}
+message PassageUser {
+  string personId = 1;
+  string name = 2;
+  string cardNo = 3;
+  string note = 4;
+  string icCode = 5;
+  string qrCode = 6;
+  string carNumber = 7;
+  string  time = 8;
+  string  endTime = 9;
+  string  imgBase64 = 10;
+  string  visitorPhone = 11;
+  string  visitorSex = 12;
+  string  visitedPhone = 13;
+  string  visitedName = 14;
+  string  visitedCompany = 15;
+  repeated string  visitedUnit = 16;
+  string  visitedSex = 17;
+  string  reason = 18;
+  string  area = 19;
+  string  insideUuid = 20;
+  string  type = 21;
+  string  unit = 22;
+  string  passport = 23;
+  string  driverLicense = 24;
+  string  socialCard = 25;
+  string  hkPass = 26;
+  string  icCard = 27;
+}
+
+message Passage {
+  string uuid = 1;
+  string insideUuid = 2;
+  string insideName = 3;
+  string insidePhone = 4;
+  string insideGender = 5;
+  string insideAvatar = 6;
+  string userUuid = 7;
+  string  name = 8;
+  string  phone = 9;
+  string  gender = 10;
+  string  idCard = 11;
+  string  insideDepString = 12;
+  repeated string  insideDep = 13;
+  string  avatar = 14;
+  string  reason = 15;
+  string  note = 16;
+  string  address = 17;
+  string  visitAddress = 18;
+  string  unit = 19;
+  string  startTime = 20;
+  string  endTime = 21;
+  string  visitTime = 22;
+  string  leaveTime = 23;
+  string  carNumber = 24;
+  string  healthCode = 25;
+  string  extendField = 26;
+  string  arrive = 27;
+  string  status = 28;
+  string  type = 29;
+  string  expire = 30;
+  string  catchPhoto = 31;
+  string  leaveCatchPhoto = 32;
+  string  childCompany = 33;
+  string  childCompanyCache = 34;
+  string  childCompanyArea = 35;
+  string  childCompanyAreaCache = 36;
+  string  form = 37;
+}
+
+message PassageSpot {
+  string uuid = 1;
+  string VisitNo = 2;
+  string VisitorName = 3;
+  string CertPhoto = 4;
+  string CatchPhoto = 5;
+  string CertNumber = 6;
+  string VisitedName = 7;
+  string  VisitTime = 8;
+  string  LeaveTime = 9;
+  int64  Status = 10;
+  string  CardNo = 11;
+  string  InDoorName = 12;
+  string  OutDoorName = 13;
+  string  VisitorSex = 14;
+  string  CertKind = 15;
+  string  VisitorCompany = 16;
+  string  Reason = 17;
+  string  VisitorAddress = 18;
+  string  BelongsList = 19;
+  string  VisitorPhone = 20;
+  int64  VisitorCount = 21;
+  string  VisitedSex = 22;
+  string  VisitedCompany = 23;
+  string  VisitedDept = 24;
+  string  VisitedPost = 25;
+  string  VisitedRoomNum = 26;
+  string  VisitedTel = 27;
+  string  VisitedMobilePhone = 28;
+  string  CarKind = 29;
+  string  CarNumber = 30;
+  string  DeviceNo = 31;
+  string  FaceScore = 32;
+  string  Extend = 33;
+}
+
+
+message QuestionNull {
+
+}
+
+message questionList {
+  string uuid = 1;
+  string title = 2;
+  string describe = 3;
+  int64 total = 4;
+  repeated questionInfo rows = 5;
+  int64 pages = 6;
+  int64 size = 7;
+}
+message questionInfo {
+  string uuid = 1;
+  string title = 2;
+  string describe = 3;
+  string type = 4;
+  int32 sort = 5;
+  string data = 6;
+  bool require = 7;
+  int64 total = 8;
+  string update_time = 9;
+  string create_time = 10;
+  bool action = 11;
+}
+message answerList {
+  string uuid = 1;
+  string title = 2;
+  string describe = 3;
+  int64 total = 4;
+  repeated answerInfo rows = 5;
+  int64 pages = 6;
+  int64 size = 7;
+}
+message answerInfo {
+  string uuid = 1;
+  string content = 2;
+  string update_time = 3;
+  string create_time = 4;
+  bool action = 5;
+  string question_uuid = 6;
+  string user_uuid =7;
+  bool require = 8;
+  string type = 9;
+  string data = 10;
+  string name = 11;
+  string title = 12;
+  string describe = 13;
+  string naire_uuid =14;
+  string page = 15;
+  string size = 16;
+  string tenant = 17;
+}
+message naireList {
+  string uuid = 1;
+  string title = 2;
+  string describe = 3;
+  int64 total = 4;
+  repeated naireInfo rows = 5;
+  int64 pages = 6;
+  int64 size = 7;
+}
+message naireInfo {
+  string uuid = 1;
+  string title = 2;
+  int32 type = 3;
+  string update_time = 4;
+  int32 status = 5;
+  string describe = 6;
+  string create_time = 7;
+  string tenant = 8;
+  bool action = 9;
+  string page = 10;
+  string size = 11;
+
+}
+service QuestionnaireApi {
+  rpc InitQuestionnaire(naireInfo) returns (naireInfo){}
+  rpc AddQuestionnaire(naireInfo) returns (naireInfo){}
+  rpc UpdateQuestionnaire(naireInfo) returns (QuestionNull){}
+  rpc GetQuestionnaire(naireInfo) returns (questionList){}
+  rpc DeleteQuestionnaire(naireInfo) returns (QuestionNull){}
+  rpc GetQuestionnaireList(naireInfo) returns (questionList){}
+  rpc GetQuestionInfo(naireInfo) returns (questionInfo){}
+  rpc AddOneQuestion(questionInfo) returns (questionInfo){}
+  rpc UpdateOneQuestion(questionInfo) returns (QuestionNull){}
+  rpc DeleteQuestionByUuid(questionInfo) returns (QuestionNull){}
+  rpc GetQuestionList(naireInfo) returns (questionList){}
+  rpc GetAnswerByUN(answerInfo) returns (answerList){}
+  rpc AddAnswerByUN(answerInfo) returns (answerInfo){}
+  rpc UpdateAnswerByAU(answerInfo) returns (QuestionNull){}
+  rpc GetIAnswerByQUuid(answerInfo) returns (answerList){}
+  rpc GetQNAnswerBYQN(answerInfo) returns (answerList){}
+  rpc DeleteUAnswerByQN(answerInfo) returns (QuestionNull){}
+}
+
+
+service SecureApi {
+  rpc GenerateToken (Jwt) returns (Jwt){}
+  rpc ParseToken (Jwt) returns (Jwt){}
+  rpc RefreshToken (Jwt) returns (Jwt){}
+}
+
+message Jwt {
+  string accessToken = 1;
+  string refreshToken = 2;
+  int64 expireIn = 3;
+  string tenant = 4;
+}
+
+service TaskApi {
+  rpc RegisterUser (Amqp) returns (TaskNull){}
+  rpc CreateVhost (Amqp) returns (TaskNull){}
+  rpc DestroyVhost (Amqp) returns (TaskNull){}
+  rpc CreateExchange (Amqp) returns (TaskNull){}
+  rpc DestroyExchange (Amqp) returns (TaskNull){}
+  rpc CreateQueue (Amqp) returns (TaskNull){}
+  rpc DestroyQueue (Amqp) returns (TaskNull){}
+  rpc Task (AmqpTask) returns (TaskNull){}
+}
+
+message TaskNull {}
+
+message Amqp {
+  string user = 1;
+  string password = 2;
+  string vhost = 3;
+  string exchange = 4;
+  string queue = 5;
+}
+
+message AmqpTask {
+  string task = 1;
+  bytes payload = 2;
+}
+
+service TenantApi {
+  rpc RefTenantReshRedis (TenantNull) returns (TenantNull){}
+  rpc ClientByUuid (TenantReq) returns (TenantRes){}
+  rpc ClientByOrgId (TenantReq) returns (TenantRes){}
+  rpc SettingByUuid (TenantReq) returns (Tenant){}
+  rpc AccountByPhone (TenantReq) returns (TenantRes){}
+  rpc AuthByDevice (TenantReq) returns (TenantRes){}
+  rpc PhoneByAccount (TenantReq) returns (TenantRes){}
+  rpc InfoByUuid (TenantReq) returns (Tenant){}
+  rpc InfoByOrgId (TenantReq) returns (Tenant){}
+  rpc InfoByPassword (TenantReq) returns (Tenant){}
+  rpc ListTenant (TenantReq) returns (TenantResMap){}
+  rpc RegisterTenant (TenantReq) returns (Tenant){}
+  rpc GenerateTenant (TenantReq) returns (Tenant){}
+  rpc TenantResetPassword (TenantReq) returns (TenantNull){}
+  rpc ChangePassword (TenantReq) returns (TenantNull){}
+  rpc RecoveryPassword (TenantReq) returns (TenantNull){}
+  rpc ChangeDevice (TenantReq) returns (TenantNull){}
+  rpc ChangeContact (TenantReq) returns (TenantNull){}
+  rpc ChangeSelf (TenantReq) returns (TenantNull){}
+  rpc ChangeBanner (TenantReq) returns (TenantNull){}
+  rpc ChangePhone (TenantReq) returns (TenantNull){}
+  rpc ChangeExpireIn (TenantReq) returns (TenantNull){}
+  rpc IsAdmin (TenantReq) returns (TenantNull){}
+  rpc SetWeChat (TenantReq) returns (TenantNull){}
+  rpc SetWork (TenantReq) returns (TenantNull){}
+  rpc SetDingTalk (TenantReq) returns (TenantNull){}
+  rpc SetLark (TenantReq) returns (TenantNull){}
+  rpc SetSetting (TenantReq) returns (TenantNull){}
+  rpc DebugSetting (TenantReq) returns (TenantNull){}
+  rpc SystemBase (TenantReq) returns (System){}
+  rpc SystemInfo (TenantReq) returns (System){}
+  rpc UpgradeSystem (TenantReq) returns (TenantNull){}
+
+}
+
+message TenantNull {}
+
+message TenantReq {
+  string tenant = 1;
+  string uuid = 2;
+  string orgId = 3;
+  string phone = 4;
+  string appId = 5;
+  string appSecret = 6;
+  string token = 7;
+  string aesKey = 8;
+  string account = 9;
+  string password = 10;
+  int64 page = 11;
+  int64 pageSize = 12;
+  string company = 13;
+  string address = 14;
+  string newPassword = 15;
+  string contact = 16;
+  string guidance = 17;
+  string signature = 18;
+  string banner = 19;
+  int64 expireIn = 20;
+  string wechatAppId = 21;
+  string wechatSecret = 22;
+  string openTM412462516 = 23;
+  string openTM412936913 = 24;
+  string openTM413233949 = 25;
+  string openTM414566210 = 26;
+  string openTM416747811 = 27;
+  string openTM418189661 = 28;
+  string openTM414471436 = 29;
+  string workAesKey = 30;
+  string workAgentId = 31;
+  string workCorpId = 32;
+  string workSecret = 33;
+  string workToken = 34;
+  string dingTalkAesKey = 35;
+  string dingTalkAgentId = 36;
+  string dingTalkAppKey = 37;
+  string dingTalkAppSecret = 38;
+  string dingTalkCorpId = 39;
+  string dingTalkToken = 40;
+  string larkAppId = 41;
+  string larkAppSecret = 42;
+  string larkEncryptKey = 43;
+  string larkVerificationToken = 44;
+  string aiAppId = 45;
+  string aiAppSecret = 46;
+  float client = 47;
+  float isDebug = 48;
+  float isIdCard = 49;
+  float sync = 50;
+  float isFast = 51;
+  float isFace = 52;
+  float isSkip = 53;
+  float isGFast = 54;
+  float isGFace = 55;
+  float isGSkip = 56;
+  float isGIdCard = 57;
+  float certStyle = 58;
+  float bookNum = 59;
+  float inviteNum = 60;
+  string regionId = 61;
+  string accessKeyId = 62;
+  string accessKeySecret = 63;
+  string smsSignature = 64;
+  string smsTemplateCode = 65;
+  string smsTemplateInv = 66;
+  string faceApiKey = 67;
+  string faceApiSecret = 68;
+  string domain = 69;
+  string version = 70;
+  string copyright = 71;
+  string support = 72;
+  string logo = 73;
+  string wiki = 74;
+  string logs = 75;
+  string notice = 76;
+  string edge = 77;
+  string amqp = 78;
+  string recordNo = 79;
+  string yunPath = 80;
+  string iYunAppId = 81;
+  string iYunAppSecret = 82;
+}
+
+message TenantRes {
+  Tenant tenant = 1;
+  string  account = 2;
+  string  uuid = 3;
+  string  contact = 4;
+  int64  expireIn = 5;
+  string  company = 6;
+  string  address = 7;
+  string  signature = 8;
+  string  banner = 9;
+  string  phone = 10;
+
+}
+message TenantResMap {
+  int64 page = 1;
+  int64  pageSize = 2;
+  int64  total = 3;
+  repeated Tenant rows = 4;
+
+}
+message Tenant {
+  string wechatAppId = 1;
+  string wechatSecret = 2;
+  string openTM412462516 = 3;
+  string openTM412936913 = 4;
+  string openTM413233949 = 5;
+  string openTM414471436 = 6;
+  string openTM414566210 = 7;
+  string openTM416747811 = 8;
+  string openTM418189661 = 9;
+  string workCorpId = 10;
+  string workAesKey = 11;
+  string workAgentId = 12;
+  string workSecret = 13;
+  string workToken = 14;
+  string dingTalkAesKey = 15;
+  string dingTalkAgentId = 16;
+  string dingTalkAppKey = 17;
+  string dingTalkAppSecret = 18;
+  string dingTalkCorpId = 19;
+  string dingTalkToken = 20;
+  string larkAppId = 21;
+  string larkAppSecret = 22;
+  string larkEncryptKey = 23;
+  string larkVerificationToken = 24;
+  int32 client = 25;
+  string uuid = 26;
+  string appId = 27;
+  string appSecret = 28;
+  string orgId = 29;
+  string aiAppId = 30;
+  string aiAppSecret = 31;
+  string token = 32;
+  string aesKey = 33;
+  string contact = 34;
+  string phone = 35;
+  string account = 36;
+  string password = 37;
+  string company = 38;
+  string address = 39;
+  string guidance = 40;
+  string banner = 41;
+  string signature = 42;
+  int32 isIdCard = 43;
+  int32 IsDebug = 44;
+  int32 Sync = 45;
+  int64 ExpireIn = 46;
+  int32 Role = 47;
+  int32 Source = 48;
+  int32 IsFast = 49;
+  int32 IsFace = 50;
+  int32 IsSkip = 51;
+  int32 IsGFast = 52;
+  int32 IsGFace = 53;
+  int32 IsGSkip = 54;
+  int32 IsGIdCard = 55;
+  repeated int64 CertStyle = 56;
+  int64 BookNum = 57;
+  int64 InviteNum = 58;
+}
+
+message System {
+  bool init = 1;
+  int32 running = 2;
+  string version = 3;
+  string domain = 4;
+  string copyright = 5;
+  string support = 6;
+  string logo = 7;
+  string wiki = 8;
+  string logs = 9;
+  string notice = 10;
+  string edge = 11;
+  string amqp = 12;
+  string recordNo = 13;
+  string yunPath = 14;
+  string iYunAppId = 15;
+  string iYunAppSecret = 16;
+  string regionId = 17;
+  string accessKeyId = 18;
+  string accessKeySecret = 19;
+  string smsSignature = 20;
+  string smsTemplateCode = 21;
+  string smsTemplateInv = 22;
+  string faceApiKey = 23;
+  string faceApiSecret = 24;
+}
+service ToolApi {
+  rpc ShortUrl (Url) returns (Url){}
+  rpc LongUrl (Url) returns (Url){}
+  rpc GetDomainUrl (Req) returns (Url){}
+  rpc GetCallbackUrl(Req) returns (Url){}
+  rpc QrCode (Req) returns (File){}
+  rpc CreateBinaryFile (File) returns (File){}
+  rpc CreateBase64File (File) returns (File){}
+  rpc CreateRemoteFile (File) returns (File){}
+  rpc GetFile (File) returns (File){}
+  rpc DeleteFile (File) returns (ToolNull){}
+}
+
+message ToolNull {}
+
+message Req {
+  string tenant = 1;
+  string type = 2;
+  string value = 3;
+}
+
+message Url {
+  string url = 1;
+  string shortUrl = 2;
+  string longUrl = 3;
+}
+
+message File {
+  string uuid = 1;
+  string name = 2;
+  string url = 3;
+  bytes stream = 4;
+  string type = 5;
+  string base64 = 6;
+  string extension = 7;
+  string expireTime = 8;
+}
+
+message WorkflowNull {
+
+}
+
+message requestInfo {
+  string uuid = 1;
+  string tenant = 2;
+  float type = 3;
+  string name = 4;
+  string title = 5;
+  string default = 6;
+  string  list = 7;
+  bool required = 8;
+  float sort = 9;
+  float multiple = 10;
+  string node_uuid = 11;
+  string approval_uuid = 12;
+  string recipients = 13;
+  string pk = 14;
+  bool notify_sponsor_in = 15;
+  bool notify_sponsor_over = 16;
+  bool notify_contact_over = 17;
+  float notify_guest_out = 18;
+  float notify_msg = 19;
+  string remark = 20;
+  float status = 21;
+  bool notify_contact_in = 22;
+  repeated responseInfo nodes = 23;
+}
+
+
+message responseInfo {
+  string uuid = 1;
+  int32 type = 2;
+  int64 sort = 3;
+  repeated taskInfo task = 4;
+  repeated string recipients = 5;
+  int64 count = 6;
+  bool show_back = 7;
+  bool show_check = 8;
+  repeated string current = 9;
+}
+
+message taskInfo {
+  string uuid = 1;
+  string approval_uuid = 2;
+}
+message formList {
+  repeated formInfo list = 1;
+  repeated formInfo rows = 2;
+}
+message formInfo {
+  string id = 1;
+  string uuid = 2;
+  string type = 3;
+  string wf_uuid = 4;
+  string title = 5;
+  string name = 6;
+  string  default = 7;
+  int32 required = 8;
+  int32 sort = 9;
+  string list = 10;
+  int32 is_delete = 11;
+  string create_time = 12;
+  string update_time = 13;
+  string delete_time = 14;
+  int32 Multiple = 15;
+}
+message recordInfo {
+  string uuid = 1;
+  string tenant = 2;
+  recordDetail data = 3;
+  repeated recordDetail list = 4;
+  repeated recordDetail rows = 5;
+}
+
+message recordDetail{
+  float type = 1;
+  string contact = 2;
+  string sponsor = 3;
+  string approval_uuid = 4;
+  int64 step = 5;
+  string name = 6;
+  string remark = 7;
+  string time = 8;
+  int32 status = 9;
+
+}
+service workflowApi {
+  rpc GetAvoidWorkFlowNode(requestInfo) returns (formList){}
+  rpc FormIndex(requestInfo) returns (formList){}
+  rpc AddFormIndex(requestInfo) returns (responseInfo){}
+  rpc UpdateFormIndex(requestInfo) returns (WorkflowNull){}
+  rpc FormIndexDelete(requestInfo) returns (WorkflowNull){}
+  rpc CreateNode(formInfo) returns (responseInfo){}
+  rpc ModifyNode(requestInfo) returns (WorkflowNull){}
+  rpc DeleteNode(requestInfo) returns (WorkflowNull){}
+  rpc CreateTask(requestInfo) returns (WorkflowNull){}
+  rpc DeleteTask(requestInfo) returns (WorkflowNull){}
+  rpc SetRecipient(requestInfo) returns (WorkflowNull){}
+  rpc SetSetting(requestInfo) returns (WorkflowNull){}
+  rpc FlowInfo(requestInfo) returns (requestInfo){}
+  rpc RecordInfo(requestInfo) returns (recordInfo){}
+  rpc ModifyRecord(requestInfo) returns (WorkflowNull){}
+  rpc RecipientByPk(requestInfo) returns (requestInfo){}
+  rpc DefaultRecipients(requestInfo) returns (responseInfo){}
+  rpc ModifyRecipient(requestInfo) returns (WorkflowNull){}
+  rpc TotalTodo(requestInfo) returns (responseInfo){}
+  rpc IsApproval(requestInfo) returns (responseInfo){}
+  rpc InitFlow(requestInfo) returns (WorkflowNull){}
+  rpc CreateRecord(recordInfo) returns (WorkflowNull){}
+  rpc GetWorkflowSetting(requestInfo) returns (requestInfo){}
+}
