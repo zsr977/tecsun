@@ -325,7 +325,7 @@ type ClientApiClient interface {
 	GetClientMedia(ctx context.Context, in *MediaInfo, opts ...grpc_go.CallOption) (*MediaInfo, common.ErrorWithAttachment)
 	GetClientOrganization(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientInfo, common.ErrorWithAttachment)
 	AsyncClientOrganization(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	GetClientUserInfo(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*UserClientInfo, common.ErrorWithAttachment)
+	GetClientUserInfo(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*User, common.ErrorWithAttachment)
 	UnbindWCClient(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	WeChatMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	WorkMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
@@ -353,7 +353,7 @@ type ClientApiClientImpl struct {
 	GetClientMedia          func(ctx context.Context, in *MediaInfo) (*MediaInfo, error)
 	GetClientOrganization   func(ctx context.Context, in *ClientInfo) (*ClientInfo, error)
 	AsyncClientOrganization func(ctx context.Context, in *ClientInfo) (*Null, error)
-	GetClientUserInfo       func(ctx context.Context, in *UserInfo) (*UserClientInfo, error)
+	GetClientUserInfo       func(ctx context.Context, in *UserInfo) (*User, error)
 	UnbindWCClient          func(ctx context.Context, in *ClientInfo) (*Null, error)
 	WeChatMessage           func(ctx context.Context, in *ClientInfo) (*Null, error)
 	WorkMessage             func(ctx context.Context, in *ClientInfo) (*Null, error)
@@ -424,8 +424,8 @@ func (c *clientApiClient) AsyncClientOrganization(ctx context.Context, in *Clien
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/AsyncClientOrganization", in, out)
 }
 
-func (c *clientApiClient) GetClientUserInfo(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*UserClientInfo, common.ErrorWithAttachment) {
-	out := new(UserClientInfo)
+func (c *clientApiClient) GetClientUserInfo(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*User, common.ErrorWithAttachment) {
+	out := new(User)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetClientUserInfo", in, out)
 }
@@ -514,7 +514,7 @@ type ClientApiServer interface {
 	GetClientMedia(context.Context, *MediaInfo) (*MediaInfo, error)
 	GetClientOrganization(context.Context, *ClientInfo) (*ClientInfo, error)
 	AsyncClientOrganization(context.Context, *ClientInfo) (*Null, error)
-	GetClientUserInfo(context.Context, *UserInfo) (*UserClientInfo, error)
+	GetClientUserInfo(context.Context, *UserInfo) (*User, error)
 	UnbindWCClient(context.Context, *ClientInfo) (*Null, error)
 	WeChatMessage(context.Context, *ClientInfo) (*Null, error)
 	WorkMessage(context.Context, *ClientInfo) (*Null, error)
@@ -559,7 +559,7 @@ func (UnimplementedClientApiServer) GetClientOrganization(context.Context, *Clie
 func (UnimplementedClientApiServer) AsyncClientOrganization(context.Context, *ClientInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AsyncClientOrganization not implemented")
 }
-func (UnimplementedClientApiServer) GetClientUserInfo(context.Context, *UserInfo) (*UserClientInfo, error) {
+func (UnimplementedClientApiServer) GetClientUserInfo(context.Context, *UserInfo) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClientUserInfo not implemented")
 }
 func (UnimplementedClientApiServer) UnbindWCClient(context.Context, *ClientInfo) (*Null, error) {

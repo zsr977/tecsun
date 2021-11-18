@@ -1192,7 +1192,7 @@ service ClientApi {
   rpc GetClientMedia(mediaInfo) returns (mediaInfo){}
   rpc GetClientOrganization(clientInfo) returns (clientInfo){}
   rpc AsyncClientOrganization(clientInfo) returns (Null){}
-  rpc GetClientUserInfo(userInfo) returns (userClientInfo){}
+  rpc GetClientUserInfo(userInfo) returns (User){}
   rpc UnbindWCClient(clientInfo) returns (Null){}
   rpc WeChatMessage(clientInfo) returns (Null){}
   rpc WorkMessage(clientInfo) returns (Null){}
