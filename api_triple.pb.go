@@ -28,11 +28,11 @@ const _ = grpc_go.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BillboardApiClient interface {
-	CreateBillboard(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*BillboardNull, common.ErrorWithAttachment)
-	DeleteBillboard(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*BillboardNull, common.ErrorWithAttachment)
-	GetBillboardList(ctx context.Context, in *BillboardNull, opts ...grpc_go.CallOption) (*BillboardList, common.ErrorWithAttachment)
-	CreateBillboardItem(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*BillboardNull, common.ErrorWithAttachment)
-	UpdateBillboardItem(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*BillboardNull, common.ErrorWithAttachment)
+	CreateBillboard(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DeleteBillboard(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	GetBillboardList(ctx context.Context, in *Null, opts ...grpc_go.CallOption) (*BillboardList, common.ErrorWithAttachment)
+	CreateBillboardItem(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	UpdateBillboardItem(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 }
 
 type billboardApiClient struct {
@@ -40,11 +40,11 @@ type billboardApiClient struct {
 }
 
 type BillboardApiClientImpl struct {
-	CreateBillboard     func(ctx context.Context, in *OneBillboard) (*BillboardNull, error)
-	DeleteBillboard     func(ctx context.Context, in *OneBillboard) (*BillboardNull, error)
-	GetBillboardList    func(ctx context.Context, in *BillboardNull) (*BillboardList, error)
-	CreateBillboardItem func(ctx context.Context, in *OneBillboard) (*BillboardNull, error)
-	UpdateBillboardItem func(ctx context.Context, in *OneBillboard) (*BillboardNull, error)
+	CreateBillboard     func(ctx context.Context, in *OneBillboard) (*Null, error)
+	DeleteBillboard     func(ctx context.Context, in *OneBillboard) (*Null, error)
+	GetBillboardList    func(ctx context.Context, in *Null) (*BillboardList, error)
+	CreateBillboardItem func(ctx context.Context, in *OneBillboard) (*Null, error)
+	UpdateBillboardItem func(ctx context.Context, in *OneBillboard) (*Null, error)
 }
 
 func (c *BillboardApiClientImpl) GetDubboStub(cc *triple.TripleConn) BillboardApiClient {
@@ -55,32 +55,32 @@ func NewBillboardApiClient(cc *triple.TripleConn) BillboardApiClient {
 	return &billboardApiClient{cc}
 }
 
-func (c *billboardApiClient) CreateBillboard(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*BillboardNull, common.ErrorWithAttachment) {
-	out := new(BillboardNull)
+func (c *billboardApiClient) CreateBillboard(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateBillboard", in, out)
 }
 
-func (c *billboardApiClient) DeleteBillboard(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*BillboardNull, common.ErrorWithAttachment) {
-	out := new(BillboardNull)
+func (c *billboardApiClient) DeleteBillboard(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteBillboard", in, out)
 }
 
-func (c *billboardApiClient) GetBillboardList(ctx context.Context, in *BillboardNull, opts ...grpc_go.CallOption) (*BillboardList, common.ErrorWithAttachment) {
+func (c *billboardApiClient) GetBillboardList(ctx context.Context, in *Null, opts ...grpc_go.CallOption) (*BillboardList, common.ErrorWithAttachment) {
 	out := new(BillboardList)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetBillboardList", in, out)
 }
 
-func (c *billboardApiClient) CreateBillboardItem(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*BillboardNull, common.ErrorWithAttachment) {
-	out := new(BillboardNull)
+func (c *billboardApiClient) CreateBillboardItem(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateBillboardItem", in, out)
 }
 
-func (c *billboardApiClient) UpdateBillboardItem(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*BillboardNull, common.ErrorWithAttachment) {
-	out := new(BillboardNull)
+func (c *billboardApiClient) UpdateBillboardItem(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpdateBillboardItem", in, out)
 }
@@ -89,11 +89,11 @@ func (c *billboardApiClient) UpdateBillboardItem(ctx context.Context, in *OneBil
 // All implementations must embed UnimplementedBillboardApiServer
 // for forward compatibility
 type BillboardApiServer interface {
-	CreateBillboard(context.Context, *OneBillboard) (*BillboardNull, error)
-	DeleteBillboard(context.Context, *OneBillboard) (*BillboardNull, error)
-	GetBillboardList(context.Context, *BillboardNull) (*BillboardList, error)
-	CreateBillboardItem(context.Context, *OneBillboard) (*BillboardNull, error)
-	UpdateBillboardItem(context.Context, *OneBillboard) (*BillboardNull, error)
+	CreateBillboard(context.Context, *OneBillboard) (*Null, error)
+	DeleteBillboard(context.Context, *OneBillboard) (*Null, error)
+	GetBillboardList(context.Context, *Null) (*BillboardList, error)
+	CreateBillboardItem(context.Context, *OneBillboard) (*Null, error)
+	UpdateBillboardItem(context.Context, *OneBillboard) (*Null, error)
 	mustEmbedUnimplementedBillboardApiServer()
 }
 
@@ -102,19 +102,19 @@ type UnimplementedBillboardApiServer struct {
 	proxyImpl protocol.Invoker
 }
 
-func (UnimplementedBillboardApiServer) CreateBillboard(context.Context, *OneBillboard) (*BillboardNull, error) {
+func (UnimplementedBillboardApiServer) CreateBillboard(context.Context, *OneBillboard) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBillboard not implemented")
 }
-func (UnimplementedBillboardApiServer) DeleteBillboard(context.Context, *OneBillboard) (*BillboardNull, error) {
+func (UnimplementedBillboardApiServer) DeleteBillboard(context.Context, *OneBillboard) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteBillboard not implemented")
 }
-func (UnimplementedBillboardApiServer) GetBillboardList(context.Context, *BillboardNull) (*BillboardList, error) {
+func (UnimplementedBillboardApiServer) GetBillboardList(context.Context, *Null) (*BillboardList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBillboardList not implemented")
 }
-func (UnimplementedBillboardApiServer) CreateBillboardItem(context.Context, *OneBillboard) (*BillboardNull, error) {
+func (UnimplementedBillboardApiServer) CreateBillboardItem(context.Context, *OneBillboard) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBillboardItem not implemented")
 }
-func (UnimplementedBillboardApiServer) UpdateBillboardItem(context.Context, *OneBillboard) (*BillboardNull, error) {
+func (UnimplementedBillboardApiServer) UpdateBillboardItem(context.Context, *OneBillboard) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBillboardItem not implemented")
 }
 func (s *UnimplementedBillboardApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
@@ -161,7 +161,7 @@ func _BillboardApi_CreateBillboard_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.BillboardApi/CreateBillboard",
+		FullMethod: "/main.BillboardApi/CreateBillboard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillboardApiServer).CreateBillboard(ctx, req.(*OneBillboard))
@@ -189,7 +189,7 @@ func _BillboardApi_DeleteBillboard_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.BillboardApi/DeleteBillboard",
+		FullMethod: "/main.BillboardApi/DeleteBillboard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillboardApiServer).DeleteBillboard(ctx, req.(*OneBillboard))
@@ -198,7 +198,7 @@ func _BillboardApi_DeleteBillboard_Handler(srv interface{}, ctx context.Context,
 }
 
 func _BillboardApi_GetBillboardList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BillboardNull)
+	in := new(Null)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -217,10 +217,10 @@ func _BillboardApi_GetBillboardList_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.BillboardApi/GetBillboardList",
+		FullMethod: "/main.BillboardApi/GetBillboardList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillboardApiServer).GetBillboardList(ctx, req.(*BillboardNull))
+		return srv.(BillboardApiServer).GetBillboardList(ctx, req.(*Null))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -245,7 +245,7 @@ func _BillboardApi_CreateBillboardItem_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.BillboardApi/CreateBillboardItem",
+		FullMethod: "/main.BillboardApi/CreateBillboardItem",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillboardApiServer).CreateBillboardItem(ctx, req.(*OneBillboard))
@@ -273,7 +273,7 @@ func _BillboardApi_UpdateBillboardItem_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.BillboardApi/UpdateBillboardItem",
+		FullMethod: "/main.BillboardApi/UpdateBillboardItem",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillboardApiServer).UpdateBillboardItem(ctx, req.(*OneBillboard))
@@ -285,7 +285,7 @@ func _BillboardApi_UpdateBillboardItem_Handler(srv interface{}, ctx context.Cont
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var BillboardApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.BillboardApi",
+	ServiceName: "main.BillboardApi",
 	HandlerType: (*BillboardApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -319,24 +319,25 @@ var BillboardApi_ServiceDesc = grpc_go.ServiceDesc{
 type ClientApiClient interface {
 	GetClientAuth(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientInfo, common.ErrorWithAttachment)
 	GetClientAuthCallback(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*UserInfo, common.ErrorWithAttachment)
-	GetClientCallback(ctx context.Context, in *MessageInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment)
+	GetClientCallback(ctx context.Context, in *MessageInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	GetJssdkConfig(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*MessageInfo, common.ErrorWithAttachment)
 	GetClientWorkTest(ctx context.Context, in *MessageInfo, opts ...grpc_go.CallOption) (*MessageInfo, common.ErrorWithAttachment)
 	GetClientMedia(ctx context.Context, in *MediaInfo, opts ...grpc_go.CallOption) (*MediaInfo, common.ErrorWithAttachment)
 	GetClientOrganization(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientInfo, common.ErrorWithAttachment)
-	AsyncClientOrganization(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment)
+	AsyncClientOrganization(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	GetClientUserInfo(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*UserClientInfo, common.ErrorWithAttachment)
-	UnbindWCClient(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment)
-	WeChatMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment)
-	WorkMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment)
-	DingTalkMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment)
-	LarkMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment)
-	SendIMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment)
+	UnbindWCClient(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	WeChatMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	WorkMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DingTalkMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	LarkMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	SendIMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	GetIUserBaseInfo(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*UserInfo, common.ErrorWithAttachment)
-	GetInitCode(ctx context.Context, in *ClientNull, opts ...grpc_go.CallOption) (*ClientInfo, common.ErrorWithAttachment)
-	GetUserOrgByPhone(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*ClientCompanyList, common.ErrorWithAttachment)
-	GetVisitorOrgByPhone(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*ClientCompanyList, common.ErrorWithAttachment)
-	GetOrgByName(ctx context.Context, in *ClientCompanyInfo, opts ...grpc_go.CallOption) (*ClientCompanyList, common.ErrorWithAttachment)
+	GetInitCode(ctx context.Context, in *Null, opts ...grpc_go.CallOption) (*ClientInfo, common.ErrorWithAttachment)
+	GetUserOrgByPhone(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*Any, common.ErrorWithAttachment)
+	GetVisitorOrgByPhone(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*Any, common.ErrorWithAttachment)
+	GetOrgByName(ctx context.Context, in *ClientCompanyInfo, opts ...grpc_go.CallOption) (*Any, common.ErrorWithAttachment)
+	GetClientIds(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
 }
 
 type clientApiClient struct {
@@ -346,24 +347,25 @@ type clientApiClient struct {
 type ClientApiClientImpl struct {
 	GetClientAuth           func(ctx context.Context, in *ClientInfo) (*ClientInfo, error)
 	GetClientAuthCallback   func(ctx context.Context, in *ClientInfo) (*UserInfo, error)
-	GetClientCallback       func(ctx context.Context, in *MessageInfo) (*ClientNull, error)
+	GetClientCallback       func(ctx context.Context, in *MessageInfo) (*Null, error)
 	GetJssdkConfig          func(ctx context.Context, in *ClientInfo) (*MessageInfo, error)
 	GetClientWorkTest       func(ctx context.Context, in *MessageInfo) (*MessageInfo, error)
 	GetClientMedia          func(ctx context.Context, in *MediaInfo) (*MediaInfo, error)
 	GetClientOrganization   func(ctx context.Context, in *ClientInfo) (*ClientInfo, error)
-	AsyncClientOrganization func(ctx context.Context, in *ClientInfo) (*ClientNull, error)
+	AsyncClientOrganization func(ctx context.Context, in *ClientInfo) (*Null, error)
 	GetClientUserInfo       func(ctx context.Context, in *UserInfo) (*UserClientInfo, error)
-	UnbindWCClient          func(ctx context.Context, in *ClientInfo) (*ClientNull, error)
-	WeChatMessage           func(ctx context.Context, in *ClientInfo) (*ClientNull, error)
-	WorkMessage             func(ctx context.Context, in *ClientInfo) (*ClientNull, error)
-	DingTalkMessage         func(ctx context.Context, in *ClientInfo) (*ClientNull, error)
-	LarkMessage             func(ctx context.Context, in *ClientInfo) (*ClientNull, error)
-	SendIMessage            func(ctx context.Context, in *ClientInfo) (*ClientNull, error)
+	UnbindWCClient          func(ctx context.Context, in *ClientInfo) (*Null, error)
+	WeChatMessage           func(ctx context.Context, in *ClientInfo) (*Null, error)
+	WorkMessage             func(ctx context.Context, in *ClientInfo) (*Null, error)
+	DingTalkMessage         func(ctx context.Context, in *ClientInfo) (*Null, error)
+	LarkMessage             func(ctx context.Context, in *ClientInfo) (*Null, error)
+	SendIMessage            func(ctx context.Context, in *ClientInfo) (*Null, error)
 	GetIUserBaseInfo        func(ctx context.Context, in *ClientInfo) (*UserInfo, error)
-	GetInitCode             func(ctx context.Context, in *ClientNull) (*ClientInfo, error)
-	GetUserOrgByPhone       func(ctx context.Context, in *UserInfo) (*ClientCompanyList, error)
-	GetVisitorOrgByPhone    func(ctx context.Context, in *UserInfo) (*ClientCompanyList, error)
-	GetOrgByName            func(ctx context.Context, in *ClientCompanyInfo) (*ClientCompanyList, error)
+	GetInitCode             func(ctx context.Context, in *Null) (*ClientInfo, error)
+	GetUserOrgByPhone       func(ctx context.Context, in *UserInfo) (*Any, error)
+	GetVisitorOrgByPhone    func(ctx context.Context, in *UserInfo) (*Any, error)
+	GetOrgByName            func(ctx context.Context, in *ClientCompanyInfo) (*Any, error)
+	GetClientIds            func(ctx context.Context, in *ClientInfo) (*OrgRes, error)
 }
 
 func (c *ClientApiClientImpl) GetDubboStub(cc *triple.TripleConn) ClientApiClient {
@@ -386,8 +388,8 @@ func (c *clientApiClient) GetClientAuthCallback(ctx context.Context, in *ClientI
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetClientAuthCallback", in, out)
 }
 
-func (c *clientApiClient) GetClientCallback(ctx context.Context, in *MessageInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment) {
-	out := new(ClientNull)
+func (c *clientApiClient) GetClientCallback(ctx context.Context, in *MessageInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetClientCallback", in, out)
 }
@@ -416,8 +418,8 @@ func (c *clientApiClient) GetClientOrganization(ctx context.Context, in *ClientI
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetClientOrganization", in, out)
 }
 
-func (c *clientApiClient) AsyncClientOrganization(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment) {
-	out := new(ClientNull)
+func (c *clientApiClient) AsyncClientOrganization(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/AsyncClientOrganization", in, out)
 }
@@ -428,38 +430,38 @@ func (c *clientApiClient) GetClientUserInfo(ctx context.Context, in *UserInfo, o
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetClientUserInfo", in, out)
 }
 
-func (c *clientApiClient) UnbindWCClient(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment) {
-	out := new(ClientNull)
+func (c *clientApiClient) UnbindWCClient(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UnbindWCClient", in, out)
 }
 
-func (c *clientApiClient) WeChatMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment) {
-	out := new(ClientNull)
+func (c *clientApiClient) WeChatMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/WeChatMessage", in, out)
 }
 
-func (c *clientApiClient) WorkMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment) {
-	out := new(ClientNull)
+func (c *clientApiClient) WorkMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/WorkMessage", in, out)
 }
 
-func (c *clientApiClient) DingTalkMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment) {
-	out := new(ClientNull)
+func (c *clientApiClient) DingTalkMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DingTalkMessage", in, out)
 }
 
-func (c *clientApiClient) LarkMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment) {
-	out := new(ClientNull)
+func (c *clientApiClient) LarkMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/LarkMessage", in, out)
 }
 
-func (c *clientApiClient) SendIMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*ClientNull, common.ErrorWithAttachment) {
-	out := new(ClientNull)
+func (c *clientApiClient) SendIMessage(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/SendIMessage", in, out)
 }
@@ -470,28 +472,34 @@ func (c *clientApiClient) GetIUserBaseInfo(ctx context.Context, in *ClientInfo, 
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetIUserBaseInfo", in, out)
 }
 
-func (c *clientApiClient) GetInitCode(ctx context.Context, in *ClientNull, opts ...grpc_go.CallOption) (*ClientInfo, common.ErrorWithAttachment) {
+func (c *clientApiClient) GetInitCode(ctx context.Context, in *Null, opts ...grpc_go.CallOption) (*ClientInfo, common.ErrorWithAttachment) {
 	out := new(ClientInfo)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetInitCode", in, out)
 }
 
-func (c *clientApiClient) GetUserOrgByPhone(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*ClientCompanyList, common.ErrorWithAttachment) {
-	out := new(ClientCompanyList)
+func (c *clientApiClient) GetUserOrgByPhone(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*Any, common.ErrorWithAttachment) {
+	out := new(Any)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetUserOrgByPhone", in, out)
 }
 
-func (c *clientApiClient) GetVisitorOrgByPhone(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*ClientCompanyList, common.ErrorWithAttachment) {
-	out := new(ClientCompanyList)
+func (c *clientApiClient) GetVisitorOrgByPhone(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*Any, common.ErrorWithAttachment) {
+	out := new(Any)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetVisitorOrgByPhone", in, out)
 }
 
-func (c *clientApiClient) GetOrgByName(ctx context.Context, in *ClientCompanyInfo, opts ...grpc_go.CallOption) (*ClientCompanyList, common.ErrorWithAttachment) {
-	out := new(ClientCompanyList)
+func (c *clientApiClient) GetOrgByName(ctx context.Context, in *ClientCompanyInfo, opts ...grpc_go.CallOption) (*Any, common.ErrorWithAttachment) {
+	out := new(Any)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetOrgByName", in, out)
+}
+
+func (c *clientApiClient) GetClientIds(ctx context.Context, in *ClientInfo, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment) {
+	out := new(OrgRes)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetClientIds", in, out)
 }
 
 // ClientApiServer is the server API for ClientApi service.
@@ -500,24 +508,25 @@ func (c *clientApiClient) GetOrgByName(ctx context.Context, in *ClientCompanyInf
 type ClientApiServer interface {
 	GetClientAuth(context.Context, *ClientInfo) (*ClientInfo, error)
 	GetClientAuthCallback(context.Context, *ClientInfo) (*UserInfo, error)
-	GetClientCallback(context.Context, *MessageInfo) (*ClientNull, error)
+	GetClientCallback(context.Context, *MessageInfo) (*Null, error)
 	GetJssdkConfig(context.Context, *ClientInfo) (*MessageInfo, error)
 	GetClientWorkTest(context.Context, *MessageInfo) (*MessageInfo, error)
 	GetClientMedia(context.Context, *MediaInfo) (*MediaInfo, error)
 	GetClientOrganization(context.Context, *ClientInfo) (*ClientInfo, error)
-	AsyncClientOrganization(context.Context, *ClientInfo) (*ClientNull, error)
+	AsyncClientOrganization(context.Context, *ClientInfo) (*Null, error)
 	GetClientUserInfo(context.Context, *UserInfo) (*UserClientInfo, error)
-	UnbindWCClient(context.Context, *ClientInfo) (*ClientNull, error)
-	WeChatMessage(context.Context, *ClientInfo) (*ClientNull, error)
-	WorkMessage(context.Context, *ClientInfo) (*ClientNull, error)
-	DingTalkMessage(context.Context, *ClientInfo) (*ClientNull, error)
-	LarkMessage(context.Context, *ClientInfo) (*ClientNull, error)
-	SendIMessage(context.Context, *ClientInfo) (*ClientNull, error)
+	UnbindWCClient(context.Context, *ClientInfo) (*Null, error)
+	WeChatMessage(context.Context, *ClientInfo) (*Null, error)
+	WorkMessage(context.Context, *ClientInfo) (*Null, error)
+	DingTalkMessage(context.Context, *ClientInfo) (*Null, error)
+	LarkMessage(context.Context, *ClientInfo) (*Null, error)
+	SendIMessage(context.Context, *ClientInfo) (*Null, error)
 	GetIUserBaseInfo(context.Context, *ClientInfo) (*UserInfo, error)
-	GetInitCode(context.Context, *ClientNull) (*ClientInfo, error)
-	GetUserOrgByPhone(context.Context, *UserInfo) (*ClientCompanyList, error)
-	GetVisitorOrgByPhone(context.Context, *UserInfo) (*ClientCompanyList, error)
-	GetOrgByName(context.Context, *ClientCompanyInfo) (*ClientCompanyList, error)
+	GetInitCode(context.Context, *Null) (*ClientInfo, error)
+	GetUserOrgByPhone(context.Context, *UserInfo) (*Any, error)
+	GetVisitorOrgByPhone(context.Context, *UserInfo) (*Any, error)
+	GetOrgByName(context.Context, *ClientCompanyInfo) (*Any, error)
+	GetClientIds(context.Context, *ClientInfo) (*OrgRes, error)
 	mustEmbedUnimplementedClientApiServer()
 }
 
@@ -532,7 +541,7 @@ func (UnimplementedClientApiServer) GetClientAuth(context.Context, *ClientInfo) 
 func (UnimplementedClientApiServer) GetClientAuthCallback(context.Context, *ClientInfo) (*UserInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClientAuthCallback not implemented")
 }
-func (UnimplementedClientApiServer) GetClientCallback(context.Context, *MessageInfo) (*ClientNull, error) {
+func (UnimplementedClientApiServer) GetClientCallback(context.Context, *MessageInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClientCallback not implemented")
 }
 func (UnimplementedClientApiServer) GetJssdkConfig(context.Context, *ClientInfo) (*MessageInfo, error) {
@@ -547,44 +556,47 @@ func (UnimplementedClientApiServer) GetClientMedia(context.Context, *MediaInfo) 
 func (UnimplementedClientApiServer) GetClientOrganization(context.Context, *ClientInfo) (*ClientInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClientOrganization not implemented")
 }
-func (UnimplementedClientApiServer) AsyncClientOrganization(context.Context, *ClientInfo) (*ClientNull, error) {
+func (UnimplementedClientApiServer) AsyncClientOrganization(context.Context, *ClientInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AsyncClientOrganization not implemented")
 }
 func (UnimplementedClientApiServer) GetClientUserInfo(context.Context, *UserInfo) (*UserClientInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClientUserInfo not implemented")
 }
-func (UnimplementedClientApiServer) UnbindWCClient(context.Context, *ClientInfo) (*ClientNull, error) {
+func (UnimplementedClientApiServer) UnbindWCClient(context.Context, *ClientInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnbindWCClient not implemented")
 }
-func (UnimplementedClientApiServer) WeChatMessage(context.Context, *ClientInfo) (*ClientNull, error) {
+func (UnimplementedClientApiServer) WeChatMessage(context.Context, *ClientInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WeChatMessage not implemented")
 }
-func (UnimplementedClientApiServer) WorkMessage(context.Context, *ClientInfo) (*ClientNull, error) {
+func (UnimplementedClientApiServer) WorkMessage(context.Context, *ClientInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WorkMessage not implemented")
 }
-func (UnimplementedClientApiServer) DingTalkMessage(context.Context, *ClientInfo) (*ClientNull, error) {
+func (UnimplementedClientApiServer) DingTalkMessage(context.Context, *ClientInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DingTalkMessage not implemented")
 }
-func (UnimplementedClientApiServer) LarkMessage(context.Context, *ClientInfo) (*ClientNull, error) {
+func (UnimplementedClientApiServer) LarkMessage(context.Context, *ClientInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LarkMessage not implemented")
 }
-func (UnimplementedClientApiServer) SendIMessage(context.Context, *ClientInfo) (*ClientNull, error) {
+func (UnimplementedClientApiServer) SendIMessage(context.Context, *ClientInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendIMessage not implemented")
 }
 func (UnimplementedClientApiServer) GetIUserBaseInfo(context.Context, *ClientInfo) (*UserInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetIUserBaseInfo not implemented")
 }
-func (UnimplementedClientApiServer) GetInitCode(context.Context, *ClientNull) (*ClientInfo, error) {
+func (UnimplementedClientApiServer) GetInitCode(context.Context, *Null) (*ClientInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInitCode not implemented")
 }
-func (UnimplementedClientApiServer) GetUserOrgByPhone(context.Context, *UserInfo) (*ClientCompanyList, error) {
+func (UnimplementedClientApiServer) GetUserOrgByPhone(context.Context, *UserInfo) (*Any, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserOrgByPhone not implemented")
 }
-func (UnimplementedClientApiServer) GetVisitorOrgByPhone(context.Context, *UserInfo) (*ClientCompanyList, error) {
+func (UnimplementedClientApiServer) GetVisitorOrgByPhone(context.Context, *UserInfo) (*Any, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVisitorOrgByPhone not implemented")
 }
-func (UnimplementedClientApiServer) GetOrgByName(context.Context, *ClientCompanyInfo) (*ClientCompanyList, error) {
+func (UnimplementedClientApiServer) GetOrgByName(context.Context, *ClientCompanyInfo) (*Any, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrgByName not implemented")
+}
+func (UnimplementedClientApiServer) GetClientIds(context.Context, *ClientInfo) (*OrgRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClientIds not implemented")
 }
 func (s *UnimplementedClientApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
 	s.proxyImpl = impl
@@ -630,7 +642,7 @@ func _ClientApi_GetClientAuth_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientAuth",
+		FullMethod: "/main.ClientApi/GetClientAuth",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientAuth(ctx, req.(*ClientInfo))
@@ -658,7 +670,7 @@ func _ClientApi_GetClientAuthCallback_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientAuthCallback",
+		FullMethod: "/main.ClientApi/GetClientAuthCallback",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientAuthCallback(ctx, req.(*ClientInfo))
@@ -686,7 +698,7 @@ func _ClientApi_GetClientCallback_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientCallback",
+		FullMethod: "/main.ClientApi/GetClientCallback",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientCallback(ctx, req.(*MessageInfo))
@@ -714,7 +726,7 @@ func _ClientApi_GetJssdkConfig_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetJssdkConfig",
+		FullMethod: "/main.ClientApi/GetJssdkConfig",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetJssdkConfig(ctx, req.(*ClientInfo))
@@ -742,7 +754,7 @@ func _ClientApi_GetClientWorkTest_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientWorkTest",
+		FullMethod: "/main.ClientApi/GetClientWorkTest",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientWorkTest(ctx, req.(*MessageInfo))
@@ -770,7 +782,7 @@ func _ClientApi_GetClientMedia_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientMedia",
+		FullMethod: "/main.ClientApi/GetClientMedia",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientMedia(ctx, req.(*MediaInfo))
@@ -798,7 +810,7 @@ func _ClientApi_GetClientOrganization_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientOrganization",
+		FullMethod: "/main.ClientApi/GetClientOrganization",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientOrganization(ctx, req.(*ClientInfo))
@@ -826,7 +838,7 @@ func _ClientApi_AsyncClientOrganization_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/AsyncClientOrganization",
+		FullMethod: "/main.ClientApi/AsyncClientOrganization",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).AsyncClientOrganization(ctx, req.(*ClientInfo))
@@ -854,7 +866,7 @@ func _ClientApi_GetClientUserInfo_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetClientUserInfo",
+		FullMethod: "/main.ClientApi/GetClientUserInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetClientUserInfo(ctx, req.(*UserInfo))
@@ -882,7 +894,7 @@ func _ClientApi_UnbindWCClient_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/UnbindWCClient",
+		FullMethod: "/main.ClientApi/UnbindWCClient",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).UnbindWCClient(ctx, req.(*ClientInfo))
@@ -910,7 +922,7 @@ func _ClientApi_WeChatMessage_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/WeChatMessage",
+		FullMethod: "/main.ClientApi/WeChatMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).WeChatMessage(ctx, req.(*ClientInfo))
@@ -938,7 +950,7 @@ func _ClientApi_WorkMessage_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/WorkMessage",
+		FullMethod: "/main.ClientApi/WorkMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).WorkMessage(ctx, req.(*ClientInfo))
@@ -966,7 +978,7 @@ func _ClientApi_DingTalkMessage_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/DingTalkMessage",
+		FullMethod: "/main.ClientApi/DingTalkMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).DingTalkMessage(ctx, req.(*ClientInfo))
@@ -994,7 +1006,7 @@ func _ClientApi_LarkMessage_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/LarkMessage",
+		FullMethod: "/main.ClientApi/LarkMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).LarkMessage(ctx, req.(*ClientInfo))
@@ -1022,7 +1034,7 @@ func _ClientApi_SendIMessage_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/SendIMessage",
+		FullMethod: "/main.ClientApi/SendIMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).SendIMessage(ctx, req.(*ClientInfo))
@@ -1050,7 +1062,7 @@ func _ClientApi_GetIUserBaseInfo_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetIUserBaseInfo",
+		FullMethod: "/main.ClientApi/GetIUserBaseInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetIUserBaseInfo(ctx, req.(*ClientInfo))
@@ -1059,7 +1071,7 @@ func _ClientApi_GetIUserBaseInfo_Handler(srv interface{}, ctx context.Context, d
 }
 
 func _ClientApi_GetInitCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ClientNull)
+	in := new(Null)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1078,10 +1090,10 @@ func _ClientApi_GetInitCode_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetInitCode",
+		FullMethod: "/main.ClientApi/GetInitCode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientApiServer).GetInitCode(ctx, req.(*ClientNull))
+		return srv.(ClientApiServer).GetInitCode(ctx, req.(*Null))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1106,7 +1118,7 @@ func _ClientApi_GetUserOrgByPhone_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetUserOrgByPhone",
+		FullMethod: "/main.ClientApi/GetUserOrgByPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetUserOrgByPhone(ctx, req.(*UserInfo))
@@ -1134,7 +1146,7 @@ func _ClientApi_GetVisitorOrgByPhone_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetVisitorOrgByPhone",
+		FullMethod: "/main.ClientApi/GetVisitorOrgByPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetVisitorOrgByPhone(ctx, req.(*UserInfo))
@@ -1162,10 +1174,38 @@ func _ClientApi_GetOrgByName_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ClientApi/GetOrgByName",
+		FullMethod: "/main.ClientApi/GetOrgByName",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientApiServer).GetOrgByName(ctx, req.(*ClientCompanyInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ClientApi_GetClientIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClientInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("GetClientIds", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.ClientApi/GetClientIds",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientApiServer).GetClientIds(ctx, req.(*ClientInfo))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1174,7 +1214,7 @@ func _ClientApi_GetOrgByName_Handler(srv interface{}, ctx context.Context, dec f
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ClientApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.ClientApi",
+	ServiceName: "main.ClientApi",
 	HandlerType: (*ClientApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -1257,6 +1297,10 @@ var ClientApi_ServiceDesc = grpc_go.ServiceDesc{
 			MethodName: "GetOrgByName",
 			Handler:    _ClientApi_GetOrgByName_Handler,
 		},
+		{
+			MethodName: "GetClientIds",
+			Handler:    _ClientApi_GetClientIds_Handler,
+		},
 	},
 	Streams:  []grpc_go.StreamDesc{},
 	Metadata: "api.proto",
@@ -1266,30 +1310,30 @@ var ClientApi_ServiceDesc = grpc_go.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DeviceApiClient interface {
-	CreateCompany(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
-	DeleteCompany(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
-	UpdateCompany(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
+	CreateCompany(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DeleteCompany(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	UpdateCompany(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	SearchCompany(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*CompanyList, common.ErrorWithAttachment)
-	CreateArea(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
-	DeleteArea(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
-	UpdateArea(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
+	CreateArea(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DeleteArea(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	UpdateArea(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	SearchArea(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*CompanyList, common.ErrorWithAttachment)
 	Prepare(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*CompanyInfo, common.ErrorWithAttachment)
-	CreateMec(ctx context.Context, in *MecInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
-	UpdateMec(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
-	RemoveMec(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
-	DeleteMec(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
+	CreateMec(ctx context.Context, in *MecInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	UpdateMec(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	RemoveMec(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DeleteMec(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	SearchMec(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*MecList, common.ErrorWithAttachment)
-	KeepAlive(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
-	AddDeviceVisitor(ctx context.Context, in *DeviceInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
-	DeviceVisitorLeave(ctx context.Context, in *DeviceInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
-	AddDeviceTraffic(ctx context.Context, in *TrafficInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
+	KeepAlive(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	AddDeviceVisitor(ctx context.Context, in *DeviceInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DeviceVisitorLeave(ctx context.Context, in *DeviceInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	AddDeviceTraffic(ctx context.Context, in *TrafficInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	GetDashboardDevicePassagePages(ctx context.Context, in *TrafficInfo, opts ...grpc_go.CallOption) (*TrafficList, common.ErrorWithAttachment)
 	GetDevicePassageDetail(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*TrafficInfo, common.ErrorWithAttachment)
-	DevicePassage(ctx context.Context, in *PassageInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
+	DevicePassage(ctx context.Context, in *PassageInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	DevicePassageIssue(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*RecordList, common.ErrorWithAttachment)
 	DevicePassageSearch(ctx context.Context, in *DeviceUserInfo, opts ...grpc_go.CallOption) (*RecordList, common.ErrorWithAttachment)
-	DevicePassageCallback(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment)
+	DevicePassageCallback(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 }
 
 type deviceApiClient struct {
@@ -1297,30 +1341,30 @@ type deviceApiClient struct {
 }
 
 type DeviceApiClientImpl struct {
-	CreateCompany                  func(ctx context.Context, in *CompanyInfo) (*DeviceNull, error)
-	DeleteCompany                  func(ctx context.Context, in *CompanyInfo) (*DeviceNull, error)
-	UpdateCompany                  func(ctx context.Context, in *CompanyInfo) (*DeviceNull, error)
+	CreateCompany                  func(ctx context.Context, in *CompanyInfo) (*Null, error)
+	DeleteCompany                  func(ctx context.Context, in *CompanyInfo) (*Null, error)
+	UpdateCompany                  func(ctx context.Context, in *CompanyInfo) (*Null, error)
 	SearchCompany                  func(ctx context.Context, in *CompanyInfo) (*CompanyList, error)
-	CreateArea                     func(ctx context.Context, in *CompanyInfo) (*DeviceNull, error)
-	DeleteArea                     func(ctx context.Context, in *CompanyInfo) (*DeviceNull, error)
-	UpdateArea                     func(ctx context.Context, in *CompanyInfo) (*DeviceNull, error)
+	CreateArea                     func(ctx context.Context, in *CompanyInfo) (*Null, error)
+	DeleteArea                     func(ctx context.Context, in *CompanyInfo) (*Null, error)
+	UpdateArea                     func(ctx context.Context, in *CompanyInfo) (*Null, error)
 	SearchArea                     func(ctx context.Context, in *CompanyInfo) (*CompanyList, error)
 	Prepare                        func(ctx context.Context, in *CompanyInfo) (*CompanyInfo, error)
-	CreateMec                      func(ctx context.Context, in *MecInfo) (*DeviceNull, error)
-	UpdateMec                      func(ctx context.Context, in *CompanyInfo) (*DeviceNull, error)
-	RemoveMec                      func(ctx context.Context, in *CompanyInfo) (*DeviceNull, error)
-	DeleteMec                      func(ctx context.Context, in *CompanyInfo) (*DeviceNull, error)
+	CreateMec                      func(ctx context.Context, in *MecInfo) (*Null, error)
+	UpdateMec                      func(ctx context.Context, in *CompanyInfo) (*Null, error)
+	RemoveMec                      func(ctx context.Context, in *CompanyInfo) (*Null, error)
+	DeleteMec                      func(ctx context.Context, in *CompanyInfo) (*Null, error)
 	SearchMec                      func(ctx context.Context, in *CompanyInfo) (*MecList, error)
-	KeepAlive                      func(ctx context.Context, in *CompanyInfo) (*DeviceNull, error)
-	AddDeviceVisitor               func(ctx context.Context, in *DeviceInfo) (*DeviceNull, error)
-	DeviceVisitorLeave             func(ctx context.Context, in *DeviceInfo) (*DeviceNull, error)
-	AddDeviceTraffic               func(ctx context.Context, in *TrafficInfo) (*DeviceNull, error)
+	KeepAlive                      func(ctx context.Context, in *CompanyInfo) (*Null, error)
+	AddDeviceVisitor               func(ctx context.Context, in *DeviceInfo) (*Null, error)
+	DeviceVisitorLeave             func(ctx context.Context, in *DeviceInfo) (*Null, error)
+	AddDeviceTraffic               func(ctx context.Context, in *TrafficInfo) (*Null, error)
 	GetDashboardDevicePassagePages func(ctx context.Context, in *TrafficInfo) (*TrafficList, error)
 	GetDevicePassageDetail         func(ctx context.Context, in *CompanyInfo) (*TrafficInfo, error)
-	DevicePassage                  func(ctx context.Context, in *PassageInfo) (*DeviceNull, error)
+	DevicePassage                  func(ctx context.Context, in *PassageInfo) (*Null, error)
 	DevicePassageIssue             func(ctx context.Context, in *CompanyInfo) (*RecordList, error)
 	DevicePassageSearch            func(ctx context.Context, in *DeviceUserInfo) (*RecordList, error)
-	DevicePassageCallback          func(ctx context.Context, in *CompanyInfo) (*DeviceNull, error)
+	DevicePassageCallback          func(ctx context.Context, in *CompanyInfo) (*Null, error)
 }
 
 func (c *DeviceApiClientImpl) GetDubboStub(cc *triple.TripleConn) DeviceApiClient {
@@ -1331,20 +1375,20 @@ func NewDeviceApiClient(cc *triple.TripleConn) DeviceApiClient {
 	return &deviceApiClient{cc}
 }
 
-func (c *deviceApiClient) CreateCompany(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) CreateCompany(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateCompany", in, out)
 }
 
-func (c *deviceApiClient) DeleteCompany(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) DeleteCompany(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteCompany", in, out)
 }
 
-func (c *deviceApiClient) UpdateCompany(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) UpdateCompany(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpdateCompany", in, out)
 }
@@ -1355,20 +1399,20 @@ func (c *deviceApiClient) SearchCompany(ctx context.Context, in *CompanyInfo, op
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/SearchCompany", in, out)
 }
 
-func (c *deviceApiClient) CreateArea(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) CreateArea(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateArea", in, out)
 }
 
-func (c *deviceApiClient) DeleteArea(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) DeleteArea(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteArea", in, out)
 }
 
-func (c *deviceApiClient) UpdateArea(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) UpdateArea(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpdateArea", in, out)
 }
@@ -1385,26 +1429,26 @@ func (c *deviceApiClient) Prepare(ctx context.Context, in *CompanyInfo, opts ...
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Prepare", in, out)
 }
 
-func (c *deviceApiClient) CreateMec(ctx context.Context, in *MecInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) CreateMec(ctx context.Context, in *MecInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateMec", in, out)
 }
 
-func (c *deviceApiClient) UpdateMec(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) UpdateMec(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpdateMec", in, out)
 }
 
-func (c *deviceApiClient) RemoveMec(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) RemoveMec(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RemoveMec", in, out)
 }
 
-func (c *deviceApiClient) DeleteMec(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) DeleteMec(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteMec", in, out)
 }
@@ -1415,26 +1459,26 @@ func (c *deviceApiClient) SearchMec(ctx context.Context, in *CompanyInfo, opts .
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/SearchMec", in, out)
 }
 
-func (c *deviceApiClient) KeepAlive(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) KeepAlive(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/KeepAlive", in, out)
 }
 
-func (c *deviceApiClient) AddDeviceVisitor(ctx context.Context, in *DeviceInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) AddDeviceVisitor(ctx context.Context, in *DeviceInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/AddDeviceVisitor", in, out)
 }
 
-func (c *deviceApiClient) DeviceVisitorLeave(ctx context.Context, in *DeviceInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) DeviceVisitorLeave(ctx context.Context, in *DeviceInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeviceVisitorLeave", in, out)
 }
 
-func (c *deviceApiClient) AddDeviceTraffic(ctx context.Context, in *TrafficInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) AddDeviceTraffic(ctx context.Context, in *TrafficInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/AddDeviceTraffic", in, out)
 }
@@ -1451,8 +1495,8 @@ func (c *deviceApiClient) GetDevicePassageDetail(ctx context.Context, in *Compan
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetDevicePassageDetail", in, out)
 }
 
-func (c *deviceApiClient) DevicePassage(ctx context.Context, in *PassageInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) DevicePassage(ctx context.Context, in *PassageInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DevicePassage", in, out)
 }
@@ -1469,8 +1513,8 @@ func (c *deviceApiClient) DevicePassageSearch(ctx context.Context, in *DeviceUse
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DevicePassageSearch", in, out)
 }
 
-func (c *deviceApiClient) DevicePassageCallback(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*DeviceNull, common.ErrorWithAttachment) {
-	out := new(DeviceNull)
+func (c *deviceApiClient) DevicePassageCallback(ctx context.Context, in *CompanyInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DevicePassageCallback", in, out)
 }
@@ -1479,30 +1523,30 @@ func (c *deviceApiClient) DevicePassageCallback(ctx context.Context, in *Company
 // All implementations must embed UnimplementedDeviceApiServer
 // for forward compatibility
 type DeviceApiServer interface {
-	CreateCompany(context.Context, *CompanyInfo) (*DeviceNull, error)
-	DeleteCompany(context.Context, *CompanyInfo) (*DeviceNull, error)
-	UpdateCompany(context.Context, *CompanyInfo) (*DeviceNull, error)
+	CreateCompany(context.Context, *CompanyInfo) (*Null, error)
+	DeleteCompany(context.Context, *CompanyInfo) (*Null, error)
+	UpdateCompany(context.Context, *CompanyInfo) (*Null, error)
 	SearchCompany(context.Context, *CompanyInfo) (*CompanyList, error)
-	CreateArea(context.Context, *CompanyInfo) (*DeviceNull, error)
-	DeleteArea(context.Context, *CompanyInfo) (*DeviceNull, error)
-	UpdateArea(context.Context, *CompanyInfo) (*DeviceNull, error)
+	CreateArea(context.Context, *CompanyInfo) (*Null, error)
+	DeleteArea(context.Context, *CompanyInfo) (*Null, error)
+	UpdateArea(context.Context, *CompanyInfo) (*Null, error)
 	SearchArea(context.Context, *CompanyInfo) (*CompanyList, error)
 	Prepare(context.Context, *CompanyInfo) (*CompanyInfo, error)
-	CreateMec(context.Context, *MecInfo) (*DeviceNull, error)
-	UpdateMec(context.Context, *CompanyInfo) (*DeviceNull, error)
-	RemoveMec(context.Context, *CompanyInfo) (*DeviceNull, error)
-	DeleteMec(context.Context, *CompanyInfo) (*DeviceNull, error)
+	CreateMec(context.Context, *MecInfo) (*Null, error)
+	UpdateMec(context.Context, *CompanyInfo) (*Null, error)
+	RemoveMec(context.Context, *CompanyInfo) (*Null, error)
+	DeleteMec(context.Context, *CompanyInfo) (*Null, error)
 	SearchMec(context.Context, *CompanyInfo) (*MecList, error)
-	KeepAlive(context.Context, *CompanyInfo) (*DeviceNull, error)
-	AddDeviceVisitor(context.Context, *DeviceInfo) (*DeviceNull, error)
-	DeviceVisitorLeave(context.Context, *DeviceInfo) (*DeviceNull, error)
-	AddDeviceTraffic(context.Context, *TrafficInfo) (*DeviceNull, error)
+	KeepAlive(context.Context, *CompanyInfo) (*Null, error)
+	AddDeviceVisitor(context.Context, *DeviceInfo) (*Null, error)
+	DeviceVisitorLeave(context.Context, *DeviceInfo) (*Null, error)
+	AddDeviceTraffic(context.Context, *TrafficInfo) (*Null, error)
 	GetDashboardDevicePassagePages(context.Context, *TrafficInfo) (*TrafficList, error)
 	GetDevicePassageDetail(context.Context, *CompanyInfo) (*TrafficInfo, error)
-	DevicePassage(context.Context, *PassageInfo) (*DeviceNull, error)
+	DevicePassage(context.Context, *PassageInfo) (*Null, error)
 	DevicePassageIssue(context.Context, *CompanyInfo) (*RecordList, error)
 	DevicePassageSearch(context.Context, *DeviceUserInfo) (*RecordList, error)
-	DevicePassageCallback(context.Context, *CompanyInfo) (*DeviceNull, error)
+	DevicePassageCallback(context.Context, *CompanyInfo) (*Null, error)
 	mustEmbedUnimplementedDeviceApiServer()
 }
 
@@ -1511,25 +1555,25 @@ type UnimplementedDeviceApiServer struct {
 	proxyImpl protocol.Invoker
 }
 
-func (UnimplementedDeviceApiServer) CreateCompany(context.Context, *CompanyInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) CreateCompany(context.Context, *CompanyInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCompany not implemented")
 }
-func (UnimplementedDeviceApiServer) DeleteCompany(context.Context, *CompanyInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) DeleteCompany(context.Context, *CompanyInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCompany not implemented")
 }
-func (UnimplementedDeviceApiServer) UpdateCompany(context.Context, *CompanyInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) UpdateCompany(context.Context, *CompanyInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCompany not implemented")
 }
 func (UnimplementedDeviceApiServer) SearchCompany(context.Context, *CompanyInfo) (*CompanyList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchCompany not implemented")
 }
-func (UnimplementedDeviceApiServer) CreateArea(context.Context, *CompanyInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) CreateArea(context.Context, *CompanyInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateArea not implemented")
 }
-func (UnimplementedDeviceApiServer) DeleteArea(context.Context, *CompanyInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) DeleteArea(context.Context, *CompanyInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteArea not implemented")
 }
-func (UnimplementedDeviceApiServer) UpdateArea(context.Context, *CompanyInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) UpdateArea(context.Context, *CompanyInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateArea not implemented")
 }
 func (UnimplementedDeviceApiServer) SearchArea(context.Context, *CompanyInfo) (*CompanyList, error) {
@@ -1538,31 +1582,31 @@ func (UnimplementedDeviceApiServer) SearchArea(context.Context, *CompanyInfo) (*
 func (UnimplementedDeviceApiServer) Prepare(context.Context, *CompanyInfo) (*CompanyInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Prepare not implemented")
 }
-func (UnimplementedDeviceApiServer) CreateMec(context.Context, *MecInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) CreateMec(context.Context, *MecInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateMec not implemented")
 }
-func (UnimplementedDeviceApiServer) UpdateMec(context.Context, *CompanyInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) UpdateMec(context.Context, *CompanyInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateMec not implemented")
 }
-func (UnimplementedDeviceApiServer) RemoveMec(context.Context, *CompanyInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) RemoveMec(context.Context, *CompanyInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveMec not implemented")
 }
-func (UnimplementedDeviceApiServer) DeleteMec(context.Context, *CompanyInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) DeleteMec(context.Context, *CompanyInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteMec not implemented")
 }
 func (UnimplementedDeviceApiServer) SearchMec(context.Context, *CompanyInfo) (*MecList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchMec not implemented")
 }
-func (UnimplementedDeviceApiServer) KeepAlive(context.Context, *CompanyInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) KeepAlive(context.Context, *CompanyInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method KeepAlive not implemented")
 }
-func (UnimplementedDeviceApiServer) AddDeviceVisitor(context.Context, *DeviceInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) AddDeviceVisitor(context.Context, *DeviceInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddDeviceVisitor not implemented")
 }
-func (UnimplementedDeviceApiServer) DeviceVisitorLeave(context.Context, *DeviceInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) DeviceVisitorLeave(context.Context, *DeviceInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeviceVisitorLeave not implemented")
 }
-func (UnimplementedDeviceApiServer) AddDeviceTraffic(context.Context, *TrafficInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) AddDeviceTraffic(context.Context, *TrafficInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddDeviceTraffic not implemented")
 }
 func (UnimplementedDeviceApiServer) GetDashboardDevicePassagePages(context.Context, *TrafficInfo) (*TrafficList, error) {
@@ -1571,7 +1615,7 @@ func (UnimplementedDeviceApiServer) GetDashboardDevicePassagePages(context.Conte
 func (UnimplementedDeviceApiServer) GetDevicePassageDetail(context.Context, *CompanyInfo) (*TrafficInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDevicePassageDetail not implemented")
 }
-func (UnimplementedDeviceApiServer) DevicePassage(context.Context, *PassageInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) DevicePassage(context.Context, *PassageInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DevicePassage not implemented")
 }
 func (UnimplementedDeviceApiServer) DevicePassageIssue(context.Context, *CompanyInfo) (*RecordList, error) {
@@ -1580,7 +1624,7 @@ func (UnimplementedDeviceApiServer) DevicePassageIssue(context.Context, *Company
 func (UnimplementedDeviceApiServer) DevicePassageSearch(context.Context, *DeviceUserInfo) (*RecordList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DevicePassageSearch not implemented")
 }
-func (UnimplementedDeviceApiServer) DevicePassageCallback(context.Context, *CompanyInfo) (*DeviceNull, error) {
+func (UnimplementedDeviceApiServer) DevicePassageCallback(context.Context, *CompanyInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DevicePassageCallback not implemented")
 }
 func (s *UnimplementedDeviceApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
@@ -1627,7 +1671,7 @@ func _DeviceApi_CreateCompany_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/CreateCompany",
+		FullMethod: "/main.DeviceApi/CreateCompany",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).CreateCompany(ctx, req.(*CompanyInfo))
@@ -1655,7 +1699,7 @@ func _DeviceApi_DeleteCompany_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DeleteCompany",
+		FullMethod: "/main.DeviceApi/DeleteCompany",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DeleteCompany(ctx, req.(*CompanyInfo))
@@ -1683,7 +1727,7 @@ func _DeviceApi_UpdateCompany_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/UpdateCompany",
+		FullMethod: "/main.DeviceApi/UpdateCompany",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).UpdateCompany(ctx, req.(*CompanyInfo))
@@ -1711,7 +1755,7 @@ func _DeviceApi_SearchCompany_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/SearchCompany",
+		FullMethod: "/main.DeviceApi/SearchCompany",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).SearchCompany(ctx, req.(*CompanyInfo))
@@ -1739,7 +1783,7 @@ func _DeviceApi_CreateArea_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/CreateArea",
+		FullMethod: "/main.DeviceApi/CreateArea",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).CreateArea(ctx, req.(*CompanyInfo))
@@ -1767,7 +1811,7 @@ func _DeviceApi_DeleteArea_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DeleteArea",
+		FullMethod: "/main.DeviceApi/DeleteArea",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DeleteArea(ctx, req.(*CompanyInfo))
@@ -1795,7 +1839,7 @@ func _DeviceApi_UpdateArea_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/UpdateArea",
+		FullMethod: "/main.DeviceApi/UpdateArea",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).UpdateArea(ctx, req.(*CompanyInfo))
@@ -1823,7 +1867,7 @@ func _DeviceApi_SearchArea_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/SearchArea",
+		FullMethod: "/main.DeviceApi/SearchArea",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).SearchArea(ctx, req.(*CompanyInfo))
@@ -1851,7 +1895,7 @@ func _DeviceApi_Prepare_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/Prepare",
+		FullMethod: "/main.DeviceApi/Prepare",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).Prepare(ctx, req.(*CompanyInfo))
@@ -1879,7 +1923,7 @@ func _DeviceApi_CreateMec_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/CreateMec",
+		FullMethod: "/main.DeviceApi/CreateMec",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).CreateMec(ctx, req.(*MecInfo))
@@ -1907,7 +1951,7 @@ func _DeviceApi_UpdateMec_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/UpdateMec",
+		FullMethod: "/main.DeviceApi/UpdateMec",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).UpdateMec(ctx, req.(*CompanyInfo))
@@ -1935,7 +1979,7 @@ func _DeviceApi_RemoveMec_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/RemoveMec",
+		FullMethod: "/main.DeviceApi/RemoveMec",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).RemoveMec(ctx, req.(*CompanyInfo))
@@ -1963,7 +2007,7 @@ func _DeviceApi_DeleteMec_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DeleteMec",
+		FullMethod: "/main.DeviceApi/DeleteMec",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DeleteMec(ctx, req.(*CompanyInfo))
@@ -1991,7 +2035,7 @@ func _DeviceApi_SearchMec_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/SearchMec",
+		FullMethod: "/main.DeviceApi/SearchMec",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).SearchMec(ctx, req.(*CompanyInfo))
@@ -2019,7 +2063,7 @@ func _DeviceApi_KeepAlive_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/KeepAlive",
+		FullMethod: "/main.DeviceApi/KeepAlive",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).KeepAlive(ctx, req.(*CompanyInfo))
@@ -2047,7 +2091,7 @@ func _DeviceApi_AddDeviceVisitor_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/AddDeviceVisitor",
+		FullMethod: "/main.DeviceApi/AddDeviceVisitor",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).AddDeviceVisitor(ctx, req.(*DeviceInfo))
@@ -2075,7 +2119,7 @@ func _DeviceApi_DeviceVisitorLeave_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DeviceVisitorLeave",
+		FullMethod: "/main.DeviceApi/DeviceVisitorLeave",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DeviceVisitorLeave(ctx, req.(*DeviceInfo))
@@ -2103,7 +2147,7 @@ func _DeviceApi_AddDeviceTraffic_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/AddDeviceTraffic",
+		FullMethod: "/main.DeviceApi/AddDeviceTraffic",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).AddDeviceTraffic(ctx, req.(*TrafficInfo))
@@ -2131,7 +2175,7 @@ func _DeviceApi_GetDashboardDevicePassagePages_Handler(srv interface{}, ctx cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/GetDashboardDevicePassagePages",
+		FullMethod: "/main.DeviceApi/GetDashboardDevicePassagePages",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).GetDashboardDevicePassagePages(ctx, req.(*TrafficInfo))
@@ -2159,7 +2203,7 @@ func _DeviceApi_GetDevicePassageDetail_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/GetDevicePassageDetail",
+		FullMethod: "/main.DeviceApi/GetDevicePassageDetail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).GetDevicePassageDetail(ctx, req.(*CompanyInfo))
@@ -2187,7 +2231,7 @@ func _DeviceApi_DevicePassage_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DevicePassage",
+		FullMethod: "/main.DeviceApi/DevicePassage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DevicePassage(ctx, req.(*PassageInfo))
@@ -2215,7 +2259,7 @@ func _DeviceApi_DevicePassageIssue_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DevicePassageIssue",
+		FullMethod: "/main.DeviceApi/DevicePassageIssue",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DevicePassageIssue(ctx, req.(*CompanyInfo))
@@ -2243,7 +2287,7 @@ func _DeviceApi_DevicePassageSearch_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DevicePassageSearch",
+		FullMethod: "/main.DeviceApi/DevicePassageSearch",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DevicePassageSearch(ctx, req.(*DeviceUserInfo))
@@ -2271,7 +2315,7 @@ func _DeviceApi_DevicePassageCallback_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.DeviceApi/DevicePassageCallback",
+		FullMethod: "/main.DeviceApi/DevicePassageCallback",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeviceApiServer).DevicePassageCallback(ctx, req.(*CompanyInfo))
@@ -2283,7 +2327,7 @@ func _DeviceApi_DevicePassageCallback_Handler(srv interface{}, ctx context.Conte
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var DeviceApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.DeviceApi",
+	ServiceName: "main.DeviceApi",
 	HandlerType: (*DeviceApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -2391,9 +2435,9 @@ var DeviceApi_ServiceDesc = grpc_go.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type HelperApiClient interface {
-	CreateOneHelp(ctx context.Context, in *Faq, opts ...grpc_go.CallOption) (*HelperNull, common.ErrorWithAttachment)
-	UpdateOneHelp(ctx context.Context, in *Faq, opts ...grpc_go.CallOption) (*HelperNull, common.ErrorWithAttachment)
-	DeleteOneHelp(ctx context.Context, in *Faq, opts ...grpc_go.CallOption) (*HelperNull, common.ErrorWithAttachment)
+	CreateOneHelp(ctx context.Context, in *Faq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	UpdateOneHelp(ctx context.Context, in *Faq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DeleteOneHelp(ctx context.Context, in *Faq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	GetHelpCenterList(ctx context.Context, in *Faqs, opts ...grpc_go.CallOption) (*Faqs, common.ErrorWithAttachment)
 }
 
@@ -2402,9 +2446,9 @@ type helperApiClient struct {
 }
 
 type HelperApiClientImpl struct {
-	CreateOneHelp     func(ctx context.Context, in *Faq) (*HelperNull, error)
-	UpdateOneHelp     func(ctx context.Context, in *Faq) (*HelperNull, error)
-	DeleteOneHelp     func(ctx context.Context, in *Faq) (*HelperNull, error)
+	CreateOneHelp     func(ctx context.Context, in *Faq) (*Null, error)
+	UpdateOneHelp     func(ctx context.Context, in *Faq) (*Null, error)
+	DeleteOneHelp     func(ctx context.Context, in *Faq) (*Null, error)
 	GetHelpCenterList func(ctx context.Context, in *Faqs) (*Faqs, error)
 }
 
@@ -2416,20 +2460,20 @@ func NewHelperApiClient(cc *triple.TripleConn) HelperApiClient {
 	return &helperApiClient{cc}
 }
 
-func (c *helperApiClient) CreateOneHelp(ctx context.Context, in *Faq, opts ...grpc_go.CallOption) (*HelperNull, common.ErrorWithAttachment) {
-	out := new(HelperNull)
+func (c *helperApiClient) CreateOneHelp(ctx context.Context, in *Faq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateOneHelp", in, out)
 }
 
-func (c *helperApiClient) UpdateOneHelp(ctx context.Context, in *Faq, opts ...grpc_go.CallOption) (*HelperNull, common.ErrorWithAttachment) {
-	out := new(HelperNull)
+func (c *helperApiClient) UpdateOneHelp(ctx context.Context, in *Faq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpdateOneHelp", in, out)
 }
 
-func (c *helperApiClient) DeleteOneHelp(ctx context.Context, in *Faq, opts ...grpc_go.CallOption) (*HelperNull, common.ErrorWithAttachment) {
-	out := new(HelperNull)
+func (c *helperApiClient) DeleteOneHelp(ctx context.Context, in *Faq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteOneHelp", in, out)
 }
@@ -2444,9 +2488,9 @@ func (c *helperApiClient) GetHelpCenterList(ctx context.Context, in *Faqs, opts 
 // All implementations must embed UnimplementedHelperApiServer
 // for forward compatibility
 type HelperApiServer interface {
-	CreateOneHelp(context.Context, *Faq) (*HelperNull, error)
-	UpdateOneHelp(context.Context, *Faq) (*HelperNull, error)
-	DeleteOneHelp(context.Context, *Faq) (*HelperNull, error)
+	CreateOneHelp(context.Context, *Faq) (*Null, error)
+	UpdateOneHelp(context.Context, *Faq) (*Null, error)
+	DeleteOneHelp(context.Context, *Faq) (*Null, error)
 	GetHelpCenterList(context.Context, *Faqs) (*Faqs, error)
 	mustEmbedUnimplementedHelperApiServer()
 }
@@ -2456,13 +2500,13 @@ type UnimplementedHelperApiServer struct {
 	proxyImpl protocol.Invoker
 }
 
-func (UnimplementedHelperApiServer) CreateOneHelp(context.Context, *Faq) (*HelperNull, error) {
+func (UnimplementedHelperApiServer) CreateOneHelp(context.Context, *Faq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOneHelp not implemented")
 }
-func (UnimplementedHelperApiServer) UpdateOneHelp(context.Context, *Faq) (*HelperNull, error) {
+func (UnimplementedHelperApiServer) UpdateOneHelp(context.Context, *Faq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateOneHelp not implemented")
 }
-func (UnimplementedHelperApiServer) DeleteOneHelp(context.Context, *Faq) (*HelperNull, error) {
+func (UnimplementedHelperApiServer) DeleteOneHelp(context.Context, *Faq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteOneHelp not implemented")
 }
 func (UnimplementedHelperApiServer) GetHelpCenterList(context.Context, *Faqs) (*Faqs, error) {
@@ -2512,7 +2556,7 @@ func _HelperApi_CreateOneHelp_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.HelperApi/CreateOneHelp",
+		FullMethod: "/main.HelperApi/CreateOneHelp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(HelperApiServer).CreateOneHelp(ctx, req.(*Faq))
@@ -2540,7 +2584,7 @@ func _HelperApi_UpdateOneHelp_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.HelperApi/UpdateOneHelp",
+		FullMethod: "/main.HelperApi/UpdateOneHelp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(HelperApiServer).UpdateOneHelp(ctx, req.(*Faq))
@@ -2568,7 +2612,7 @@ func _HelperApi_DeleteOneHelp_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.HelperApi/DeleteOneHelp",
+		FullMethod: "/main.HelperApi/DeleteOneHelp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(HelperApiServer).DeleteOneHelp(ctx, req.(*Faq))
@@ -2596,7 +2640,7 @@ func _HelperApi_GetHelpCenterList_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.HelperApi/GetHelpCenterList",
+		FullMethod: "/main.HelperApi/GetHelpCenterList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(HelperApiServer).GetHelpCenterList(ctx, req.(*Faqs))
@@ -2608,7 +2652,7 @@ func _HelperApi_GetHelpCenterList_Handler(srv interface{}, ctx context.Context, 
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var HelperApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.HelperApi",
+	ServiceName: "main.HelperApi",
 	HandlerType: (*HelperApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -2636,19 +2680,17 @@ var HelperApi_ServiceDesc = grpc_go.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ManagerApiClient interface {
-	// Sends a greeting
 	RegisterManager(ctx context.Context, in *RegisterManagerReq, opts ...grpc_go.CallOption) (*RegisterManagerRes, common.ErrorWithAttachment)
-	// Sends a greeting via stream
-	ChangeName(ctx context.Context, in *ChangeNameReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment)
-	ChangeTFA(ctx context.Context, in *ChangeTFAReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment)
-	ChangePhone(ctx context.Context, in *ChangePhoneReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment)
-	ChangePassword(ctx context.Context, in *ChangePasswordReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment)
-	ChangeAccountAndPassword(ctx context.Context, in *ChangeAccountAndPasswordReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment)
-	ChangePasswordByPhone(ctx context.Context, in *ChangePasswordByPhoneReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment)
+	ChangeName(ctx context.Context, in *ChangeNameReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangeTFA(ctx context.Context, in *ChangeTFAReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangePhone(ctx context.Context, in *ChangePhoneReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangePassword(ctx context.Context, in *ChangePasswordReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangeAccountAndPassword(ctx context.Context, in *ChangeAccountAndPasswordReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangePasswordByPhone(ctx context.Context, in *ChangePasswordByPhoneReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	LoginByPhone(ctx context.Context, in *LoginByPhoneReq, opts ...grpc_go.CallOption) (*LoginByPhoneRes, common.ErrorWithAttachment)
 	GetLoginManager(ctx context.Context, in *GetLoginManagerReq, opts ...grpc_go.CallOption) (*GetLoginManagerRes, common.ErrorWithAttachment)
-	DeleteAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment)
-	CreateTeam(ctx context.Context, in *CreateTeamReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment)
+	DeleteAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	CreateTeam(ctx context.Context, in *CreateTeamReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 }
 
 type managerApiClient struct {
@@ -2657,16 +2699,16 @@ type managerApiClient struct {
 
 type ManagerApiClientImpl struct {
 	RegisterManager          func(ctx context.Context, in *RegisterManagerReq) (*RegisterManagerRes, error)
-	ChangeName               func(ctx context.Context, in *ChangeNameReq) (*Empty, error)
-	ChangeTFA                func(ctx context.Context, in *ChangeTFAReq) (*Empty, error)
-	ChangePhone              func(ctx context.Context, in *ChangePhoneReq) (*Empty, error)
-	ChangePassword           func(ctx context.Context, in *ChangePasswordReq) (*Empty, error)
-	ChangeAccountAndPassword func(ctx context.Context, in *ChangeAccountAndPasswordReq) (*Empty, error)
-	ChangePasswordByPhone    func(ctx context.Context, in *ChangePasswordByPhoneReq) (*Empty, error)
+	ChangeName               func(ctx context.Context, in *ChangeNameReq) (*Null, error)
+	ChangeTFA                func(ctx context.Context, in *ChangeTFAReq) (*Null, error)
+	ChangePhone              func(ctx context.Context, in *ChangePhoneReq) (*Null, error)
+	ChangePassword           func(ctx context.Context, in *ChangePasswordReq) (*Null, error)
+	ChangeAccountAndPassword func(ctx context.Context, in *ChangeAccountAndPasswordReq) (*Null, error)
+	ChangePasswordByPhone    func(ctx context.Context, in *ChangePasswordByPhoneReq) (*Null, error)
 	LoginByPhone             func(ctx context.Context, in *LoginByPhoneReq) (*LoginByPhoneRes, error)
 	GetLoginManager          func(ctx context.Context, in *GetLoginManagerReq) (*GetLoginManagerRes, error)
-	DeleteAccount            func(ctx context.Context, in *DeleteAccountReq) (*Empty, error)
-	CreateTeam               func(ctx context.Context, in *CreateTeamReq) (*Empty, error)
+	DeleteAccount            func(ctx context.Context, in *DeleteAccountReq) (*Null, error)
+	CreateTeam               func(ctx context.Context, in *CreateTeamReq) (*Null, error)
 }
 
 func (c *ManagerApiClientImpl) GetDubboStub(cc *triple.TripleConn) ManagerApiClient {
@@ -2683,38 +2725,38 @@ func (c *managerApiClient) RegisterManager(ctx context.Context, in *RegisterMana
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RegisterManager", in, out)
 }
 
-func (c *managerApiClient) ChangeName(ctx context.Context, in *ChangeNameReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment) {
-	out := new(Empty)
+func (c *managerApiClient) ChangeName(ctx context.Context, in *ChangeNameReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeName", in, out)
 }
 
-func (c *managerApiClient) ChangeTFA(ctx context.Context, in *ChangeTFAReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment) {
-	out := new(Empty)
+func (c *managerApiClient) ChangeTFA(ctx context.Context, in *ChangeTFAReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeTFA", in, out)
 }
 
-func (c *managerApiClient) ChangePhone(ctx context.Context, in *ChangePhoneReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment) {
-	out := new(Empty)
+func (c *managerApiClient) ChangePhone(ctx context.Context, in *ChangePhoneReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangePhone", in, out)
 }
 
-func (c *managerApiClient) ChangePassword(ctx context.Context, in *ChangePasswordReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment) {
-	out := new(Empty)
+func (c *managerApiClient) ChangePassword(ctx context.Context, in *ChangePasswordReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangePassword", in, out)
 }
 
-func (c *managerApiClient) ChangeAccountAndPassword(ctx context.Context, in *ChangeAccountAndPasswordReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment) {
-	out := new(Empty)
+func (c *managerApiClient) ChangeAccountAndPassword(ctx context.Context, in *ChangeAccountAndPasswordReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeAccountAndPassword", in, out)
 }
 
-func (c *managerApiClient) ChangePasswordByPhone(ctx context.Context, in *ChangePasswordByPhoneReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment) {
-	out := new(Empty)
+func (c *managerApiClient) ChangePasswordByPhone(ctx context.Context, in *ChangePasswordByPhoneReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangePasswordByPhone", in, out)
 }
@@ -2731,14 +2773,14 @@ func (c *managerApiClient) GetLoginManager(ctx context.Context, in *GetLoginMana
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetLoginManager", in, out)
 }
 
-func (c *managerApiClient) DeleteAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment) {
-	out := new(Empty)
+func (c *managerApiClient) DeleteAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteAccount", in, out)
 }
 
-func (c *managerApiClient) CreateTeam(ctx context.Context, in *CreateTeamReq, opts ...grpc_go.CallOption) (*Empty, common.ErrorWithAttachment) {
-	out := new(Empty)
+func (c *managerApiClient) CreateTeam(ctx context.Context, in *CreateTeamReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateTeam", in, out)
 }
@@ -2747,19 +2789,17 @@ func (c *managerApiClient) CreateTeam(ctx context.Context, in *CreateTeamReq, op
 // All implementations must embed UnimplementedManagerApiServer
 // for forward compatibility
 type ManagerApiServer interface {
-	// Sends a greeting
 	RegisterManager(context.Context, *RegisterManagerReq) (*RegisterManagerRes, error)
-	// Sends a greeting via stream
-	ChangeName(context.Context, *ChangeNameReq) (*Empty, error)
-	ChangeTFA(context.Context, *ChangeTFAReq) (*Empty, error)
-	ChangePhone(context.Context, *ChangePhoneReq) (*Empty, error)
-	ChangePassword(context.Context, *ChangePasswordReq) (*Empty, error)
-	ChangeAccountAndPassword(context.Context, *ChangeAccountAndPasswordReq) (*Empty, error)
-	ChangePasswordByPhone(context.Context, *ChangePasswordByPhoneReq) (*Empty, error)
+	ChangeName(context.Context, *ChangeNameReq) (*Null, error)
+	ChangeTFA(context.Context, *ChangeTFAReq) (*Null, error)
+	ChangePhone(context.Context, *ChangePhoneReq) (*Null, error)
+	ChangePassword(context.Context, *ChangePasswordReq) (*Null, error)
+	ChangeAccountAndPassword(context.Context, *ChangeAccountAndPasswordReq) (*Null, error)
+	ChangePasswordByPhone(context.Context, *ChangePasswordByPhoneReq) (*Null, error)
 	LoginByPhone(context.Context, *LoginByPhoneReq) (*LoginByPhoneRes, error)
 	GetLoginManager(context.Context, *GetLoginManagerReq) (*GetLoginManagerRes, error)
-	DeleteAccount(context.Context, *DeleteAccountReq) (*Empty, error)
-	CreateTeam(context.Context, *CreateTeamReq) (*Empty, error)
+	DeleteAccount(context.Context, *DeleteAccountReq) (*Null, error)
+	CreateTeam(context.Context, *CreateTeamReq) (*Null, error)
 	mustEmbedUnimplementedManagerApiServer()
 }
 
@@ -2771,22 +2811,22 @@ type UnimplementedManagerApiServer struct {
 func (UnimplementedManagerApiServer) RegisterManager(context.Context, *RegisterManagerReq) (*RegisterManagerRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterManager not implemented")
 }
-func (UnimplementedManagerApiServer) ChangeName(context.Context, *ChangeNameReq) (*Empty, error) {
+func (UnimplementedManagerApiServer) ChangeName(context.Context, *ChangeNameReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeName not implemented")
 }
-func (UnimplementedManagerApiServer) ChangeTFA(context.Context, *ChangeTFAReq) (*Empty, error) {
+func (UnimplementedManagerApiServer) ChangeTFA(context.Context, *ChangeTFAReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeTFA not implemented")
 }
-func (UnimplementedManagerApiServer) ChangePhone(context.Context, *ChangePhoneReq) (*Empty, error) {
+func (UnimplementedManagerApiServer) ChangePhone(context.Context, *ChangePhoneReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangePhone not implemented")
 }
-func (UnimplementedManagerApiServer) ChangePassword(context.Context, *ChangePasswordReq) (*Empty, error) {
+func (UnimplementedManagerApiServer) ChangePassword(context.Context, *ChangePasswordReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangePassword not implemented")
 }
-func (UnimplementedManagerApiServer) ChangeAccountAndPassword(context.Context, *ChangeAccountAndPasswordReq) (*Empty, error) {
+func (UnimplementedManagerApiServer) ChangeAccountAndPassword(context.Context, *ChangeAccountAndPasswordReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeAccountAndPassword not implemented")
 }
-func (UnimplementedManagerApiServer) ChangePasswordByPhone(context.Context, *ChangePasswordByPhoneReq) (*Empty, error) {
+func (UnimplementedManagerApiServer) ChangePasswordByPhone(context.Context, *ChangePasswordByPhoneReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangePasswordByPhone not implemented")
 }
 func (UnimplementedManagerApiServer) LoginByPhone(context.Context, *LoginByPhoneReq) (*LoginByPhoneRes, error) {
@@ -2795,10 +2835,10 @@ func (UnimplementedManagerApiServer) LoginByPhone(context.Context, *LoginByPhone
 func (UnimplementedManagerApiServer) GetLoginManager(context.Context, *GetLoginManagerReq) (*GetLoginManagerRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLoginManager not implemented")
 }
-func (UnimplementedManagerApiServer) DeleteAccount(context.Context, *DeleteAccountReq) (*Empty, error) {
+func (UnimplementedManagerApiServer) DeleteAccount(context.Context, *DeleteAccountReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAccount not implemented")
 }
-func (UnimplementedManagerApiServer) CreateTeam(context.Context, *CreateTeamReq) (*Empty, error) {
+func (UnimplementedManagerApiServer) CreateTeam(context.Context, *CreateTeamReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTeam not implemented")
 }
 func (s *UnimplementedManagerApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
@@ -2845,7 +2885,7 @@ func _ManagerApi_RegisterManager_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/RegisterManager",
+		FullMethod: "/main.ManagerApi/RegisterManager",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).RegisterManager(ctx, req.(*RegisterManagerReq))
@@ -2873,7 +2913,7 @@ func _ManagerApi_ChangeName_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/ChangeName",
+		FullMethod: "/main.ManagerApi/ChangeName",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).ChangeName(ctx, req.(*ChangeNameReq))
@@ -2901,7 +2941,7 @@ func _ManagerApi_ChangeTFA_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/ChangeTFA",
+		FullMethod: "/main.ManagerApi/ChangeTFA",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).ChangeTFA(ctx, req.(*ChangeTFAReq))
@@ -2929,7 +2969,7 @@ func _ManagerApi_ChangePhone_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/ChangePhone",
+		FullMethod: "/main.ManagerApi/ChangePhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).ChangePhone(ctx, req.(*ChangePhoneReq))
@@ -2957,7 +2997,7 @@ func _ManagerApi_ChangePassword_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/ChangePassword",
+		FullMethod: "/main.ManagerApi/ChangePassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).ChangePassword(ctx, req.(*ChangePasswordReq))
@@ -2985,7 +3025,7 @@ func _ManagerApi_ChangeAccountAndPassword_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/ChangeAccountAndPassword",
+		FullMethod: "/main.ManagerApi/ChangeAccountAndPassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).ChangeAccountAndPassword(ctx, req.(*ChangeAccountAndPasswordReq))
@@ -3013,7 +3053,7 @@ func _ManagerApi_ChangePasswordByPhone_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/ChangePasswordByPhone",
+		FullMethod: "/main.ManagerApi/ChangePasswordByPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).ChangePasswordByPhone(ctx, req.(*ChangePasswordByPhoneReq))
@@ -3041,7 +3081,7 @@ func _ManagerApi_LoginByPhone_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/LoginByPhone",
+		FullMethod: "/main.ManagerApi/LoginByPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).LoginByPhone(ctx, req.(*LoginByPhoneReq))
@@ -3069,7 +3109,7 @@ func _ManagerApi_GetLoginManager_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/GetLoginManager",
+		FullMethod: "/main.ManagerApi/GetLoginManager",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).GetLoginManager(ctx, req.(*GetLoginManagerReq))
@@ -3097,7 +3137,7 @@ func _ManagerApi_DeleteAccount_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/DeleteAccount",
+		FullMethod: "/main.ManagerApi/DeleteAccount",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).DeleteAccount(ctx, req.(*DeleteAccountReq))
@@ -3125,7 +3165,7 @@ func _ManagerApi_CreateTeam_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ManagerApi/CreateTeam",
+		FullMethod: "/main.ManagerApi/CreateTeam",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerApiServer).CreateTeam(ctx, req.(*CreateTeamReq))
@@ -3137,7 +3177,7 @@ func _ManagerApi_CreateTeam_Handler(srv interface{}, ctx context.Context, dec fu
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ManagerApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.ManagerApi",
+	ServiceName: "main.ManagerApi",
 	HandlerType: (*ManagerApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -3193,9 +3233,9 @@ var ManagerApi_ServiceDesc = grpc_go.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MessageApiClient interface {
-	GenerateAndroidMsg(ctx context.Context, in *AndroidMsg, opts ...grpc_go.CallOption) (*MessageNull, common.ErrorWithAttachment)
-	GenerateCheckCode(ctx context.Context, in *CheckCode, opts ...grpc_go.CallOption) (*MessageNull, common.ErrorWithAttachment)
-	VerifyCheckCode(ctx context.Context, in *CheckCode, opts ...grpc_go.CallOption) (*MessageNull, common.ErrorWithAttachment)
+	GenerateAndroidMsg(ctx context.Context, in *AndroidMsg, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	GenerateCheckCode(ctx context.Context, in *CheckCode, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	VerifyCheckCode(ctx context.Context, in *CheckCode, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	TotalMessage(ctx context.Context, in *TotalMsg, opts ...grpc_go.CallOption) (*TotalMsg, common.ErrorWithAttachment)
 }
 
@@ -3204,9 +3244,9 @@ type messageApiClient struct {
 }
 
 type MessageApiClientImpl struct {
-	GenerateAndroidMsg func(ctx context.Context, in *AndroidMsg) (*MessageNull, error)
-	GenerateCheckCode  func(ctx context.Context, in *CheckCode) (*MessageNull, error)
-	VerifyCheckCode    func(ctx context.Context, in *CheckCode) (*MessageNull, error)
+	GenerateAndroidMsg func(ctx context.Context, in *AndroidMsg) (*Null, error)
+	GenerateCheckCode  func(ctx context.Context, in *CheckCode) (*Null, error)
+	VerifyCheckCode    func(ctx context.Context, in *CheckCode) (*Null, error)
 	TotalMessage       func(ctx context.Context, in *TotalMsg) (*TotalMsg, error)
 }
 
@@ -3218,20 +3258,20 @@ func NewMessageApiClient(cc *triple.TripleConn) MessageApiClient {
 	return &messageApiClient{cc}
 }
 
-func (c *messageApiClient) GenerateAndroidMsg(ctx context.Context, in *AndroidMsg, opts ...grpc_go.CallOption) (*MessageNull, common.ErrorWithAttachment) {
-	out := new(MessageNull)
+func (c *messageApiClient) GenerateAndroidMsg(ctx context.Context, in *AndroidMsg, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GenerateAndroidMsg", in, out)
 }
 
-func (c *messageApiClient) GenerateCheckCode(ctx context.Context, in *CheckCode, opts ...grpc_go.CallOption) (*MessageNull, common.ErrorWithAttachment) {
-	out := new(MessageNull)
+func (c *messageApiClient) GenerateCheckCode(ctx context.Context, in *CheckCode, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GenerateCheckCode", in, out)
 }
 
-func (c *messageApiClient) VerifyCheckCode(ctx context.Context, in *CheckCode, opts ...grpc_go.CallOption) (*MessageNull, common.ErrorWithAttachment) {
-	out := new(MessageNull)
+func (c *messageApiClient) VerifyCheckCode(ctx context.Context, in *CheckCode, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/VerifyCheckCode", in, out)
 }
@@ -3246,9 +3286,9 @@ func (c *messageApiClient) TotalMessage(ctx context.Context, in *TotalMsg, opts 
 // All implementations must embed UnimplementedMessageApiServer
 // for forward compatibility
 type MessageApiServer interface {
-	GenerateAndroidMsg(context.Context, *AndroidMsg) (*MessageNull, error)
-	GenerateCheckCode(context.Context, *CheckCode) (*MessageNull, error)
-	VerifyCheckCode(context.Context, *CheckCode) (*MessageNull, error)
+	GenerateAndroidMsg(context.Context, *AndroidMsg) (*Null, error)
+	GenerateCheckCode(context.Context, *CheckCode) (*Null, error)
+	VerifyCheckCode(context.Context, *CheckCode) (*Null, error)
 	TotalMessage(context.Context, *TotalMsg) (*TotalMsg, error)
 	mustEmbedUnimplementedMessageApiServer()
 }
@@ -3258,13 +3298,13 @@ type UnimplementedMessageApiServer struct {
 	proxyImpl protocol.Invoker
 }
 
-func (UnimplementedMessageApiServer) GenerateAndroidMsg(context.Context, *AndroidMsg) (*MessageNull, error) {
+func (UnimplementedMessageApiServer) GenerateAndroidMsg(context.Context, *AndroidMsg) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GenerateAndroidMsg not implemented")
 }
-func (UnimplementedMessageApiServer) GenerateCheckCode(context.Context, *CheckCode) (*MessageNull, error) {
+func (UnimplementedMessageApiServer) GenerateCheckCode(context.Context, *CheckCode) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GenerateCheckCode not implemented")
 }
-func (UnimplementedMessageApiServer) VerifyCheckCode(context.Context, *CheckCode) (*MessageNull, error) {
+func (UnimplementedMessageApiServer) VerifyCheckCode(context.Context, *CheckCode) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyCheckCode not implemented")
 }
 func (UnimplementedMessageApiServer) TotalMessage(context.Context, *TotalMsg) (*TotalMsg, error) {
@@ -3314,7 +3354,7 @@ func _MessageApi_GenerateAndroidMsg_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.MessageApi/GenerateAndroidMsg",
+		FullMethod: "/main.MessageApi/GenerateAndroidMsg",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MessageApiServer).GenerateAndroidMsg(ctx, req.(*AndroidMsg))
@@ -3342,7 +3382,7 @@ func _MessageApi_GenerateCheckCode_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.MessageApi/GenerateCheckCode",
+		FullMethod: "/main.MessageApi/GenerateCheckCode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MessageApiServer).GenerateCheckCode(ctx, req.(*CheckCode))
@@ -3370,7 +3410,7 @@ func _MessageApi_VerifyCheckCode_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.MessageApi/VerifyCheckCode",
+		FullMethod: "/main.MessageApi/VerifyCheckCode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MessageApiServer).VerifyCheckCode(ctx, req.(*CheckCode))
@@ -3398,7 +3438,7 @@ func _MessageApi_TotalMessage_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.MessageApi/TotalMessage",
+		FullMethod: "/main.MessageApi/TotalMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MessageApiServer).TotalMessage(ctx, req.(*TotalMsg))
@@ -3410,7 +3450,7 @@ func _MessageApi_TotalMessage_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var MessageApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.MessageApi",
+	ServiceName: "main.MessageApi",
 	HandlerType: (*MessageApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -3438,10 +3478,10 @@ var MessageApi_ServiceDesc = grpc_go.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrganizationApiClient interface {
-	OneUser(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
+	OneUser(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	GetVisitorTicketInfo(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
 	OneTenantUser(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
-	DeleteUser(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
+	DeleteUser(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	UserBase(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
 	UserBaseContainsIdCard(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
 	UnitUserBase(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
@@ -3456,15 +3496,15 @@ type OrganizationApiClient interface {
 	UserByNameAndPhoneIndistinct(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
 	GetUserByNameAndPhoneIndistinct(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
 	UserUuidByPhone(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
-	UserMark(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
-	UserModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
+	UserMark(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	UserModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	UserFaceRedirect(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
-	OneUserTenant(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
-	RootUnit(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
-	ChildUnit(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
-	RootUnitModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
-	ChildUnitModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
-	DeleteUnit(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
+	OneUserTenant(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	RootUnit(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChildUnit(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	RootUnitModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChildUnitModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DeleteUnit(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	UnitRootTree(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Any, common.ErrorWithAttachment)
 	UnitTreeByParUuid(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Any, common.ErrorWithAttachment)
 	UnitRootTreeJson(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Any, common.ErrorWithAttachment)
@@ -3475,19 +3515,19 @@ type OrganizationApiClient interface {
 	UnitMemberByUnitUuid(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
 	UnitByUserUuid(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
 	SameUnitMemberList(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
-	UnitMemberModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
-	DeleteUnitMember(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
+	UnitMemberModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DeleteUnitMember(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	ExcelFileImport(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
 	ImportVisitors(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
-	AddOneVisitor(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
+	AddOneVisitor(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	GetImportOrgResult(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Any, common.ErrorWithAttachment)
 	GetImportVisitorOrgResult(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Any, common.ErrorWithAttachment)
 	BaseInfoByBindPhone(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
 	ClientIds(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
-	WeChatUnBind(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
+	WeChatUnBind(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	UserTenantByUserUuid(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
 	IsBlacklist(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgRes, common.ErrorWithAttachment)
-	UpdateIsBlacklist(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment)
+	UpdateIsBlacklist(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 }
 
 type organizationApiClient struct {
@@ -3495,10 +3535,10 @@ type organizationApiClient struct {
 }
 
 type OrganizationApiClientImpl struct {
-	OneUser                         func(ctx context.Context, in *OrgReq) (*OrgNull, error)
+	OneUser                         func(ctx context.Context, in *OrgReq) (*Null, error)
 	GetVisitorTicketInfo            func(ctx context.Context, in *OrgReq) (*OrgRes, error)
 	OneTenantUser                   func(ctx context.Context, in *OrgReq) (*OrgRes, error)
-	DeleteUser                      func(ctx context.Context, in *OrgReq) (*OrgNull, error)
+	DeleteUser                      func(ctx context.Context, in *OrgReq) (*Null, error)
 	UserBase                        func(ctx context.Context, in *OrgReq) (*OrgRes, error)
 	UserBaseContainsIdCard          func(ctx context.Context, in *OrgReq) (*OrgRes, error)
 	UnitUserBase                    func(ctx context.Context, in *OrgReq) (*OrgRes, error)
@@ -3513,15 +3553,15 @@ type OrganizationApiClientImpl struct {
 	UserByNameAndPhoneIndistinct    func(ctx context.Context, in *OrgReq) (*OrgRes, error)
 	GetUserByNameAndPhoneIndistinct func(ctx context.Context, in *OrgReq) (*OrgRes, error)
 	UserUuidByPhone                 func(ctx context.Context, in *OrgReq) (*OrgRes, error)
-	UserMark                        func(ctx context.Context, in *OrgReq) (*OrgNull, error)
-	UserModify                      func(ctx context.Context, in *OrgReq) (*OrgNull, error)
+	UserMark                        func(ctx context.Context, in *OrgReq) (*Null, error)
+	UserModify                      func(ctx context.Context, in *OrgReq) (*Null, error)
 	UserFaceRedirect                func(ctx context.Context, in *OrgReq) (*OrgRes, error)
-	OneUserTenant                   func(ctx context.Context, in *OrgReq) (*OrgNull, error)
-	RootUnit                        func(ctx context.Context, in *OrgReq) (*OrgNull, error)
-	ChildUnit                       func(ctx context.Context, in *OrgReq) (*OrgNull, error)
-	RootUnitModify                  func(ctx context.Context, in *OrgReq) (*OrgNull, error)
-	ChildUnitModify                 func(ctx context.Context, in *OrgReq) (*OrgNull, error)
-	DeleteUnit                      func(ctx context.Context, in *OrgReq) (*OrgNull, error)
+	OneUserTenant                   func(ctx context.Context, in *OrgReq) (*Null, error)
+	RootUnit                        func(ctx context.Context, in *OrgReq) (*Null, error)
+	ChildUnit                       func(ctx context.Context, in *OrgReq) (*Null, error)
+	RootUnitModify                  func(ctx context.Context, in *OrgReq) (*Null, error)
+	ChildUnitModify                 func(ctx context.Context, in *OrgReq) (*Null, error)
+	DeleteUnit                      func(ctx context.Context, in *OrgReq) (*Null, error)
 	UnitRootTree                    func(ctx context.Context, in *OrgReq) (*Any, error)
 	UnitTreeByParUuid               func(ctx context.Context, in *OrgReq) (*Any, error)
 	UnitRootTreeJson                func(ctx context.Context, in *OrgReq) (*Any, error)
@@ -3532,19 +3572,19 @@ type OrganizationApiClientImpl struct {
 	UnitMemberByUnitUuid            func(ctx context.Context, in *OrgReq) (*OrgRes, error)
 	UnitByUserUuid                  func(ctx context.Context, in *OrgReq) (*OrgRes, error)
 	SameUnitMemberList              func(ctx context.Context, in *OrgReq) (*OrgRes, error)
-	UnitMemberModify                func(ctx context.Context, in *OrgReq) (*OrgNull, error)
-	DeleteUnitMember                func(ctx context.Context, in *OrgReq) (*OrgNull, error)
+	UnitMemberModify                func(ctx context.Context, in *OrgReq) (*Null, error)
+	DeleteUnitMember                func(ctx context.Context, in *OrgReq) (*Null, error)
 	ExcelFileImport                 func(ctx context.Context, in *OrgReq) (*OrgRes, error)
 	ImportVisitors                  func(ctx context.Context, in *OrgReq) (*OrgRes, error)
-	AddOneVisitor                   func(ctx context.Context, in *OrgReq) (*OrgNull, error)
+	AddOneVisitor                   func(ctx context.Context, in *OrgReq) (*Null, error)
 	GetImportOrgResult              func(ctx context.Context, in *OrgReq) (*Any, error)
 	GetImportVisitorOrgResult       func(ctx context.Context, in *OrgReq) (*Any, error)
 	BaseInfoByBindPhone             func(ctx context.Context, in *OrgReq) (*OrgRes, error)
 	ClientIds                       func(ctx context.Context, in *OrgReq) (*OrgRes, error)
-	WeChatUnBind                    func(ctx context.Context, in *OrgReq) (*OrgNull, error)
+	WeChatUnBind                    func(ctx context.Context, in *OrgReq) (*Null, error)
 	UserTenantByUserUuid            func(ctx context.Context, in *OrgReq) (*OrgRes, error)
 	IsBlacklist                     func(ctx context.Context, in *OrgReq) (*OrgRes, error)
-	UpdateIsBlacklist               func(ctx context.Context, in *OrgReq) (*OrgNull, error)
+	UpdateIsBlacklist               func(ctx context.Context, in *OrgReq) (*Null, error)
 }
 
 func (c *OrganizationApiClientImpl) GetDubboStub(cc *triple.TripleConn) OrganizationApiClient {
@@ -3555,8 +3595,8 @@ func NewOrganizationApiClient(cc *triple.TripleConn) OrganizationApiClient {
 	return &organizationApiClient{cc}
 }
 
-func (c *organizationApiClient) OneUser(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) OneUser(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/OneUser", in, out)
 }
@@ -3573,8 +3613,8 @@ func (c *organizationApiClient) OneTenantUser(ctx context.Context, in *OrgReq, o
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/OneTenantUser", in, out)
 }
 
-func (c *organizationApiClient) DeleteUser(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) DeleteUser(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteUser", in, out)
 }
@@ -3663,14 +3703,14 @@ func (c *organizationApiClient) UserUuidByPhone(ctx context.Context, in *OrgReq,
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UserUuidByPhone", in, out)
 }
 
-func (c *organizationApiClient) UserMark(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) UserMark(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UserMark", in, out)
 }
 
-func (c *organizationApiClient) UserModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) UserModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UserModify", in, out)
 }
@@ -3681,38 +3721,38 @@ func (c *organizationApiClient) UserFaceRedirect(ctx context.Context, in *OrgReq
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UserFaceRedirect", in, out)
 }
 
-func (c *organizationApiClient) OneUserTenant(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) OneUserTenant(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/OneUserTenant", in, out)
 }
 
-func (c *organizationApiClient) RootUnit(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) RootUnit(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RootUnit", in, out)
 }
 
-func (c *organizationApiClient) ChildUnit(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) ChildUnit(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChildUnit", in, out)
 }
 
-func (c *organizationApiClient) RootUnitModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) RootUnitModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RootUnitModify", in, out)
 }
 
-func (c *organizationApiClient) ChildUnitModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) ChildUnitModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChildUnitModify", in, out)
 }
 
-func (c *organizationApiClient) DeleteUnit(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) DeleteUnit(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteUnit", in, out)
 }
@@ -3777,14 +3817,14 @@ func (c *organizationApiClient) SameUnitMemberList(ctx context.Context, in *OrgR
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/SameUnitMemberList", in, out)
 }
 
-func (c *organizationApiClient) UnitMemberModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) UnitMemberModify(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UnitMemberModify", in, out)
 }
 
-func (c *organizationApiClient) DeleteUnitMember(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) DeleteUnitMember(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteUnitMember", in, out)
 }
@@ -3801,8 +3841,8 @@ func (c *organizationApiClient) ImportVisitors(ctx context.Context, in *OrgReq, 
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ImportVisitors", in, out)
 }
 
-func (c *organizationApiClient) AddOneVisitor(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) AddOneVisitor(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/AddOneVisitor", in, out)
 }
@@ -3831,8 +3871,8 @@ func (c *organizationApiClient) ClientIds(ctx context.Context, in *OrgReq, opts 
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ClientIds", in, out)
 }
 
-func (c *organizationApiClient) WeChatUnBind(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) WeChatUnBind(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/WeChatUnBind", in, out)
 }
@@ -3849,8 +3889,8 @@ func (c *organizationApiClient) IsBlacklist(ctx context.Context, in *OrgReq, opt
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/IsBlacklist", in, out)
 }
 
-func (c *organizationApiClient) UpdateIsBlacklist(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*OrgNull, common.ErrorWithAttachment) {
-	out := new(OrgNull)
+func (c *organizationApiClient) UpdateIsBlacklist(ctx context.Context, in *OrgReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpdateIsBlacklist", in, out)
 }
@@ -3859,10 +3899,10 @@ func (c *organizationApiClient) UpdateIsBlacklist(ctx context.Context, in *OrgRe
 // All implementations must embed UnimplementedOrganizationApiServer
 // for forward compatibility
 type OrganizationApiServer interface {
-	OneUser(context.Context, *OrgReq) (*OrgNull, error)
+	OneUser(context.Context, *OrgReq) (*Null, error)
 	GetVisitorTicketInfo(context.Context, *OrgReq) (*OrgRes, error)
 	OneTenantUser(context.Context, *OrgReq) (*OrgRes, error)
-	DeleteUser(context.Context, *OrgReq) (*OrgNull, error)
+	DeleteUser(context.Context, *OrgReq) (*Null, error)
 	UserBase(context.Context, *OrgReq) (*OrgRes, error)
 	UserBaseContainsIdCard(context.Context, *OrgReq) (*OrgRes, error)
 	UnitUserBase(context.Context, *OrgReq) (*OrgRes, error)
@@ -3877,15 +3917,15 @@ type OrganizationApiServer interface {
 	UserByNameAndPhoneIndistinct(context.Context, *OrgReq) (*OrgRes, error)
 	GetUserByNameAndPhoneIndistinct(context.Context, *OrgReq) (*OrgRes, error)
 	UserUuidByPhone(context.Context, *OrgReq) (*OrgRes, error)
-	UserMark(context.Context, *OrgReq) (*OrgNull, error)
-	UserModify(context.Context, *OrgReq) (*OrgNull, error)
+	UserMark(context.Context, *OrgReq) (*Null, error)
+	UserModify(context.Context, *OrgReq) (*Null, error)
 	UserFaceRedirect(context.Context, *OrgReq) (*OrgRes, error)
-	OneUserTenant(context.Context, *OrgReq) (*OrgNull, error)
-	RootUnit(context.Context, *OrgReq) (*OrgNull, error)
-	ChildUnit(context.Context, *OrgReq) (*OrgNull, error)
-	RootUnitModify(context.Context, *OrgReq) (*OrgNull, error)
-	ChildUnitModify(context.Context, *OrgReq) (*OrgNull, error)
-	DeleteUnit(context.Context, *OrgReq) (*OrgNull, error)
+	OneUserTenant(context.Context, *OrgReq) (*Null, error)
+	RootUnit(context.Context, *OrgReq) (*Null, error)
+	ChildUnit(context.Context, *OrgReq) (*Null, error)
+	RootUnitModify(context.Context, *OrgReq) (*Null, error)
+	ChildUnitModify(context.Context, *OrgReq) (*Null, error)
+	DeleteUnit(context.Context, *OrgReq) (*Null, error)
 	UnitRootTree(context.Context, *OrgReq) (*Any, error)
 	UnitTreeByParUuid(context.Context, *OrgReq) (*Any, error)
 	UnitRootTreeJson(context.Context, *OrgReq) (*Any, error)
@@ -3896,19 +3936,19 @@ type OrganizationApiServer interface {
 	UnitMemberByUnitUuid(context.Context, *OrgReq) (*OrgRes, error)
 	UnitByUserUuid(context.Context, *OrgReq) (*OrgRes, error)
 	SameUnitMemberList(context.Context, *OrgReq) (*OrgRes, error)
-	UnitMemberModify(context.Context, *OrgReq) (*OrgNull, error)
-	DeleteUnitMember(context.Context, *OrgReq) (*OrgNull, error)
+	UnitMemberModify(context.Context, *OrgReq) (*Null, error)
+	DeleteUnitMember(context.Context, *OrgReq) (*Null, error)
 	ExcelFileImport(context.Context, *OrgReq) (*OrgRes, error)
 	ImportVisitors(context.Context, *OrgReq) (*OrgRes, error)
-	AddOneVisitor(context.Context, *OrgReq) (*OrgNull, error)
+	AddOneVisitor(context.Context, *OrgReq) (*Null, error)
 	GetImportOrgResult(context.Context, *OrgReq) (*Any, error)
 	GetImportVisitorOrgResult(context.Context, *OrgReq) (*Any, error)
 	BaseInfoByBindPhone(context.Context, *OrgReq) (*OrgRes, error)
 	ClientIds(context.Context, *OrgReq) (*OrgRes, error)
-	WeChatUnBind(context.Context, *OrgReq) (*OrgNull, error)
+	WeChatUnBind(context.Context, *OrgReq) (*Null, error)
 	UserTenantByUserUuid(context.Context, *OrgReq) (*OrgRes, error)
 	IsBlacklist(context.Context, *OrgReq) (*OrgRes, error)
-	UpdateIsBlacklist(context.Context, *OrgReq) (*OrgNull, error)
+	UpdateIsBlacklist(context.Context, *OrgReq) (*Null, error)
 	mustEmbedUnimplementedOrganizationApiServer()
 }
 
@@ -3917,7 +3957,7 @@ type UnimplementedOrganizationApiServer struct {
 	proxyImpl protocol.Invoker
 }
 
-func (UnimplementedOrganizationApiServer) OneUser(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) OneUser(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OneUser not implemented")
 }
 func (UnimplementedOrganizationApiServer) GetVisitorTicketInfo(context.Context, *OrgReq) (*OrgRes, error) {
@@ -3926,7 +3966,7 @@ func (UnimplementedOrganizationApiServer) GetVisitorTicketInfo(context.Context, 
 func (UnimplementedOrganizationApiServer) OneTenantUser(context.Context, *OrgReq) (*OrgRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OneTenantUser not implemented")
 }
-func (UnimplementedOrganizationApiServer) DeleteUser(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) DeleteUser(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
 }
 func (UnimplementedOrganizationApiServer) UserBase(context.Context, *OrgReq) (*OrgRes, error) {
@@ -3971,31 +4011,31 @@ func (UnimplementedOrganizationApiServer) GetUserByNameAndPhoneIndistinct(contex
 func (UnimplementedOrganizationApiServer) UserUuidByPhone(context.Context, *OrgReq) (*OrgRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserUuidByPhone not implemented")
 }
-func (UnimplementedOrganizationApiServer) UserMark(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) UserMark(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserMark not implemented")
 }
-func (UnimplementedOrganizationApiServer) UserModify(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) UserModify(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserModify not implemented")
 }
 func (UnimplementedOrganizationApiServer) UserFaceRedirect(context.Context, *OrgReq) (*OrgRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserFaceRedirect not implemented")
 }
-func (UnimplementedOrganizationApiServer) OneUserTenant(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) OneUserTenant(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OneUserTenant not implemented")
 }
-func (UnimplementedOrganizationApiServer) RootUnit(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) RootUnit(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RootUnit not implemented")
 }
-func (UnimplementedOrganizationApiServer) ChildUnit(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) ChildUnit(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChildUnit not implemented")
 }
-func (UnimplementedOrganizationApiServer) RootUnitModify(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) RootUnitModify(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RootUnitModify not implemented")
 }
-func (UnimplementedOrganizationApiServer) ChildUnitModify(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) ChildUnitModify(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChildUnitModify not implemented")
 }
-func (UnimplementedOrganizationApiServer) DeleteUnit(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) DeleteUnit(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteUnit not implemented")
 }
 func (UnimplementedOrganizationApiServer) UnitRootTree(context.Context, *OrgReq) (*Any, error) {
@@ -4028,10 +4068,10 @@ func (UnimplementedOrganizationApiServer) UnitByUserUuid(context.Context, *OrgRe
 func (UnimplementedOrganizationApiServer) SameUnitMemberList(context.Context, *OrgReq) (*OrgRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SameUnitMemberList not implemented")
 }
-func (UnimplementedOrganizationApiServer) UnitMemberModify(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) UnitMemberModify(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnitMemberModify not implemented")
 }
-func (UnimplementedOrganizationApiServer) DeleteUnitMember(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) DeleteUnitMember(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteUnitMember not implemented")
 }
 func (UnimplementedOrganizationApiServer) ExcelFileImport(context.Context, *OrgReq) (*OrgRes, error) {
@@ -4040,7 +4080,7 @@ func (UnimplementedOrganizationApiServer) ExcelFileImport(context.Context, *OrgR
 func (UnimplementedOrganizationApiServer) ImportVisitors(context.Context, *OrgReq) (*OrgRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ImportVisitors not implemented")
 }
-func (UnimplementedOrganizationApiServer) AddOneVisitor(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) AddOneVisitor(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddOneVisitor not implemented")
 }
 func (UnimplementedOrganizationApiServer) GetImportOrgResult(context.Context, *OrgReq) (*Any, error) {
@@ -4055,7 +4095,7 @@ func (UnimplementedOrganizationApiServer) BaseInfoByBindPhone(context.Context, *
 func (UnimplementedOrganizationApiServer) ClientIds(context.Context, *OrgReq) (*OrgRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClientIds not implemented")
 }
-func (UnimplementedOrganizationApiServer) WeChatUnBind(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) WeChatUnBind(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WeChatUnBind not implemented")
 }
 func (UnimplementedOrganizationApiServer) UserTenantByUserUuid(context.Context, *OrgReq) (*OrgRes, error) {
@@ -4064,7 +4104,7 @@ func (UnimplementedOrganizationApiServer) UserTenantByUserUuid(context.Context, 
 func (UnimplementedOrganizationApiServer) IsBlacklist(context.Context, *OrgReq) (*OrgRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsBlacklist not implemented")
 }
-func (UnimplementedOrganizationApiServer) UpdateIsBlacklist(context.Context, *OrgReq) (*OrgNull, error) {
+func (UnimplementedOrganizationApiServer) UpdateIsBlacklist(context.Context, *OrgReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateIsBlacklist not implemented")
 }
 func (s *UnimplementedOrganizationApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
@@ -4111,7 +4151,7 @@ func _OrganizationApi_OneUser_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/OneUser",
+		FullMethod: "/main.OrganizationApi/OneUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).OneUser(ctx, req.(*OrgReq))
@@ -4139,7 +4179,7 @@ func _OrganizationApi_GetVisitorTicketInfo_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/GetVisitorTicketInfo",
+		FullMethod: "/main.OrganizationApi/GetVisitorTicketInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).GetVisitorTicketInfo(ctx, req.(*OrgReq))
@@ -4167,7 +4207,7 @@ func _OrganizationApi_OneTenantUser_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/OneTenantUser",
+		FullMethod: "/main.OrganizationApi/OneTenantUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).OneTenantUser(ctx, req.(*OrgReq))
@@ -4195,7 +4235,7 @@ func _OrganizationApi_DeleteUser_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/DeleteUser",
+		FullMethod: "/main.OrganizationApi/DeleteUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).DeleteUser(ctx, req.(*OrgReq))
@@ -4223,7 +4263,7 @@ func _OrganizationApi_UserBase_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserBase",
+		FullMethod: "/main.OrganizationApi/UserBase",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserBase(ctx, req.(*OrgReq))
@@ -4251,7 +4291,7 @@ func _OrganizationApi_UserBaseContainsIdCard_Handler(srv interface{}, ctx contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserBaseContainsIdCard",
+		FullMethod: "/main.OrganizationApi/UserBaseContainsIdCard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserBaseContainsIdCard(ctx, req.(*OrgReq))
@@ -4279,7 +4319,7 @@ func _OrganizationApi_UnitUserBase_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitUserBase",
+		FullMethod: "/main.OrganizationApi/UnitUserBase",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitUserBase(ctx, req.(*OrgReq))
@@ -4307,7 +4347,7 @@ func _OrganizationApi_UnitMemberIds_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitMemberIds",
+		FullMethod: "/main.OrganizationApi/UnitMemberIds",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitMemberIds(ctx, req.(*OrgReq))
@@ -4335,7 +4375,7 @@ func _OrganizationApi_UserIds_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserIds",
+		FullMethod: "/main.OrganizationApi/UserIds",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserIds(ctx, req.(*OrgReq))
@@ -4363,7 +4403,7 @@ func _OrganizationApi_LeaderUuid_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/LeaderUuid",
+		FullMethod: "/main.OrganizationApi/LeaderUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).LeaderUuid(ctx, req.(*OrgReq))
@@ -4391,7 +4431,7 @@ func _OrganizationApi_EmpIndistinct_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/EmpIndistinct",
+		FullMethod: "/main.OrganizationApi/EmpIndistinct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).EmpIndistinct(ctx, req.(*OrgReq))
@@ -4419,7 +4459,7 @@ func _OrganizationApi_EmpByNameAndPhoneIndistinct_Handler(srv interface{}, ctx c
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/EmpByNameAndPhoneIndistinct",
+		FullMethod: "/main.OrganizationApi/EmpByNameAndPhoneIndistinct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).EmpByNameAndPhoneIndistinct(ctx, req.(*OrgReq))
@@ -4447,7 +4487,7 @@ func _OrganizationApi_EmpByNameAndPhoneAndDepName_Handler(srv interface{}, ctx c
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/EmpByNameAndPhoneAndDepName",
+		FullMethod: "/main.OrganizationApi/EmpByNameAndPhoneAndDepName",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).EmpByNameAndPhoneAndDepName(ctx, req.(*OrgReq))
@@ -4475,7 +4515,7 @@ func _OrganizationApi_UnitUser_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitUser",
+		FullMethod: "/main.OrganizationApi/UnitUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitUser(ctx, req.(*OrgReq))
@@ -4503,7 +4543,7 @@ func _OrganizationApi_VisitorsUser_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/VisitorsUser",
+		FullMethod: "/main.OrganizationApi/VisitorsUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).VisitorsUser(ctx, req.(*OrgReq))
@@ -4531,7 +4571,7 @@ func _OrganizationApi_UserByNameAndPhoneIndistinct_Handler(srv interface{}, ctx 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserByNameAndPhoneIndistinct",
+		FullMethod: "/main.OrganizationApi/UserByNameAndPhoneIndistinct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserByNameAndPhoneIndistinct(ctx, req.(*OrgReq))
@@ -4559,7 +4599,7 @@ func _OrganizationApi_GetUserByNameAndPhoneIndistinct_Handler(srv interface{}, c
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/GetUserByNameAndPhoneIndistinct",
+		FullMethod: "/main.OrganizationApi/GetUserByNameAndPhoneIndistinct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).GetUserByNameAndPhoneIndistinct(ctx, req.(*OrgReq))
@@ -4587,7 +4627,7 @@ func _OrganizationApi_UserUuidByPhone_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserUuidByPhone",
+		FullMethod: "/main.OrganizationApi/UserUuidByPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserUuidByPhone(ctx, req.(*OrgReq))
@@ -4615,7 +4655,7 @@ func _OrganizationApi_UserMark_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserMark",
+		FullMethod: "/main.OrganizationApi/UserMark",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserMark(ctx, req.(*OrgReq))
@@ -4643,7 +4683,7 @@ func _OrganizationApi_UserModify_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserModify",
+		FullMethod: "/main.OrganizationApi/UserModify",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserModify(ctx, req.(*OrgReq))
@@ -4671,7 +4711,7 @@ func _OrganizationApi_UserFaceRedirect_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserFaceRedirect",
+		FullMethod: "/main.OrganizationApi/UserFaceRedirect",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserFaceRedirect(ctx, req.(*OrgReq))
@@ -4699,7 +4739,7 @@ func _OrganizationApi_OneUserTenant_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/OneUserTenant",
+		FullMethod: "/main.OrganizationApi/OneUserTenant",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).OneUserTenant(ctx, req.(*OrgReq))
@@ -4727,7 +4767,7 @@ func _OrganizationApi_RootUnit_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/RootUnit",
+		FullMethod: "/main.OrganizationApi/RootUnit",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).RootUnit(ctx, req.(*OrgReq))
@@ -4755,7 +4795,7 @@ func _OrganizationApi_ChildUnit_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ChildUnit",
+		FullMethod: "/main.OrganizationApi/ChildUnit",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ChildUnit(ctx, req.(*OrgReq))
@@ -4783,7 +4823,7 @@ func _OrganizationApi_RootUnitModify_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/RootUnitModify",
+		FullMethod: "/main.OrganizationApi/RootUnitModify",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).RootUnitModify(ctx, req.(*OrgReq))
@@ -4811,7 +4851,7 @@ func _OrganizationApi_ChildUnitModify_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ChildUnitModify",
+		FullMethod: "/main.OrganizationApi/ChildUnitModify",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ChildUnitModify(ctx, req.(*OrgReq))
@@ -4839,7 +4879,7 @@ func _OrganizationApi_DeleteUnit_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/DeleteUnit",
+		FullMethod: "/main.OrganizationApi/DeleteUnit",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).DeleteUnit(ctx, req.(*OrgReq))
@@ -4867,7 +4907,7 @@ func _OrganizationApi_UnitRootTree_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitRootTree",
+		FullMethod: "/main.OrganizationApi/UnitRootTree",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitRootTree(ctx, req.(*OrgReq))
@@ -4895,7 +4935,7 @@ func _OrganizationApi_UnitTreeByParUuid_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitTreeByParUuid",
+		FullMethod: "/main.OrganizationApi/UnitTreeByParUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitTreeByParUuid(ctx, req.(*OrgReq))
@@ -4923,7 +4963,7 @@ func _OrganizationApi_UnitRootTreeJson_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitRootTreeJson",
+		FullMethod: "/main.OrganizationApi/UnitRootTreeJson",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitRootTreeJson(ctx, req.(*OrgReq))
@@ -4951,7 +4991,7 @@ func _OrganizationApi_ParentUnitTree_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ParentUnitTree",
+		FullMethod: "/main.OrganizationApi/ParentUnitTree",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ParentUnitTree(ctx, req.(*OrgReq))
@@ -4979,7 +5019,7 @@ func _OrganizationApi_IsLeader_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/IsLeader",
+		FullMethod: "/main.OrganizationApi/IsLeader",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).IsLeader(ctx, req.(*OrgReq))
@@ -5007,7 +5047,7 @@ func _OrganizationApi_ChildUnitPagesList_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ChildUnitPagesList",
+		FullMethod: "/main.OrganizationApi/ChildUnitPagesList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ChildUnitPagesList(ctx, req.(*OrgReq))
@@ -5035,7 +5075,7 @@ func _OrganizationApi_RootUnitPagesList_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/RootUnitPagesList",
+		FullMethod: "/main.OrganizationApi/RootUnitPagesList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).RootUnitPagesList(ctx, req.(*OrgReq))
@@ -5063,7 +5103,7 @@ func _OrganizationApi_UnitMemberByUnitUuid_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitMemberByUnitUuid",
+		FullMethod: "/main.OrganizationApi/UnitMemberByUnitUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitMemberByUnitUuid(ctx, req.(*OrgReq))
@@ -5091,7 +5131,7 @@ func _OrganizationApi_UnitByUserUuid_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitByUserUuid",
+		FullMethod: "/main.OrganizationApi/UnitByUserUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitByUserUuid(ctx, req.(*OrgReq))
@@ -5119,7 +5159,7 @@ func _OrganizationApi_SameUnitMemberList_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/SameUnitMemberList",
+		FullMethod: "/main.OrganizationApi/SameUnitMemberList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).SameUnitMemberList(ctx, req.(*OrgReq))
@@ -5147,7 +5187,7 @@ func _OrganizationApi_UnitMemberModify_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UnitMemberModify",
+		FullMethod: "/main.OrganizationApi/UnitMemberModify",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UnitMemberModify(ctx, req.(*OrgReq))
@@ -5175,7 +5215,7 @@ func _OrganizationApi_DeleteUnitMember_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/DeleteUnitMember",
+		FullMethod: "/main.OrganizationApi/DeleteUnitMember",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).DeleteUnitMember(ctx, req.(*OrgReq))
@@ -5203,7 +5243,7 @@ func _OrganizationApi_ExcelFileImport_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ExcelFileImport",
+		FullMethod: "/main.OrganizationApi/ExcelFileImport",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ExcelFileImport(ctx, req.(*OrgReq))
@@ -5231,7 +5271,7 @@ func _OrganizationApi_ImportVisitors_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ImportVisitors",
+		FullMethod: "/main.OrganizationApi/ImportVisitors",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ImportVisitors(ctx, req.(*OrgReq))
@@ -5259,7 +5299,7 @@ func _OrganizationApi_AddOneVisitor_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/AddOneVisitor",
+		FullMethod: "/main.OrganizationApi/AddOneVisitor",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).AddOneVisitor(ctx, req.(*OrgReq))
@@ -5287,7 +5327,7 @@ func _OrganizationApi_GetImportOrgResult_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/GetImportOrgResult",
+		FullMethod: "/main.OrganizationApi/GetImportOrgResult",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).GetImportOrgResult(ctx, req.(*OrgReq))
@@ -5315,7 +5355,7 @@ func _OrganizationApi_GetImportVisitorOrgResult_Handler(srv interface{}, ctx con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/GetImportVisitorOrgResult",
+		FullMethod: "/main.OrganizationApi/GetImportVisitorOrgResult",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).GetImportVisitorOrgResult(ctx, req.(*OrgReq))
@@ -5343,7 +5383,7 @@ func _OrganizationApi_BaseInfoByBindPhone_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/BaseInfoByBindPhone",
+		FullMethod: "/main.OrganizationApi/BaseInfoByBindPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).BaseInfoByBindPhone(ctx, req.(*OrgReq))
@@ -5371,7 +5411,7 @@ func _OrganizationApi_ClientIds_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/ClientIds",
+		FullMethod: "/main.OrganizationApi/ClientIds",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).ClientIds(ctx, req.(*OrgReq))
@@ -5399,7 +5439,7 @@ func _OrganizationApi_WeChatUnBind_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/WeChatUnBind",
+		FullMethod: "/main.OrganizationApi/WeChatUnBind",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).WeChatUnBind(ctx, req.(*OrgReq))
@@ -5427,7 +5467,7 @@ func _OrganizationApi_UserTenantByUserUuid_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UserTenantByUserUuid",
+		FullMethod: "/main.OrganizationApi/UserTenantByUserUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UserTenantByUserUuid(ctx, req.(*OrgReq))
@@ -5455,7 +5495,7 @@ func _OrganizationApi_IsBlacklist_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/IsBlacklist",
+		FullMethod: "/main.OrganizationApi/IsBlacklist",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).IsBlacklist(ctx, req.(*OrgReq))
@@ -5483,7 +5523,7 @@ func _OrganizationApi_UpdateIsBlacklist_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.OrganizationApi/UpdateIsBlacklist",
+		FullMethod: "/main.OrganizationApi/UpdateIsBlacklist",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationApiServer).UpdateIsBlacklist(ctx, req.(*OrgReq))
@@ -5495,7 +5535,7 @@ func _OrganizationApi_UpdateIsBlacklist_Handler(srv interface{}, ctx context.Con
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var OrganizationApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.OrganizationApi",
+	ServiceName: "main.OrganizationApi",
 	HandlerType: (*OrganizationApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -5709,7 +5749,7 @@ var OrganizationApi_ServiceDesc = grpc_go.ServiceDesc{
 type PassageApiClient interface {
 	PassageAddMyEmp(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageRes, common.ErrorWithAttachment)
 	PassageMyEmpPages(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageResMap, common.ErrorWithAttachment)
-	PassageMyEmp(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageNull, common.ErrorWithAttachment)
+	PassageMyEmp(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	PassageMyEmpLists(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageRes, common.ErrorWithAttachment)
 	PassageBooking(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageRes, common.ErrorWithAttachment)
 	BatchPassageInvite(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageRes, common.ErrorWithAttachment)
@@ -5730,16 +5770,16 @@ type PassageApiClient interface {
 	VisitorTodayPass(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageRes, common.ErrorWithAttachment)
 	EmpTodayPass(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageRes, common.ErrorWithAttachment)
 	PassageAddMyVisitor(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageRes, common.ErrorWithAttachment)
-	PassageMyVisitorTop(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageNull, common.ErrorWithAttachment)
+	PassageMyVisitorTop(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	PassageMyVisitorPages(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageResMap, common.ErrorWithAttachment)
 	PassageMyVisitor(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageResMap, common.ErrorWithAttachment)
 	PassageMyVisitorByUuid(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageRes, common.ErrorWithAttachment)
 	PassageMyVisitorLists(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageRes, common.ErrorWithAttachment)
-	WorkFlow(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageNull, common.ErrorWithAttachment)
+	WorkFlow(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	PassagePageLists(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageMap, common.ErrorWithAttachment)
 	PassageExcel(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageRes, common.ErrorWithAttachment)
-	DevicePassage(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageNull, common.ErrorWithAttachment)
-	BasePassage(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageNull, common.ErrorWithAttachment)
+	DevicePassage(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	BasePassage(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	SpotVisitorDetail(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageRes, common.ErrorWithAttachment)
 	PassageSpotVisitorPages(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageSpotMap, common.ErrorWithAttachment)
 	PassageSpotVisitor(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageSpotMap, common.ErrorWithAttachment)
@@ -5752,7 +5792,7 @@ type passageApiClient struct {
 type PassageApiClientImpl struct {
 	PassageAddMyEmp             func(ctx context.Context, in *PassageReq) (*PassageRes, error)
 	PassageMyEmpPages           func(ctx context.Context, in *PassageReq) (*PassageResMap, error)
-	PassageMyEmp                func(ctx context.Context, in *PassageReq) (*PassageNull, error)
+	PassageMyEmp                func(ctx context.Context, in *PassageReq) (*Null, error)
 	PassageMyEmpLists           func(ctx context.Context, in *PassageReq) (*PassageRes, error)
 	PassageBooking              func(ctx context.Context, in *PassageReq) (*PassageRes, error)
 	BatchPassageInvite          func(ctx context.Context, in *PassageReq) (*PassageRes, error)
@@ -5773,16 +5813,16 @@ type PassageApiClientImpl struct {
 	VisitorTodayPass            func(ctx context.Context, in *PassageReq) (*PassageRes, error)
 	EmpTodayPass                func(ctx context.Context, in *PassageReq) (*PassageRes, error)
 	PassageAddMyVisitor         func(ctx context.Context, in *PassageReq) (*PassageRes, error)
-	PassageMyVisitorTop         func(ctx context.Context, in *PassageReq) (*PassageNull, error)
+	PassageMyVisitorTop         func(ctx context.Context, in *PassageReq) (*Null, error)
 	PassageMyVisitorPages       func(ctx context.Context, in *PassageReq) (*PassageResMap, error)
 	PassageMyVisitor            func(ctx context.Context, in *PassageReq) (*PassageResMap, error)
 	PassageMyVisitorByUuid      func(ctx context.Context, in *PassageReq) (*PassageRes, error)
 	PassageMyVisitorLists       func(ctx context.Context, in *PassageReq) (*PassageRes, error)
-	WorkFlow                    func(ctx context.Context, in *PassageReq) (*PassageNull, error)
+	WorkFlow                    func(ctx context.Context, in *PassageReq) (*Null, error)
 	PassagePageLists            func(ctx context.Context, in *PassageReq) (*PassageMap, error)
 	PassageExcel                func(ctx context.Context, in *PassageReq) (*PassageRes, error)
-	DevicePassage               func(ctx context.Context, in *PassageReq) (*PassageNull, error)
-	BasePassage                 func(ctx context.Context, in *PassageReq) (*PassageNull, error)
+	DevicePassage               func(ctx context.Context, in *PassageReq) (*Null, error)
+	BasePassage                 func(ctx context.Context, in *PassageReq) (*Null, error)
 	SpotVisitorDetail           func(ctx context.Context, in *PassageReq) (*PassageRes, error)
 	PassageSpotVisitorPages     func(ctx context.Context, in *PassageReq) (*PassageSpotMap, error)
 	PassageSpotVisitor          func(ctx context.Context, in *PassageReq) (*PassageSpotMap, error)
@@ -5808,8 +5848,8 @@ func (c *passageApiClient) PassageMyEmpPages(ctx context.Context, in *PassageReq
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/PassageMyEmpPages", in, out)
 }
 
-func (c *passageApiClient) PassageMyEmp(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageNull, common.ErrorWithAttachment) {
-	out := new(PassageNull)
+func (c *passageApiClient) PassageMyEmp(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/PassageMyEmp", in, out)
 }
@@ -5934,8 +5974,8 @@ func (c *passageApiClient) PassageAddMyVisitor(ctx context.Context, in *PassageR
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/PassageAddMyVisitor", in, out)
 }
 
-func (c *passageApiClient) PassageMyVisitorTop(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageNull, common.ErrorWithAttachment) {
-	out := new(PassageNull)
+func (c *passageApiClient) PassageMyVisitorTop(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/PassageMyVisitorTop", in, out)
 }
@@ -5964,8 +6004,8 @@ func (c *passageApiClient) PassageMyVisitorLists(ctx context.Context, in *Passag
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/PassageMyVisitorLists", in, out)
 }
 
-func (c *passageApiClient) WorkFlow(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageNull, common.ErrorWithAttachment) {
-	out := new(PassageNull)
+func (c *passageApiClient) WorkFlow(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/WorkFlow", in, out)
 }
@@ -5982,14 +6022,14 @@ func (c *passageApiClient) PassageExcel(ctx context.Context, in *PassageReq, opt
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/PassageExcel", in, out)
 }
 
-func (c *passageApiClient) DevicePassage(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageNull, common.ErrorWithAttachment) {
-	out := new(PassageNull)
+func (c *passageApiClient) DevicePassage(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DevicePassage", in, out)
 }
 
-func (c *passageApiClient) BasePassage(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*PassageNull, common.ErrorWithAttachment) {
-	out := new(PassageNull)
+func (c *passageApiClient) BasePassage(ctx context.Context, in *PassageReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/BasePassage", in, out)
 }
@@ -6018,7 +6058,7 @@ func (c *passageApiClient) PassageSpotVisitor(ctx context.Context, in *PassageRe
 type PassageApiServer interface {
 	PassageAddMyEmp(context.Context, *PassageReq) (*PassageRes, error)
 	PassageMyEmpPages(context.Context, *PassageReq) (*PassageResMap, error)
-	PassageMyEmp(context.Context, *PassageReq) (*PassageNull, error)
+	PassageMyEmp(context.Context, *PassageReq) (*Null, error)
 	PassageMyEmpLists(context.Context, *PassageReq) (*PassageRes, error)
 	PassageBooking(context.Context, *PassageReq) (*PassageRes, error)
 	BatchPassageInvite(context.Context, *PassageReq) (*PassageRes, error)
@@ -6039,16 +6079,16 @@ type PassageApiServer interface {
 	VisitorTodayPass(context.Context, *PassageReq) (*PassageRes, error)
 	EmpTodayPass(context.Context, *PassageReq) (*PassageRes, error)
 	PassageAddMyVisitor(context.Context, *PassageReq) (*PassageRes, error)
-	PassageMyVisitorTop(context.Context, *PassageReq) (*PassageNull, error)
+	PassageMyVisitorTop(context.Context, *PassageReq) (*Null, error)
 	PassageMyVisitorPages(context.Context, *PassageReq) (*PassageResMap, error)
 	PassageMyVisitor(context.Context, *PassageReq) (*PassageResMap, error)
 	PassageMyVisitorByUuid(context.Context, *PassageReq) (*PassageRes, error)
 	PassageMyVisitorLists(context.Context, *PassageReq) (*PassageRes, error)
-	WorkFlow(context.Context, *PassageReq) (*PassageNull, error)
+	WorkFlow(context.Context, *PassageReq) (*Null, error)
 	PassagePageLists(context.Context, *PassageReq) (*PassageMap, error)
 	PassageExcel(context.Context, *PassageReq) (*PassageRes, error)
-	DevicePassage(context.Context, *PassageReq) (*PassageNull, error)
-	BasePassage(context.Context, *PassageReq) (*PassageNull, error)
+	DevicePassage(context.Context, *PassageReq) (*Null, error)
+	BasePassage(context.Context, *PassageReq) (*Null, error)
 	SpotVisitorDetail(context.Context, *PassageReq) (*PassageRes, error)
 	PassageSpotVisitorPages(context.Context, *PassageReq) (*PassageSpotMap, error)
 	PassageSpotVisitor(context.Context, *PassageReq) (*PassageSpotMap, error)
@@ -6066,7 +6106,7 @@ func (UnimplementedPassageApiServer) PassageAddMyEmp(context.Context, *PassageRe
 func (UnimplementedPassageApiServer) PassageMyEmpPages(context.Context, *PassageReq) (*PassageResMap, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PassageMyEmpPages not implemented")
 }
-func (UnimplementedPassageApiServer) PassageMyEmp(context.Context, *PassageReq) (*PassageNull, error) {
+func (UnimplementedPassageApiServer) PassageMyEmp(context.Context, *PassageReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PassageMyEmp not implemented")
 }
 func (UnimplementedPassageApiServer) PassageMyEmpLists(context.Context, *PassageReq) (*PassageRes, error) {
@@ -6129,7 +6169,7 @@ func (UnimplementedPassageApiServer) EmpTodayPass(context.Context, *PassageReq) 
 func (UnimplementedPassageApiServer) PassageAddMyVisitor(context.Context, *PassageReq) (*PassageRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PassageAddMyVisitor not implemented")
 }
-func (UnimplementedPassageApiServer) PassageMyVisitorTop(context.Context, *PassageReq) (*PassageNull, error) {
+func (UnimplementedPassageApiServer) PassageMyVisitorTop(context.Context, *PassageReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PassageMyVisitorTop not implemented")
 }
 func (UnimplementedPassageApiServer) PassageMyVisitorPages(context.Context, *PassageReq) (*PassageResMap, error) {
@@ -6144,7 +6184,7 @@ func (UnimplementedPassageApiServer) PassageMyVisitorByUuid(context.Context, *Pa
 func (UnimplementedPassageApiServer) PassageMyVisitorLists(context.Context, *PassageReq) (*PassageRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PassageMyVisitorLists not implemented")
 }
-func (UnimplementedPassageApiServer) WorkFlow(context.Context, *PassageReq) (*PassageNull, error) {
+func (UnimplementedPassageApiServer) WorkFlow(context.Context, *PassageReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WorkFlow not implemented")
 }
 func (UnimplementedPassageApiServer) PassagePageLists(context.Context, *PassageReq) (*PassageMap, error) {
@@ -6153,10 +6193,10 @@ func (UnimplementedPassageApiServer) PassagePageLists(context.Context, *PassageR
 func (UnimplementedPassageApiServer) PassageExcel(context.Context, *PassageReq) (*PassageRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PassageExcel not implemented")
 }
-func (UnimplementedPassageApiServer) DevicePassage(context.Context, *PassageReq) (*PassageNull, error) {
+func (UnimplementedPassageApiServer) DevicePassage(context.Context, *PassageReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DevicePassage not implemented")
 }
-func (UnimplementedPassageApiServer) BasePassage(context.Context, *PassageReq) (*PassageNull, error) {
+func (UnimplementedPassageApiServer) BasePassage(context.Context, *PassageReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BasePassage not implemented")
 }
 func (UnimplementedPassageApiServer) SpotVisitorDetail(context.Context, *PassageReq) (*PassageRes, error) {
@@ -6212,7 +6252,7 @@ func _PassageApi_PassageAddMyEmp_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageAddMyEmp",
+		FullMethod: "/main.PassageApi/PassageAddMyEmp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageAddMyEmp(ctx, req.(*PassageReq))
@@ -6240,7 +6280,7 @@ func _PassageApi_PassageMyEmpPages_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyEmpPages",
+		FullMethod: "/main.PassageApi/PassageMyEmpPages",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyEmpPages(ctx, req.(*PassageReq))
@@ -6268,7 +6308,7 @@ func _PassageApi_PassageMyEmp_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyEmp",
+		FullMethod: "/main.PassageApi/PassageMyEmp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyEmp(ctx, req.(*PassageReq))
@@ -6296,7 +6336,7 @@ func _PassageApi_PassageMyEmpLists_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyEmpLists",
+		FullMethod: "/main.PassageApi/PassageMyEmpLists",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyEmpLists(ctx, req.(*PassageReq))
@@ -6324,7 +6364,7 @@ func _PassageApi_PassageBooking_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageBooking",
+		FullMethod: "/main.PassageApi/PassageBooking",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageBooking(ctx, req.(*PassageReq))
@@ -6352,7 +6392,7 @@ func _PassageApi_BatchPassageInvite_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/BatchPassageInvite",
+		FullMethod: "/main.PassageApi/BatchPassageInvite",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).BatchPassageInvite(ctx, req.(*PassageReq))
@@ -6380,7 +6420,7 @@ func _PassageApi_GetInviteBatchPassageResult_Handler(srv interface{}, ctx contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/GetInviteBatchPassageResult",
+		FullMethod: "/main.PassageApi/GetInviteBatchPassageResult",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).GetInviteBatchPassageResult(ctx, req.(*PassageReq))
@@ -6408,7 +6448,7 @@ func _PassageApi_PassageInvite_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageInvite",
+		FullMethod: "/main.PassageApi/PassageInvite",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageInvite(ctx, req.(*PassageReq))
@@ -6436,7 +6476,7 @@ func _PassageApi_DeletePassage_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/DeletePassage",
+		FullMethod: "/main.PassageApi/DeletePassage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).DeletePassage(ctx, req.(*PassageReq))
@@ -6464,7 +6504,7 @@ func _PassageApi_DeletePassageByPersonUuid_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/DeletePassageByPersonUuid",
+		FullMethod: "/main.PassageApi/DeletePassageByPersonUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).DeletePassageByPersonUuid(ctx, req.(*PassageReq))
@@ -6492,7 +6532,7 @@ func _PassageApi_PassageLists_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageLists",
+		FullMethod: "/main.PassageApi/PassageLists",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageLists(ctx, req.(*PassageReq))
@@ -6520,7 +6560,7 @@ func _PassageApi_PassageBookingAll_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageBookingAll",
+		FullMethod: "/main.PassageApi/PassageBookingAll",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageBookingAll(ctx, req.(*PassageReq))
@@ -6548,7 +6588,7 @@ func _PassageApi_PassageInviteAll_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageInviteAll",
+		FullMethod: "/main.PassageApi/PassageInviteAll",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageInviteAll(ctx, req.(*PassageReq))
@@ -6576,7 +6616,7 @@ func _PassageApi_PassageBookingArrival_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageBookingArrival",
+		FullMethod: "/main.PassageApi/PassageBookingArrival",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageBookingArrival(ctx, req.(*PassageReq))
@@ -6604,7 +6644,7 @@ func _PassageApi_PassageBookingStatus_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageBookingStatus",
+		FullMethod: "/main.PassageApi/PassageBookingStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageBookingStatus(ctx, req.(*PassageReq))
@@ -6632,7 +6672,7 @@ func _PassageApi_PassageBookingStatusPass_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageBookingStatusPass",
+		FullMethod: "/main.PassageApi/PassageBookingStatusPass",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageBookingStatusPass(ctx, req.(*PassageReq))
@@ -6660,7 +6700,7 @@ func _PassageApi_PassageInviteArrival_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageInviteArrival",
+		FullMethod: "/main.PassageApi/PassageInviteArrival",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageInviteArrival(ctx, req.(*PassageReq))
@@ -6688,7 +6728,7 @@ func _PassageApi_PassageInviteStatus_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageInviteStatus",
+		FullMethod: "/main.PassageApi/PassageInviteStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageInviteStatus(ctx, req.(*PassageReq))
@@ -6716,7 +6756,7 @@ func _PassageApi_PassageInviteStatusPass_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageInviteStatusPass",
+		FullMethod: "/main.PassageApi/PassageInviteStatusPass",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageInviteStatusPass(ctx, req.(*PassageReq))
@@ -6744,7 +6784,7 @@ func _PassageApi_OneDetail_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/OneDetail",
+		FullMethod: "/main.PassageApi/OneDetail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).OneDetail(ctx, req.(*PassageReq))
@@ -6772,7 +6812,7 @@ func _PassageApi_VisitorTodayPass_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/VisitorTodayPass",
+		FullMethod: "/main.PassageApi/VisitorTodayPass",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).VisitorTodayPass(ctx, req.(*PassageReq))
@@ -6800,7 +6840,7 @@ func _PassageApi_EmpTodayPass_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/EmpTodayPass",
+		FullMethod: "/main.PassageApi/EmpTodayPass",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).EmpTodayPass(ctx, req.(*PassageReq))
@@ -6828,7 +6868,7 @@ func _PassageApi_PassageAddMyVisitor_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageAddMyVisitor",
+		FullMethod: "/main.PassageApi/PassageAddMyVisitor",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageAddMyVisitor(ctx, req.(*PassageReq))
@@ -6856,7 +6896,7 @@ func _PassageApi_PassageMyVisitorTop_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyVisitorTop",
+		FullMethod: "/main.PassageApi/PassageMyVisitorTop",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyVisitorTop(ctx, req.(*PassageReq))
@@ -6884,7 +6924,7 @@ func _PassageApi_PassageMyVisitorPages_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyVisitorPages",
+		FullMethod: "/main.PassageApi/PassageMyVisitorPages",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyVisitorPages(ctx, req.(*PassageReq))
@@ -6912,7 +6952,7 @@ func _PassageApi_PassageMyVisitor_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyVisitor",
+		FullMethod: "/main.PassageApi/PassageMyVisitor",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyVisitor(ctx, req.(*PassageReq))
@@ -6940,7 +6980,7 @@ func _PassageApi_PassageMyVisitorByUuid_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyVisitorByUuid",
+		FullMethod: "/main.PassageApi/PassageMyVisitorByUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyVisitorByUuid(ctx, req.(*PassageReq))
@@ -6968,7 +7008,7 @@ func _PassageApi_PassageMyVisitorLists_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageMyVisitorLists",
+		FullMethod: "/main.PassageApi/PassageMyVisitorLists",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageMyVisitorLists(ctx, req.(*PassageReq))
@@ -6996,7 +7036,7 @@ func _PassageApi_WorkFlow_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/WorkFlow",
+		FullMethod: "/main.PassageApi/WorkFlow",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).WorkFlow(ctx, req.(*PassageReq))
@@ -7024,7 +7064,7 @@ func _PassageApi_PassagePageLists_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassagePageLists",
+		FullMethod: "/main.PassageApi/PassagePageLists",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassagePageLists(ctx, req.(*PassageReq))
@@ -7052,7 +7092,7 @@ func _PassageApi_PassageExcel_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageExcel",
+		FullMethod: "/main.PassageApi/PassageExcel",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageExcel(ctx, req.(*PassageReq))
@@ -7080,7 +7120,7 @@ func _PassageApi_DevicePassage_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/DevicePassage",
+		FullMethod: "/main.PassageApi/DevicePassage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).DevicePassage(ctx, req.(*PassageReq))
@@ -7108,7 +7148,7 @@ func _PassageApi_BasePassage_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/BasePassage",
+		FullMethod: "/main.PassageApi/BasePassage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).BasePassage(ctx, req.(*PassageReq))
@@ -7136,7 +7176,7 @@ func _PassageApi_SpotVisitorDetail_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/SpotVisitorDetail",
+		FullMethod: "/main.PassageApi/SpotVisitorDetail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).SpotVisitorDetail(ctx, req.(*PassageReq))
@@ -7164,7 +7204,7 @@ func _PassageApi_PassageSpotVisitorPages_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageSpotVisitorPages",
+		FullMethod: "/main.PassageApi/PassageSpotVisitorPages",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageSpotVisitorPages(ctx, req.(*PassageReq))
@@ -7192,7 +7232,7 @@ func _PassageApi_PassageSpotVisitor_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.PassageApi/PassageSpotVisitor",
+		FullMethod: "/main.PassageApi/PassageSpotVisitor",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PassageApiServer).PassageSpotVisitor(ctx, req.(*PassageReq))
@@ -7204,7 +7244,7 @@ func _PassageApi_PassageSpotVisitor_Handler(srv interface{}, ctx context.Context
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PassageApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.PassageApi",
+	ServiceName: "main.PassageApi",
 	HandlerType: (*PassageApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -7362,21 +7402,21 @@ var PassageApi_ServiceDesc = grpc_go.ServiceDesc{
 type QuestionnaireApiClient interface {
 	InitQuestionnaire(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*NaireInfo, common.ErrorWithAttachment)
 	AddQuestionnaire(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*NaireInfo, common.ErrorWithAttachment)
-	UpdateQuestionnaire(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*QuestionNull, common.ErrorWithAttachment)
+	UpdateQuestionnaire(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	GetQuestionnaire(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*QuestionList, common.ErrorWithAttachment)
-	DeleteQuestionnaire(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*QuestionNull, common.ErrorWithAttachment)
+	DeleteQuestionnaire(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	GetQuestionnaireList(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*QuestionList, common.ErrorWithAttachment)
 	GetQuestionInfo(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*QuestionInfo, common.ErrorWithAttachment)
 	AddOneQuestion(ctx context.Context, in *QuestionInfo, opts ...grpc_go.CallOption) (*QuestionInfo, common.ErrorWithAttachment)
-	UpdateOneQuestion(ctx context.Context, in *QuestionInfo, opts ...grpc_go.CallOption) (*QuestionNull, common.ErrorWithAttachment)
-	DeleteQuestionByUuid(ctx context.Context, in *QuestionInfo, opts ...grpc_go.CallOption) (*QuestionNull, common.ErrorWithAttachment)
+	UpdateOneQuestion(ctx context.Context, in *QuestionInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DeleteQuestionByUuid(ctx context.Context, in *QuestionInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	GetQuestionList(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*QuestionList, common.ErrorWithAttachment)
 	GetAnswerByUN(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*AnswerList, common.ErrorWithAttachment)
 	AddAnswerByUN(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*AnswerInfo, common.ErrorWithAttachment)
-	UpdateAnswerByAU(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*QuestionNull, common.ErrorWithAttachment)
+	UpdateAnswerByAU(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	GetIAnswerByQUuid(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*AnswerList, common.ErrorWithAttachment)
 	GetQNAnswerBYQN(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*AnswerList, common.ErrorWithAttachment)
-	DeleteUAnswerByQN(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*QuestionNull, common.ErrorWithAttachment)
+	DeleteUAnswerByQN(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 }
 
 type questionnaireApiClient struct {
@@ -7386,21 +7426,21 @@ type questionnaireApiClient struct {
 type QuestionnaireApiClientImpl struct {
 	InitQuestionnaire    func(ctx context.Context, in *NaireInfo) (*NaireInfo, error)
 	AddQuestionnaire     func(ctx context.Context, in *NaireInfo) (*NaireInfo, error)
-	UpdateQuestionnaire  func(ctx context.Context, in *NaireInfo) (*QuestionNull, error)
+	UpdateQuestionnaire  func(ctx context.Context, in *NaireInfo) (*Null, error)
 	GetQuestionnaire     func(ctx context.Context, in *NaireInfo) (*QuestionList, error)
-	DeleteQuestionnaire  func(ctx context.Context, in *NaireInfo) (*QuestionNull, error)
+	DeleteQuestionnaire  func(ctx context.Context, in *NaireInfo) (*Null, error)
 	GetQuestionnaireList func(ctx context.Context, in *NaireInfo) (*QuestionList, error)
 	GetQuestionInfo      func(ctx context.Context, in *NaireInfo) (*QuestionInfo, error)
 	AddOneQuestion       func(ctx context.Context, in *QuestionInfo) (*QuestionInfo, error)
-	UpdateOneQuestion    func(ctx context.Context, in *QuestionInfo) (*QuestionNull, error)
-	DeleteQuestionByUuid func(ctx context.Context, in *QuestionInfo) (*QuestionNull, error)
+	UpdateOneQuestion    func(ctx context.Context, in *QuestionInfo) (*Null, error)
+	DeleteQuestionByUuid func(ctx context.Context, in *QuestionInfo) (*Null, error)
 	GetQuestionList      func(ctx context.Context, in *NaireInfo) (*QuestionList, error)
 	GetAnswerByUN        func(ctx context.Context, in *AnswerInfo) (*AnswerList, error)
 	AddAnswerByUN        func(ctx context.Context, in *AnswerInfo) (*AnswerInfo, error)
-	UpdateAnswerByAU     func(ctx context.Context, in *AnswerInfo) (*QuestionNull, error)
+	UpdateAnswerByAU     func(ctx context.Context, in *AnswerInfo) (*Null, error)
 	GetIAnswerByQUuid    func(ctx context.Context, in *AnswerInfo) (*AnswerList, error)
 	GetQNAnswerBYQN      func(ctx context.Context, in *AnswerInfo) (*AnswerList, error)
-	DeleteUAnswerByQN    func(ctx context.Context, in *AnswerInfo) (*QuestionNull, error)
+	DeleteUAnswerByQN    func(ctx context.Context, in *AnswerInfo) (*Null, error)
 }
 
 func (c *QuestionnaireApiClientImpl) GetDubboStub(cc *triple.TripleConn) QuestionnaireApiClient {
@@ -7423,8 +7463,8 @@ func (c *questionnaireApiClient) AddQuestionnaire(ctx context.Context, in *Naire
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/AddQuestionnaire", in, out)
 }
 
-func (c *questionnaireApiClient) UpdateQuestionnaire(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*QuestionNull, common.ErrorWithAttachment) {
-	out := new(QuestionNull)
+func (c *questionnaireApiClient) UpdateQuestionnaire(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpdateQuestionnaire", in, out)
 }
@@ -7435,8 +7475,8 @@ func (c *questionnaireApiClient) GetQuestionnaire(ctx context.Context, in *Naire
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetQuestionnaire", in, out)
 }
 
-func (c *questionnaireApiClient) DeleteQuestionnaire(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*QuestionNull, common.ErrorWithAttachment) {
-	out := new(QuestionNull)
+func (c *questionnaireApiClient) DeleteQuestionnaire(ctx context.Context, in *NaireInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteQuestionnaire", in, out)
 }
@@ -7459,14 +7499,14 @@ func (c *questionnaireApiClient) AddOneQuestion(ctx context.Context, in *Questio
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/AddOneQuestion", in, out)
 }
 
-func (c *questionnaireApiClient) UpdateOneQuestion(ctx context.Context, in *QuestionInfo, opts ...grpc_go.CallOption) (*QuestionNull, common.ErrorWithAttachment) {
-	out := new(QuestionNull)
+func (c *questionnaireApiClient) UpdateOneQuestion(ctx context.Context, in *QuestionInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpdateOneQuestion", in, out)
 }
 
-func (c *questionnaireApiClient) DeleteQuestionByUuid(ctx context.Context, in *QuestionInfo, opts ...grpc_go.CallOption) (*QuestionNull, common.ErrorWithAttachment) {
-	out := new(QuestionNull)
+func (c *questionnaireApiClient) DeleteQuestionByUuid(ctx context.Context, in *QuestionInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteQuestionByUuid", in, out)
 }
@@ -7489,8 +7529,8 @@ func (c *questionnaireApiClient) AddAnswerByUN(ctx context.Context, in *AnswerIn
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/AddAnswerByUN", in, out)
 }
 
-func (c *questionnaireApiClient) UpdateAnswerByAU(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*QuestionNull, common.ErrorWithAttachment) {
-	out := new(QuestionNull)
+func (c *questionnaireApiClient) UpdateAnswerByAU(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpdateAnswerByAU", in, out)
 }
@@ -7507,8 +7547,8 @@ func (c *questionnaireApiClient) GetQNAnswerBYQN(ctx context.Context, in *Answer
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetQNAnswerBYQN", in, out)
 }
 
-func (c *questionnaireApiClient) DeleteUAnswerByQN(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*QuestionNull, common.ErrorWithAttachment) {
-	out := new(QuestionNull)
+func (c *questionnaireApiClient) DeleteUAnswerByQN(ctx context.Context, in *AnswerInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteUAnswerByQN", in, out)
 }
@@ -7519,21 +7559,21 @@ func (c *questionnaireApiClient) DeleteUAnswerByQN(ctx context.Context, in *Answ
 type QuestionnaireApiServer interface {
 	InitQuestionnaire(context.Context, *NaireInfo) (*NaireInfo, error)
 	AddQuestionnaire(context.Context, *NaireInfo) (*NaireInfo, error)
-	UpdateQuestionnaire(context.Context, *NaireInfo) (*QuestionNull, error)
+	UpdateQuestionnaire(context.Context, *NaireInfo) (*Null, error)
 	GetQuestionnaire(context.Context, *NaireInfo) (*QuestionList, error)
-	DeleteQuestionnaire(context.Context, *NaireInfo) (*QuestionNull, error)
+	DeleteQuestionnaire(context.Context, *NaireInfo) (*Null, error)
 	GetQuestionnaireList(context.Context, *NaireInfo) (*QuestionList, error)
 	GetQuestionInfo(context.Context, *NaireInfo) (*QuestionInfo, error)
 	AddOneQuestion(context.Context, *QuestionInfo) (*QuestionInfo, error)
-	UpdateOneQuestion(context.Context, *QuestionInfo) (*QuestionNull, error)
-	DeleteQuestionByUuid(context.Context, *QuestionInfo) (*QuestionNull, error)
+	UpdateOneQuestion(context.Context, *QuestionInfo) (*Null, error)
+	DeleteQuestionByUuid(context.Context, *QuestionInfo) (*Null, error)
 	GetQuestionList(context.Context, *NaireInfo) (*QuestionList, error)
 	GetAnswerByUN(context.Context, *AnswerInfo) (*AnswerList, error)
 	AddAnswerByUN(context.Context, *AnswerInfo) (*AnswerInfo, error)
-	UpdateAnswerByAU(context.Context, *AnswerInfo) (*QuestionNull, error)
+	UpdateAnswerByAU(context.Context, *AnswerInfo) (*Null, error)
 	GetIAnswerByQUuid(context.Context, *AnswerInfo) (*AnswerList, error)
 	GetQNAnswerBYQN(context.Context, *AnswerInfo) (*AnswerList, error)
-	DeleteUAnswerByQN(context.Context, *AnswerInfo) (*QuestionNull, error)
+	DeleteUAnswerByQN(context.Context, *AnswerInfo) (*Null, error)
 	mustEmbedUnimplementedQuestionnaireApiServer()
 }
 
@@ -7548,13 +7588,13 @@ func (UnimplementedQuestionnaireApiServer) InitQuestionnaire(context.Context, *N
 func (UnimplementedQuestionnaireApiServer) AddQuestionnaire(context.Context, *NaireInfo) (*NaireInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddQuestionnaire not implemented")
 }
-func (UnimplementedQuestionnaireApiServer) UpdateQuestionnaire(context.Context, *NaireInfo) (*QuestionNull, error) {
+func (UnimplementedQuestionnaireApiServer) UpdateQuestionnaire(context.Context, *NaireInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateQuestionnaire not implemented")
 }
 func (UnimplementedQuestionnaireApiServer) GetQuestionnaire(context.Context, *NaireInfo) (*QuestionList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionnaire not implemented")
 }
-func (UnimplementedQuestionnaireApiServer) DeleteQuestionnaire(context.Context, *NaireInfo) (*QuestionNull, error) {
+func (UnimplementedQuestionnaireApiServer) DeleteQuestionnaire(context.Context, *NaireInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteQuestionnaire not implemented")
 }
 func (UnimplementedQuestionnaireApiServer) GetQuestionnaireList(context.Context, *NaireInfo) (*QuestionList, error) {
@@ -7566,10 +7606,10 @@ func (UnimplementedQuestionnaireApiServer) GetQuestionInfo(context.Context, *Nai
 func (UnimplementedQuestionnaireApiServer) AddOneQuestion(context.Context, *QuestionInfo) (*QuestionInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddOneQuestion not implemented")
 }
-func (UnimplementedQuestionnaireApiServer) UpdateOneQuestion(context.Context, *QuestionInfo) (*QuestionNull, error) {
+func (UnimplementedQuestionnaireApiServer) UpdateOneQuestion(context.Context, *QuestionInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateOneQuestion not implemented")
 }
-func (UnimplementedQuestionnaireApiServer) DeleteQuestionByUuid(context.Context, *QuestionInfo) (*QuestionNull, error) {
+func (UnimplementedQuestionnaireApiServer) DeleteQuestionByUuid(context.Context, *QuestionInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteQuestionByUuid not implemented")
 }
 func (UnimplementedQuestionnaireApiServer) GetQuestionList(context.Context, *NaireInfo) (*QuestionList, error) {
@@ -7581,7 +7621,7 @@ func (UnimplementedQuestionnaireApiServer) GetAnswerByUN(context.Context, *Answe
 func (UnimplementedQuestionnaireApiServer) AddAnswerByUN(context.Context, *AnswerInfo) (*AnswerInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddAnswerByUN not implemented")
 }
-func (UnimplementedQuestionnaireApiServer) UpdateAnswerByAU(context.Context, *AnswerInfo) (*QuestionNull, error) {
+func (UnimplementedQuestionnaireApiServer) UpdateAnswerByAU(context.Context, *AnswerInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAnswerByAU not implemented")
 }
 func (UnimplementedQuestionnaireApiServer) GetIAnswerByQUuid(context.Context, *AnswerInfo) (*AnswerList, error) {
@@ -7590,7 +7630,7 @@ func (UnimplementedQuestionnaireApiServer) GetIAnswerByQUuid(context.Context, *A
 func (UnimplementedQuestionnaireApiServer) GetQNAnswerBYQN(context.Context, *AnswerInfo) (*AnswerList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQNAnswerBYQN not implemented")
 }
-func (UnimplementedQuestionnaireApiServer) DeleteUAnswerByQN(context.Context, *AnswerInfo) (*QuestionNull, error) {
+func (UnimplementedQuestionnaireApiServer) DeleteUAnswerByQN(context.Context, *AnswerInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteUAnswerByQN not implemented")
 }
 func (s *UnimplementedQuestionnaireApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
@@ -7637,7 +7677,7 @@ func _QuestionnaireApi_InitQuestionnaire_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/InitQuestionnaire",
+		FullMethod: "/main.QuestionnaireApi/InitQuestionnaire",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).InitQuestionnaire(ctx, req.(*NaireInfo))
@@ -7665,7 +7705,7 @@ func _QuestionnaireApi_AddQuestionnaire_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/AddQuestionnaire",
+		FullMethod: "/main.QuestionnaireApi/AddQuestionnaire",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).AddQuestionnaire(ctx, req.(*NaireInfo))
@@ -7693,7 +7733,7 @@ func _QuestionnaireApi_UpdateQuestionnaire_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/UpdateQuestionnaire",
+		FullMethod: "/main.QuestionnaireApi/UpdateQuestionnaire",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).UpdateQuestionnaire(ctx, req.(*NaireInfo))
@@ -7721,7 +7761,7 @@ func _QuestionnaireApi_GetQuestionnaire_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetQuestionnaire",
+		FullMethod: "/main.QuestionnaireApi/GetQuestionnaire",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetQuestionnaire(ctx, req.(*NaireInfo))
@@ -7749,7 +7789,7 @@ func _QuestionnaireApi_DeleteQuestionnaire_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/DeleteQuestionnaire",
+		FullMethod: "/main.QuestionnaireApi/DeleteQuestionnaire",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).DeleteQuestionnaire(ctx, req.(*NaireInfo))
@@ -7777,7 +7817,7 @@ func _QuestionnaireApi_GetQuestionnaireList_Handler(srv interface{}, ctx context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetQuestionnaireList",
+		FullMethod: "/main.QuestionnaireApi/GetQuestionnaireList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetQuestionnaireList(ctx, req.(*NaireInfo))
@@ -7805,7 +7845,7 @@ func _QuestionnaireApi_GetQuestionInfo_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetQuestionInfo",
+		FullMethod: "/main.QuestionnaireApi/GetQuestionInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetQuestionInfo(ctx, req.(*NaireInfo))
@@ -7833,7 +7873,7 @@ func _QuestionnaireApi_AddOneQuestion_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/AddOneQuestion",
+		FullMethod: "/main.QuestionnaireApi/AddOneQuestion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).AddOneQuestion(ctx, req.(*QuestionInfo))
@@ -7861,7 +7901,7 @@ func _QuestionnaireApi_UpdateOneQuestion_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/UpdateOneQuestion",
+		FullMethod: "/main.QuestionnaireApi/UpdateOneQuestion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).UpdateOneQuestion(ctx, req.(*QuestionInfo))
@@ -7889,7 +7929,7 @@ func _QuestionnaireApi_DeleteQuestionByUuid_Handler(srv interface{}, ctx context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/DeleteQuestionByUuid",
+		FullMethod: "/main.QuestionnaireApi/DeleteQuestionByUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).DeleteQuestionByUuid(ctx, req.(*QuestionInfo))
@@ -7917,7 +7957,7 @@ func _QuestionnaireApi_GetQuestionList_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetQuestionList",
+		FullMethod: "/main.QuestionnaireApi/GetQuestionList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetQuestionList(ctx, req.(*NaireInfo))
@@ -7945,7 +7985,7 @@ func _QuestionnaireApi_GetAnswerByUN_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetAnswerByUN",
+		FullMethod: "/main.QuestionnaireApi/GetAnswerByUN",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetAnswerByUN(ctx, req.(*AnswerInfo))
@@ -7973,7 +8013,7 @@ func _QuestionnaireApi_AddAnswerByUN_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/AddAnswerByUN",
+		FullMethod: "/main.QuestionnaireApi/AddAnswerByUN",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).AddAnswerByUN(ctx, req.(*AnswerInfo))
@@ -8001,7 +8041,7 @@ func _QuestionnaireApi_UpdateAnswerByAU_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/UpdateAnswerByAU",
+		FullMethod: "/main.QuestionnaireApi/UpdateAnswerByAU",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).UpdateAnswerByAU(ctx, req.(*AnswerInfo))
@@ -8029,7 +8069,7 @@ func _QuestionnaireApi_GetIAnswerByQUuid_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetIAnswerByQUuid",
+		FullMethod: "/main.QuestionnaireApi/GetIAnswerByQUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetIAnswerByQUuid(ctx, req.(*AnswerInfo))
@@ -8057,7 +8097,7 @@ func _QuestionnaireApi_GetQNAnswerBYQN_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/GetQNAnswerBYQN",
+		FullMethod: "/main.QuestionnaireApi/GetQNAnswerBYQN",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).GetQNAnswerBYQN(ctx, req.(*AnswerInfo))
@@ -8085,7 +8125,7 @@ func _QuestionnaireApi_DeleteUAnswerByQN_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.QuestionnaireApi/DeleteUAnswerByQN",
+		FullMethod: "/main.QuestionnaireApi/DeleteUAnswerByQN",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QuestionnaireApiServer).DeleteUAnswerByQN(ctx, req.(*AnswerInfo))
@@ -8097,7 +8137,7 @@ func _QuestionnaireApi_DeleteUAnswerByQN_Handler(srv interface{}, ctx context.Co
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var QuestionnaireApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.QuestionnaireApi",
+	ServiceName: "main.QuestionnaireApi",
 	HandlerType: (*QuestionnaireApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -8286,7 +8326,7 @@ func _SecureApi_GenerateToken_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.SecureApi/GenerateToken",
+		FullMethod: "/main.SecureApi/GenerateToken",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SecureApiServer).GenerateToken(ctx, req.(*Jwt))
@@ -8314,7 +8354,7 @@ func _SecureApi_ParseToken_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.SecureApi/ParseToken",
+		FullMethod: "/main.SecureApi/ParseToken",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SecureApiServer).ParseToken(ctx, req.(*Jwt))
@@ -8342,7 +8382,7 @@ func _SecureApi_RefreshToken_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.SecureApi/RefreshToken",
+		FullMethod: "/main.SecureApi/RefreshToken",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SecureApiServer).RefreshToken(ctx, req.(*Jwt))
@@ -8354,7 +8394,7 @@ func _SecureApi_RefreshToken_Handler(srv interface{}, ctx context.Context, dec f
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var SecureApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.SecureApi",
+	ServiceName: "main.SecureApi",
 	HandlerType: (*SecureApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -8378,14 +8418,14 @@ var SecureApi_ServiceDesc = grpc_go.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TaskApiClient interface {
-	RegisterUser(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment)
-	CreateVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment)
-	DestroyVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment)
-	CreateExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment)
-	DestroyExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment)
-	CreateQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment)
-	DestroyQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment)
-	Task(ctx context.Context, in *AmqpTask, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment)
+	RegisterUser(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	CreateVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DestroyVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	CreateExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DestroyExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	CreateQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DestroyQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	Task(ctx context.Context, in *AmqpTask, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 }
 
 type taskApiClient struct {
@@ -8393,14 +8433,14 @@ type taskApiClient struct {
 }
 
 type TaskApiClientImpl struct {
-	RegisterUser    func(ctx context.Context, in *Amqp) (*TaskNull, error)
-	CreateVhost     func(ctx context.Context, in *Amqp) (*TaskNull, error)
-	DestroyVhost    func(ctx context.Context, in *Amqp) (*TaskNull, error)
-	CreateExchange  func(ctx context.Context, in *Amqp) (*TaskNull, error)
-	DestroyExchange func(ctx context.Context, in *Amqp) (*TaskNull, error)
-	CreateQueue     func(ctx context.Context, in *Amqp) (*TaskNull, error)
-	DestroyQueue    func(ctx context.Context, in *Amqp) (*TaskNull, error)
-	Task            func(ctx context.Context, in *AmqpTask) (*TaskNull, error)
+	RegisterUser    func(ctx context.Context, in *Amqp) (*Null, error)
+	CreateVhost     func(ctx context.Context, in *Amqp) (*Null, error)
+	DestroyVhost    func(ctx context.Context, in *Amqp) (*Null, error)
+	CreateExchange  func(ctx context.Context, in *Amqp) (*Null, error)
+	DestroyExchange func(ctx context.Context, in *Amqp) (*Null, error)
+	CreateQueue     func(ctx context.Context, in *Amqp) (*Null, error)
+	DestroyQueue    func(ctx context.Context, in *Amqp) (*Null, error)
+	Task            func(ctx context.Context, in *AmqpTask) (*Null, error)
 }
 
 func (c *TaskApiClientImpl) GetDubboStub(cc *triple.TripleConn) TaskApiClient {
@@ -8411,50 +8451,50 @@ func NewTaskApiClient(cc *triple.TripleConn) TaskApiClient {
 	return &taskApiClient{cc}
 }
 
-func (c *taskApiClient) RegisterUser(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment) {
-	out := new(TaskNull)
+func (c *taskApiClient) RegisterUser(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RegisterUser", in, out)
 }
 
-func (c *taskApiClient) CreateVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment) {
-	out := new(TaskNull)
+func (c *taskApiClient) CreateVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateVhost", in, out)
 }
 
-func (c *taskApiClient) DestroyVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment) {
-	out := new(TaskNull)
+func (c *taskApiClient) DestroyVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DestroyVhost", in, out)
 }
 
-func (c *taskApiClient) CreateExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment) {
-	out := new(TaskNull)
+func (c *taskApiClient) CreateExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateExchange", in, out)
 }
 
-func (c *taskApiClient) DestroyExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment) {
-	out := new(TaskNull)
+func (c *taskApiClient) DestroyExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DestroyExchange", in, out)
 }
 
-func (c *taskApiClient) CreateQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment) {
-	out := new(TaskNull)
+func (c *taskApiClient) CreateQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateQueue", in, out)
 }
 
-func (c *taskApiClient) DestroyQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment) {
-	out := new(TaskNull)
+func (c *taskApiClient) DestroyQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DestroyQueue", in, out)
 }
 
-func (c *taskApiClient) Task(ctx context.Context, in *AmqpTask, opts ...grpc_go.CallOption) (*TaskNull, common.ErrorWithAttachment) {
-	out := new(TaskNull)
+func (c *taskApiClient) Task(ctx context.Context, in *AmqpTask, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Task", in, out)
 }
@@ -8463,14 +8503,14 @@ func (c *taskApiClient) Task(ctx context.Context, in *AmqpTask, opts ...grpc_go.
 // All implementations must embed UnimplementedTaskApiServer
 // for forward compatibility
 type TaskApiServer interface {
-	RegisterUser(context.Context, *Amqp) (*TaskNull, error)
-	CreateVhost(context.Context, *Amqp) (*TaskNull, error)
-	DestroyVhost(context.Context, *Amqp) (*TaskNull, error)
-	CreateExchange(context.Context, *Amqp) (*TaskNull, error)
-	DestroyExchange(context.Context, *Amqp) (*TaskNull, error)
-	CreateQueue(context.Context, *Amqp) (*TaskNull, error)
-	DestroyQueue(context.Context, *Amqp) (*TaskNull, error)
-	Task(context.Context, *AmqpTask) (*TaskNull, error)
+	RegisterUser(context.Context, *Amqp) (*Null, error)
+	CreateVhost(context.Context, *Amqp) (*Null, error)
+	DestroyVhost(context.Context, *Amqp) (*Null, error)
+	CreateExchange(context.Context, *Amqp) (*Null, error)
+	DestroyExchange(context.Context, *Amqp) (*Null, error)
+	CreateQueue(context.Context, *Amqp) (*Null, error)
+	DestroyQueue(context.Context, *Amqp) (*Null, error)
+	Task(context.Context, *AmqpTask) (*Null, error)
 	mustEmbedUnimplementedTaskApiServer()
 }
 
@@ -8479,28 +8519,28 @@ type UnimplementedTaskApiServer struct {
 	proxyImpl protocol.Invoker
 }
 
-func (UnimplementedTaskApiServer) RegisterUser(context.Context, *Amqp) (*TaskNull, error) {
+func (UnimplementedTaskApiServer) RegisterUser(context.Context, *Amqp) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterUser not implemented")
 }
-func (UnimplementedTaskApiServer) CreateVhost(context.Context, *Amqp) (*TaskNull, error) {
+func (UnimplementedTaskApiServer) CreateVhost(context.Context, *Amqp) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateVhost not implemented")
 }
-func (UnimplementedTaskApiServer) DestroyVhost(context.Context, *Amqp) (*TaskNull, error) {
+func (UnimplementedTaskApiServer) DestroyVhost(context.Context, *Amqp) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DestroyVhost not implemented")
 }
-func (UnimplementedTaskApiServer) CreateExchange(context.Context, *Amqp) (*TaskNull, error) {
+func (UnimplementedTaskApiServer) CreateExchange(context.Context, *Amqp) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateExchange not implemented")
 }
-func (UnimplementedTaskApiServer) DestroyExchange(context.Context, *Amqp) (*TaskNull, error) {
+func (UnimplementedTaskApiServer) DestroyExchange(context.Context, *Amqp) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DestroyExchange not implemented")
 }
-func (UnimplementedTaskApiServer) CreateQueue(context.Context, *Amqp) (*TaskNull, error) {
+func (UnimplementedTaskApiServer) CreateQueue(context.Context, *Amqp) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateQueue not implemented")
 }
-func (UnimplementedTaskApiServer) DestroyQueue(context.Context, *Amqp) (*TaskNull, error) {
+func (UnimplementedTaskApiServer) DestroyQueue(context.Context, *Amqp) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DestroyQueue not implemented")
 }
-func (UnimplementedTaskApiServer) Task(context.Context, *AmqpTask) (*TaskNull, error) {
+func (UnimplementedTaskApiServer) Task(context.Context, *AmqpTask) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Task not implemented")
 }
 func (s *UnimplementedTaskApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
@@ -8547,7 +8587,7 @@ func _TaskApi_RegisterUser_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/RegisterUser",
+		FullMethod: "/main.TaskApi/RegisterUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).RegisterUser(ctx, req.(*Amqp))
@@ -8575,7 +8615,7 @@ func _TaskApi_CreateVhost_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/CreateVhost",
+		FullMethod: "/main.TaskApi/CreateVhost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).CreateVhost(ctx, req.(*Amqp))
@@ -8603,7 +8643,7 @@ func _TaskApi_DestroyVhost_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/DestroyVhost",
+		FullMethod: "/main.TaskApi/DestroyVhost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).DestroyVhost(ctx, req.(*Amqp))
@@ -8631,7 +8671,7 @@ func _TaskApi_CreateExchange_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/CreateExchange",
+		FullMethod: "/main.TaskApi/CreateExchange",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).CreateExchange(ctx, req.(*Amqp))
@@ -8659,7 +8699,7 @@ func _TaskApi_DestroyExchange_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/DestroyExchange",
+		FullMethod: "/main.TaskApi/DestroyExchange",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).DestroyExchange(ctx, req.(*Amqp))
@@ -8687,7 +8727,7 @@ func _TaskApi_CreateQueue_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/CreateQueue",
+		FullMethod: "/main.TaskApi/CreateQueue",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).CreateQueue(ctx, req.(*Amqp))
@@ -8715,7 +8755,7 @@ func _TaskApi_DestroyQueue_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/DestroyQueue",
+		FullMethod: "/main.TaskApi/DestroyQueue",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).DestroyQueue(ctx, req.(*Amqp))
@@ -8743,7 +8783,7 @@ func _TaskApi_Task_Handler(srv interface{}, ctx context.Context, dec func(interf
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TaskApi/Task",
+		FullMethod: "/main.TaskApi/Task",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskApiServer).Task(ctx, req.(*AmqpTask))
@@ -8755,7 +8795,7 @@ func _TaskApi_Task_Handler(srv interface{}, ctx context.Context, dec func(interf
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var TaskApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.TaskApi",
+	ServiceName: "main.TaskApi",
 	HandlerType: (*TaskApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -8799,7 +8839,7 @@ var TaskApi_ServiceDesc = grpc_go.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TenantApiClient interface {
-	RefTenantReshRedis(ctx context.Context, in *TenantNull, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
+	RefTenantReshRedis(ctx context.Context, in *Null, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	ClientByUuid(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantRes, common.ErrorWithAttachment)
 	ClientByOrgId(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantRes, common.ErrorWithAttachment)
 	SettingByUuid(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Tenant, common.ErrorWithAttachment)
@@ -8812,25 +8852,25 @@ type TenantApiClient interface {
 	ListTenant(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantResMap, common.ErrorWithAttachment)
 	RegisterTenant(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Tenant, common.ErrorWithAttachment)
 	GenerateTenant(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Tenant, common.ErrorWithAttachment)
-	TenantResetPassword(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	ChangePassword(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	RecoveryPassword(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	ChangeDevice(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	ChangeContact(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	ChangeSelf(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	ChangeBanner(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	ChangePhone(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	ChangeExpireIn(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	IsAdmin(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	SetWeChat(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	SetWork(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	SetDingTalk(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	SetLark(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	SetSetting(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
-	DebugSetting(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
+	TenantResetPassword(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangePassword(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	RecoveryPassword(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangeDevice(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangeContact(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangeSelf(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangeBanner(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangePhone(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangeExpireIn(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	IsAdmin(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	SetWeChat(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	SetWork(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	SetDingTalk(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	SetLark(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	SetSetting(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DebugSetting(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	SystemBase(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*System, common.ErrorWithAttachment)
 	SystemInfo(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*System, common.ErrorWithAttachment)
-	UpgradeSystem(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment)
+	UpgradeSystem(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 }
 
 type tenantApiClient struct {
@@ -8838,7 +8878,7 @@ type tenantApiClient struct {
 }
 
 type TenantApiClientImpl struct {
-	RefTenantReshRedis  func(ctx context.Context, in *TenantNull) (*TenantNull, error)
+	RefTenantReshRedis  func(ctx context.Context, in *Null) (*Null, error)
 	ClientByUuid        func(ctx context.Context, in *TenantReq) (*TenantRes, error)
 	ClientByOrgId       func(ctx context.Context, in *TenantReq) (*TenantRes, error)
 	SettingByUuid       func(ctx context.Context, in *TenantReq) (*Tenant, error)
@@ -8851,25 +8891,25 @@ type TenantApiClientImpl struct {
 	ListTenant          func(ctx context.Context, in *TenantReq) (*TenantResMap, error)
 	RegisterTenant      func(ctx context.Context, in *TenantReq) (*Tenant, error)
 	GenerateTenant      func(ctx context.Context, in *TenantReq) (*Tenant, error)
-	TenantResetPassword func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	ChangePassword      func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	RecoveryPassword    func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	ChangeDevice        func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	ChangeContact       func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	ChangeSelf          func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	ChangeBanner        func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	ChangePhone         func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	ChangeExpireIn      func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	IsAdmin             func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	SetWeChat           func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	SetWork             func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	SetDingTalk         func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	SetLark             func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	SetSetting          func(ctx context.Context, in *TenantReq) (*TenantNull, error)
-	DebugSetting        func(ctx context.Context, in *TenantReq) (*TenantNull, error)
+	TenantResetPassword func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangePassword      func(ctx context.Context, in *TenantReq) (*Null, error)
+	RecoveryPassword    func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangeDevice        func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangeContact       func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangeSelf          func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangeBanner        func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangePhone         func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangeExpireIn      func(ctx context.Context, in *TenantReq) (*Null, error)
+	IsAdmin             func(ctx context.Context, in *TenantReq) (*Null, error)
+	SetWeChat           func(ctx context.Context, in *TenantReq) (*Null, error)
+	SetWork             func(ctx context.Context, in *TenantReq) (*Null, error)
+	SetDingTalk         func(ctx context.Context, in *TenantReq) (*Null, error)
+	SetLark             func(ctx context.Context, in *TenantReq) (*Null, error)
+	SetSetting          func(ctx context.Context, in *TenantReq) (*Null, error)
+	DebugSetting        func(ctx context.Context, in *TenantReq) (*Null, error)
 	SystemBase          func(ctx context.Context, in *TenantReq) (*System, error)
 	SystemInfo          func(ctx context.Context, in *TenantReq) (*System, error)
-	UpgradeSystem       func(ctx context.Context, in *TenantReq) (*TenantNull, error)
+	UpgradeSystem       func(ctx context.Context, in *TenantReq) (*Null, error)
 }
 
 func (c *TenantApiClientImpl) GetDubboStub(cc *triple.TripleConn) TenantApiClient {
@@ -8880,8 +8920,8 @@ func NewTenantApiClient(cc *triple.TripleConn) TenantApiClient {
 	return &tenantApiClient{cc}
 }
 
-func (c *tenantApiClient) RefTenantReshRedis(ctx context.Context, in *TenantNull, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) RefTenantReshRedis(ctx context.Context, in *Null, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RefTenantReshRedis", in, out)
 }
@@ -8958,98 +8998,98 @@ func (c *tenantApiClient) GenerateTenant(ctx context.Context, in *TenantReq, opt
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GenerateTenant", in, out)
 }
 
-func (c *tenantApiClient) TenantResetPassword(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) TenantResetPassword(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/TenantResetPassword", in, out)
 }
 
-func (c *tenantApiClient) ChangePassword(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) ChangePassword(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangePassword", in, out)
 }
 
-func (c *tenantApiClient) RecoveryPassword(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) RecoveryPassword(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RecoveryPassword", in, out)
 }
 
-func (c *tenantApiClient) ChangeDevice(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) ChangeDevice(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeDevice", in, out)
 }
 
-func (c *tenantApiClient) ChangeContact(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) ChangeContact(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeContact", in, out)
 }
 
-func (c *tenantApiClient) ChangeSelf(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) ChangeSelf(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeSelf", in, out)
 }
 
-func (c *tenantApiClient) ChangeBanner(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) ChangeBanner(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeBanner", in, out)
 }
 
-func (c *tenantApiClient) ChangePhone(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) ChangePhone(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangePhone", in, out)
 }
 
-func (c *tenantApiClient) ChangeExpireIn(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) ChangeExpireIn(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeExpireIn", in, out)
 }
 
-func (c *tenantApiClient) IsAdmin(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) IsAdmin(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/IsAdmin", in, out)
 }
 
-func (c *tenantApiClient) SetWeChat(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) SetWeChat(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/SetWeChat", in, out)
 }
 
-func (c *tenantApiClient) SetWork(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) SetWork(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/SetWork", in, out)
 }
 
-func (c *tenantApiClient) SetDingTalk(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) SetDingTalk(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/SetDingTalk", in, out)
 }
 
-func (c *tenantApiClient) SetLark(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) SetLark(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/SetLark", in, out)
 }
 
-func (c *tenantApiClient) SetSetting(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) SetSetting(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/SetSetting", in, out)
 }
 
-func (c *tenantApiClient) DebugSetting(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) DebugSetting(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DebugSetting", in, out)
 }
@@ -9066,8 +9106,8 @@ func (c *tenantApiClient) SystemInfo(ctx context.Context, in *TenantReq, opts ..
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/SystemInfo", in, out)
 }
 
-func (c *tenantApiClient) UpgradeSystem(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*TenantNull, common.ErrorWithAttachment) {
-	out := new(TenantNull)
+func (c *tenantApiClient) UpgradeSystem(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpgradeSystem", in, out)
 }
@@ -9076,7 +9116,7 @@ func (c *tenantApiClient) UpgradeSystem(ctx context.Context, in *TenantReq, opts
 // All implementations must embed UnimplementedTenantApiServer
 // for forward compatibility
 type TenantApiServer interface {
-	RefTenantReshRedis(context.Context, *TenantNull) (*TenantNull, error)
+	RefTenantReshRedis(context.Context, *Null) (*Null, error)
 	ClientByUuid(context.Context, *TenantReq) (*TenantRes, error)
 	ClientByOrgId(context.Context, *TenantReq) (*TenantRes, error)
 	SettingByUuid(context.Context, *TenantReq) (*Tenant, error)
@@ -9089,25 +9129,25 @@ type TenantApiServer interface {
 	ListTenant(context.Context, *TenantReq) (*TenantResMap, error)
 	RegisterTenant(context.Context, *TenantReq) (*Tenant, error)
 	GenerateTenant(context.Context, *TenantReq) (*Tenant, error)
-	TenantResetPassword(context.Context, *TenantReq) (*TenantNull, error)
-	ChangePassword(context.Context, *TenantReq) (*TenantNull, error)
-	RecoveryPassword(context.Context, *TenantReq) (*TenantNull, error)
-	ChangeDevice(context.Context, *TenantReq) (*TenantNull, error)
-	ChangeContact(context.Context, *TenantReq) (*TenantNull, error)
-	ChangeSelf(context.Context, *TenantReq) (*TenantNull, error)
-	ChangeBanner(context.Context, *TenantReq) (*TenantNull, error)
-	ChangePhone(context.Context, *TenantReq) (*TenantNull, error)
-	ChangeExpireIn(context.Context, *TenantReq) (*TenantNull, error)
-	IsAdmin(context.Context, *TenantReq) (*TenantNull, error)
-	SetWeChat(context.Context, *TenantReq) (*TenantNull, error)
-	SetWork(context.Context, *TenantReq) (*TenantNull, error)
-	SetDingTalk(context.Context, *TenantReq) (*TenantNull, error)
-	SetLark(context.Context, *TenantReq) (*TenantNull, error)
-	SetSetting(context.Context, *TenantReq) (*TenantNull, error)
-	DebugSetting(context.Context, *TenantReq) (*TenantNull, error)
+	TenantResetPassword(context.Context, *TenantReq) (*Null, error)
+	ChangePassword(context.Context, *TenantReq) (*Null, error)
+	RecoveryPassword(context.Context, *TenantReq) (*Null, error)
+	ChangeDevice(context.Context, *TenantReq) (*Null, error)
+	ChangeContact(context.Context, *TenantReq) (*Null, error)
+	ChangeSelf(context.Context, *TenantReq) (*Null, error)
+	ChangeBanner(context.Context, *TenantReq) (*Null, error)
+	ChangePhone(context.Context, *TenantReq) (*Null, error)
+	ChangeExpireIn(context.Context, *TenantReq) (*Null, error)
+	IsAdmin(context.Context, *TenantReq) (*Null, error)
+	SetWeChat(context.Context, *TenantReq) (*Null, error)
+	SetWork(context.Context, *TenantReq) (*Null, error)
+	SetDingTalk(context.Context, *TenantReq) (*Null, error)
+	SetLark(context.Context, *TenantReq) (*Null, error)
+	SetSetting(context.Context, *TenantReq) (*Null, error)
+	DebugSetting(context.Context, *TenantReq) (*Null, error)
 	SystemBase(context.Context, *TenantReq) (*System, error)
 	SystemInfo(context.Context, *TenantReq) (*System, error)
-	UpgradeSystem(context.Context, *TenantReq) (*TenantNull, error)
+	UpgradeSystem(context.Context, *TenantReq) (*Null, error)
 	mustEmbedUnimplementedTenantApiServer()
 }
 
@@ -9116,7 +9156,7 @@ type UnimplementedTenantApiServer struct {
 	proxyImpl protocol.Invoker
 }
 
-func (UnimplementedTenantApiServer) RefTenantReshRedis(context.Context, *TenantNull) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) RefTenantReshRedis(context.Context, *Null) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefTenantReshRedis not implemented")
 }
 func (UnimplementedTenantApiServer) ClientByUuid(context.Context, *TenantReq) (*TenantRes, error) {
@@ -9155,52 +9195,52 @@ func (UnimplementedTenantApiServer) RegisterTenant(context.Context, *TenantReq) 
 func (UnimplementedTenantApiServer) GenerateTenant(context.Context, *TenantReq) (*Tenant, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GenerateTenant not implemented")
 }
-func (UnimplementedTenantApiServer) TenantResetPassword(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) TenantResetPassword(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TenantResetPassword not implemented")
 }
-func (UnimplementedTenantApiServer) ChangePassword(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) ChangePassword(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangePassword not implemented")
 }
-func (UnimplementedTenantApiServer) RecoveryPassword(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) RecoveryPassword(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RecoveryPassword not implemented")
 }
-func (UnimplementedTenantApiServer) ChangeDevice(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) ChangeDevice(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeDevice not implemented")
 }
-func (UnimplementedTenantApiServer) ChangeContact(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) ChangeContact(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeContact not implemented")
 }
-func (UnimplementedTenantApiServer) ChangeSelf(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) ChangeSelf(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeSelf not implemented")
 }
-func (UnimplementedTenantApiServer) ChangeBanner(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) ChangeBanner(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeBanner not implemented")
 }
-func (UnimplementedTenantApiServer) ChangePhone(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) ChangePhone(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangePhone not implemented")
 }
-func (UnimplementedTenantApiServer) ChangeExpireIn(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) ChangeExpireIn(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeExpireIn not implemented")
 }
-func (UnimplementedTenantApiServer) IsAdmin(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) IsAdmin(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsAdmin not implemented")
 }
-func (UnimplementedTenantApiServer) SetWeChat(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) SetWeChat(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetWeChat not implemented")
 }
-func (UnimplementedTenantApiServer) SetWork(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) SetWork(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetWork not implemented")
 }
-func (UnimplementedTenantApiServer) SetDingTalk(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) SetDingTalk(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetDingTalk not implemented")
 }
-func (UnimplementedTenantApiServer) SetLark(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) SetLark(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetLark not implemented")
 }
-func (UnimplementedTenantApiServer) SetSetting(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) SetSetting(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetSetting not implemented")
 }
-func (UnimplementedTenantApiServer) DebugSetting(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) DebugSetting(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DebugSetting not implemented")
 }
 func (UnimplementedTenantApiServer) SystemBase(context.Context, *TenantReq) (*System, error) {
@@ -9209,7 +9249,7 @@ func (UnimplementedTenantApiServer) SystemBase(context.Context, *TenantReq) (*Sy
 func (UnimplementedTenantApiServer) SystemInfo(context.Context, *TenantReq) (*System, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SystemInfo not implemented")
 }
-func (UnimplementedTenantApiServer) UpgradeSystem(context.Context, *TenantReq) (*TenantNull, error) {
+func (UnimplementedTenantApiServer) UpgradeSystem(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpgradeSystem not implemented")
 }
 func (s *UnimplementedTenantApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
@@ -9237,7 +9277,7 @@ func RegisterTenantApiServer(s grpc_go.ServiceRegistrar, srv TenantApiServer) {
 }
 
 func _TenantApi_RefTenantReshRedis_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TenantNull)
+	in := new(Null)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -9256,10 +9296,10 @@ func _TenantApi_RefTenantReshRedis_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/RefTenantReshRedis",
+		FullMethod: "/main.TenantApi/RefTenantReshRedis",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TenantApiServer).RefTenantReshRedis(ctx, req.(*TenantNull))
+		return srv.(TenantApiServer).RefTenantReshRedis(ctx, req.(*Null))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -9284,7 +9324,7 @@ func _TenantApi_ClientByUuid_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ClientByUuid",
+		FullMethod: "/main.TenantApi/ClientByUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ClientByUuid(ctx, req.(*TenantReq))
@@ -9312,7 +9352,7 @@ func _TenantApi_ClientByOrgId_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ClientByOrgId",
+		FullMethod: "/main.TenantApi/ClientByOrgId",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ClientByOrgId(ctx, req.(*TenantReq))
@@ -9340,7 +9380,7 @@ func _TenantApi_SettingByUuid_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SettingByUuid",
+		FullMethod: "/main.TenantApi/SettingByUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SettingByUuid(ctx, req.(*TenantReq))
@@ -9368,7 +9408,7 @@ func _TenantApi_AccountByPhone_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/AccountByPhone",
+		FullMethod: "/main.TenantApi/AccountByPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).AccountByPhone(ctx, req.(*TenantReq))
@@ -9396,7 +9436,7 @@ func _TenantApi_AuthByDevice_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/AuthByDevice",
+		FullMethod: "/main.TenantApi/AuthByDevice",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).AuthByDevice(ctx, req.(*TenantReq))
@@ -9424,7 +9464,7 @@ func _TenantApi_PhoneByAccount_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/PhoneByAccount",
+		FullMethod: "/main.TenantApi/PhoneByAccount",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).PhoneByAccount(ctx, req.(*TenantReq))
@@ -9452,7 +9492,7 @@ func _TenantApi_InfoByUuid_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/InfoByUuid",
+		FullMethod: "/main.TenantApi/InfoByUuid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).InfoByUuid(ctx, req.(*TenantReq))
@@ -9480,7 +9520,7 @@ func _TenantApi_InfoByOrgId_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/InfoByOrgId",
+		FullMethod: "/main.TenantApi/InfoByOrgId",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).InfoByOrgId(ctx, req.(*TenantReq))
@@ -9508,7 +9548,7 @@ func _TenantApi_InfoByPassword_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/InfoByPassword",
+		FullMethod: "/main.TenantApi/InfoByPassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).InfoByPassword(ctx, req.(*TenantReq))
@@ -9536,7 +9576,7 @@ func _TenantApi_ListTenant_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ListTenant",
+		FullMethod: "/main.TenantApi/ListTenant",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ListTenant(ctx, req.(*TenantReq))
@@ -9564,7 +9604,7 @@ func _TenantApi_RegisterTenant_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/RegisterTenant",
+		FullMethod: "/main.TenantApi/RegisterTenant",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).RegisterTenant(ctx, req.(*TenantReq))
@@ -9592,7 +9632,7 @@ func _TenantApi_GenerateTenant_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/GenerateTenant",
+		FullMethod: "/main.TenantApi/GenerateTenant",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).GenerateTenant(ctx, req.(*TenantReq))
@@ -9620,7 +9660,7 @@ func _TenantApi_TenantResetPassword_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/TenantResetPassword",
+		FullMethod: "/main.TenantApi/TenantResetPassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).TenantResetPassword(ctx, req.(*TenantReq))
@@ -9648,7 +9688,7 @@ func _TenantApi_ChangePassword_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangePassword",
+		FullMethod: "/main.TenantApi/ChangePassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangePassword(ctx, req.(*TenantReq))
@@ -9676,7 +9716,7 @@ func _TenantApi_RecoveryPassword_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/RecoveryPassword",
+		FullMethod: "/main.TenantApi/RecoveryPassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).RecoveryPassword(ctx, req.(*TenantReq))
@@ -9704,7 +9744,7 @@ func _TenantApi_ChangeDevice_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangeDevice",
+		FullMethod: "/main.TenantApi/ChangeDevice",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangeDevice(ctx, req.(*TenantReq))
@@ -9732,7 +9772,7 @@ func _TenantApi_ChangeContact_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangeContact",
+		FullMethod: "/main.TenantApi/ChangeContact",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangeContact(ctx, req.(*TenantReq))
@@ -9760,7 +9800,7 @@ func _TenantApi_ChangeSelf_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangeSelf",
+		FullMethod: "/main.TenantApi/ChangeSelf",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangeSelf(ctx, req.(*TenantReq))
@@ -9788,7 +9828,7 @@ func _TenantApi_ChangeBanner_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangeBanner",
+		FullMethod: "/main.TenantApi/ChangeBanner",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangeBanner(ctx, req.(*TenantReq))
@@ -9816,7 +9856,7 @@ func _TenantApi_ChangePhone_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangePhone",
+		FullMethod: "/main.TenantApi/ChangePhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangePhone(ctx, req.(*TenantReq))
@@ -9844,7 +9884,7 @@ func _TenantApi_ChangeExpireIn_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/ChangeExpireIn",
+		FullMethod: "/main.TenantApi/ChangeExpireIn",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).ChangeExpireIn(ctx, req.(*TenantReq))
@@ -9872,7 +9912,7 @@ func _TenantApi_IsAdmin_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/IsAdmin",
+		FullMethod: "/main.TenantApi/IsAdmin",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).IsAdmin(ctx, req.(*TenantReq))
@@ -9900,7 +9940,7 @@ func _TenantApi_SetWeChat_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SetWeChat",
+		FullMethod: "/main.TenantApi/SetWeChat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SetWeChat(ctx, req.(*TenantReq))
@@ -9928,7 +9968,7 @@ func _TenantApi_SetWork_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SetWork",
+		FullMethod: "/main.TenantApi/SetWork",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SetWork(ctx, req.(*TenantReq))
@@ -9956,7 +9996,7 @@ func _TenantApi_SetDingTalk_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SetDingTalk",
+		FullMethod: "/main.TenantApi/SetDingTalk",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SetDingTalk(ctx, req.(*TenantReq))
@@ -9984,7 +10024,7 @@ func _TenantApi_SetLark_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SetLark",
+		FullMethod: "/main.TenantApi/SetLark",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SetLark(ctx, req.(*TenantReq))
@@ -10012,7 +10052,7 @@ func _TenantApi_SetSetting_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SetSetting",
+		FullMethod: "/main.TenantApi/SetSetting",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SetSetting(ctx, req.(*TenantReq))
@@ -10040,7 +10080,7 @@ func _TenantApi_DebugSetting_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/DebugSetting",
+		FullMethod: "/main.TenantApi/DebugSetting",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).DebugSetting(ctx, req.(*TenantReq))
@@ -10068,7 +10108,7 @@ func _TenantApi_SystemBase_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SystemBase",
+		FullMethod: "/main.TenantApi/SystemBase",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SystemBase(ctx, req.(*TenantReq))
@@ -10096,7 +10136,7 @@ func _TenantApi_SystemInfo_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/SystemInfo",
+		FullMethod: "/main.TenantApi/SystemInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).SystemInfo(ctx, req.(*TenantReq))
@@ -10124,7 +10164,7 @@ func _TenantApi_UpgradeSystem_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.TenantApi/UpgradeSystem",
+		FullMethod: "/main.TenantApi/UpgradeSystem",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TenantApiServer).UpgradeSystem(ctx, req.(*TenantReq))
@@ -10136,7 +10176,7 @@ func _TenantApi_UpgradeSystem_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var TenantApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.TenantApi",
+	ServiceName: "main.TenantApi",
 	HandlerType: (*TenantApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -10285,7 +10325,7 @@ type ToolApiClient interface {
 	CreateBase64File(ctx context.Context, in *File, opts ...grpc_go.CallOption) (*File, common.ErrorWithAttachment)
 	CreateRemoteFile(ctx context.Context, in *File, opts ...grpc_go.CallOption) (*File, common.ErrorWithAttachment)
 	GetFile(ctx context.Context, in *File, opts ...grpc_go.CallOption) (*File, common.ErrorWithAttachment)
-	DeleteFile(ctx context.Context, in *File, opts ...grpc_go.CallOption) (*ToolNull, common.ErrorWithAttachment)
+	DeleteFile(ctx context.Context, in *File, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 }
 
 type toolApiClient struct {
@@ -10302,7 +10342,7 @@ type ToolApiClientImpl struct {
 	CreateBase64File func(ctx context.Context, in *File) (*File, error)
 	CreateRemoteFile func(ctx context.Context, in *File) (*File, error)
 	GetFile          func(ctx context.Context, in *File) (*File, error)
-	DeleteFile       func(ctx context.Context, in *File) (*ToolNull, error)
+	DeleteFile       func(ctx context.Context, in *File) (*Null, error)
 }
 
 func (c *ToolApiClientImpl) GetDubboStub(cc *triple.TripleConn) ToolApiClient {
@@ -10367,8 +10407,8 @@ func (c *toolApiClient) GetFile(ctx context.Context, in *File, opts ...grpc_go.C
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetFile", in, out)
 }
 
-func (c *toolApiClient) DeleteFile(ctx context.Context, in *File, opts ...grpc_go.CallOption) (*ToolNull, common.ErrorWithAttachment) {
-	out := new(ToolNull)
+func (c *toolApiClient) DeleteFile(ctx context.Context, in *File, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteFile", in, out)
 }
@@ -10386,7 +10426,7 @@ type ToolApiServer interface {
 	CreateBase64File(context.Context, *File) (*File, error)
 	CreateRemoteFile(context.Context, *File) (*File, error)
 	GetFile(context.Context, *File) (*File, error)
-	DeleteFile(context.Context, *File) (*ToolNull, error)
+	DeleteFile(context.Context, *File) (*Null, error)
 	mustEmbedUnimplementedToolApiServer()
 }
 
@@ -10422,7 +10462,7 @@ func (UnimplementedToolApiServer) CreateRemoteFile(context.Context, *File) (*Fil
 func (UnimplementedToolApiServer) GetFile(context.Context, *File) (*File, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFile not implemented")
 }
-func (UnimplementedToolApiServer) DeleteFile(context.Context, *File) (*ToolNull, error) {
+func (UnimplementedToolApiServer) DeleteFile(context.Context, *File) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFile not implemented")
 }
 func (s *UnimplementedToolApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
@@ -10469,7 +10509,7 @@ func _ToolApi_ShortUrl_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/ShortUrl",
+		FullMethod: "/main.ToolApi/ShortUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).ShortUrl(ctx, req.(*Url))
@@ -10497,7 +10537,7 @@ func _ToolApi_LongUrl_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/LongUrl",
+		FullMethod: "/main.ToolApi/LongUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).LongUrl(ctx, req.(*Url))
@@ -10525,7 +10565,7 @@ func _ToolApi_GetDomainUrl_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/GetDomainUrl",
+		FullMethod: "/main.ToolApi/GetDomainUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).GetDomainUrl(ctx, req.(*Req))
@@ -10553,7 +10593,7 @@ func _ToolApi_GetCallbackUrl_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/GetCallbackUrl",
+		FullMethod: "/main.ToolApi/GetCallbackUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).GetCallbackUrl(ctx, req.(*Req))
@@ -10581,7 +10621,7 @@ func _ToolApi_QrCode_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/QrCode",
+		FullMethod: "/main.ToolApi/QrCode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).QrCode(ctx, req.(*Req))
@@ -10609,7 +10649,7 @@ func _ToolApi_CreateBinaryFile_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/CreateBinaryFile",
+		FullMethod: "/main.ToolApi/CreateBinaryFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).CreateBinaryFile(ctx, req.(*File))
@@ -10637,7 +10677,7 @@ func _ToolApi_CreateBase64File_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/CreateBase64File",
+		FullMethod: "/main.ToolApi/CreateBase64File",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).CreateBase64File(ctx, req.(*File))
@@ -10665,7 +10705,7 @@ func _ToolApi_CreateRemoteFile_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/CreateRemoteFile",
+		FullMethod: "/main.ToolApi/CreateRemoteFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).CreateRemoteFile(ctx, req.(*File))
@@ -10693,7 +10733,7 @@ func _ToolApi_GetFile_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/GetFile",
+		FullMethod: "/main.ToolApi/GetFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).GetFile(ctx, req.(*File))
@@ -10721,7 +10761,7 @@ func _ToolApi_DeleteFile_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.ToolApi/DeleteFile",
+		FullMethod: "/main.ToolApi/DeleteFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ToolApiServer).DeleteFile(ctx, req.(*File))
@@ -10733,7 +10773,7 @@ func _ToolApi_DeleteFile_Handler(srv interface{}, ctx context.Context, dec func(
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ToolApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.ToolApi",
+	ServiceName: "main.ToolApi",
 	HandlerType: (*ToolApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
@@ -10788,25 +10828,25 @@ type WorkflowApiClient interface {
 	GetAvoidWorkFlowNode(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*FormList, common.ErrorWithAttachment)
 	FormIndex(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*FormList, common.ErrorWithAttachment)
 	AddFormIndex(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*ResponseInfo, common.ErrorWithAttachment)
-	UpdateFormIndex(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment)
-	FormIndexDelete(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment)
+	UpdateFormIndex(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	FormIndexDelete(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	CreateNode(ctx context.Context, in *FormInfo, opts ...grpc_go.CallOption) (*ResponseInfo, common.ErrorWithAttachment)
-	ModifyNode(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment)
-	DeleteNode(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment)
-	CreateTask(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment)
-	DeleteTask(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment)
-	SetRecipient(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment)
-	SetSetting(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment)
+	ModifyNode(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DeleteNode(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	CreateTask(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DeleteTask(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	SetRecipient(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	SetSetting(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	FlowInfo(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*RequestInfo, common.ErrorWithAttachment)
 	RecordInfo(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*RecordInfo, common.ErrorWithAttachment)
-	ModifyRecord(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment)
+	ModifyRecord(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	RecipientByPk(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*RequestInfo, common.ErrorWithAttachment)
 	DefaultRecipients(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*ResponseInfo, common.ErrorWithAttachment)
-	ModifyRecipient(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment)
+	ModifyRecipient(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	TotalTodo(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*ResponseInfo, common.ErrorWithAttachment)
 	IsApproval(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*ResponseInfo, common.ErrorWithAttachment)
-	InitFlow(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment)
-	CreateRecord(ctx context.Context, in *RecordInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment)
+	InitFlow(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	CreateRecord(ctx context.Context, in *RecordInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	GetWorkflowSetting(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*RequestInfo, common.ErrorWithAttachment)
 }
 
@@ -10818,25 +10858,25 @@ type WorkflowApiClientImpl struct {
 	GetAvoidWorkFlowNode func(ctx context.Context, in *RequestInfo) (*FormList, error)
 	FormIndex            func(ctx context.Context, in *RequestInfo) (*FormList, error)
 	AddFormIndex         func(ctx context.Context, in *RequestInfo) (*ResponseInfo, error)
-	UpdateFormIndex      func(ctx context.Context, in *RequestInfo) (*WorkflowNull, error)
-	FormIndexDelete      func(ctx context.Context, in *RequestInfo) (*WorkflowNull, error)
+	UpdateFormIndex      func(ctx context.Context, in *RequestInfo) (*Null, error)
+	FormIndexDelete      func(ctx context.Context, in *RequestInfo) (*Null, error)
 	CreateNode           func(ctx context.Context, in *FormInfo) (*ResponseInfo, error)
-	ModifyNode           func(ctx context.Context, in *RequestInfo) (*WorkflowNull, error)
-	DeleteNode           func(ctx context.Context, in *RequestInfo) (*WorkflowNull, error)
-	CreateTask           func(ctx context.Context, in *RequestInfo) (*WorkflowNull, error)
-	DeleteTask           func(ctx context.Context, in *RequestInfo) (*WorkflowNull, error)
-	SetRecipient         func(ctx context.Context, in *RequestInfo) (*WorkflowNull, error)
-	SetSetting           func(ctx context.Context, in *RequestInfo) (*WorkflowNull, error)
+	ModifyNode           func(ctx context.Context, in *RequestInfo) (*Null, error)
+	DeleteNode           func(ctx context.Context, in *RequestInfo) (*Null, error)
+	CreateTask           func(ctx context.Context, in *RequestInfo) (*Null, error)
+	DeleteTask           func(ctx context.Context, in *RequestInfo) (*Null, error)
+	SetRecipient         func(ctx context.Context, in *RequestInfo) (*Null, error)
+	SetSetting           func(ctx context.Context, in *RequestInfo) (*Null, error)
 	FlowInfo             func(ctx context.Context, in *RequestInfo) (*RequestInfo, error)
 	RecordInfo           func(ctx context.Context, in *RequestInfo) (*RecordInfo, error)
-	ModifyRecord         func(ctx context.Context, in *RequestInfo) (*WorkflowNull, error)
+	ModifyRecord         func(ctx context.Context, in *RequestInfo) (*Null, error)
 	RecipientByPk        func(ctx context.Context, in *RequestInfo) (*RequestInfo, error)
 	DefaultRecipients    func(ctx context.Context, in *RequestInfo) (*ResponseInfo, error)
-	ModifyRecipient      func(ctx context.Context, in *RequestInfo) (*WorkflowNull, error)
+	ModifyRecipient      func(ctx context.Context, in *RequestInfo) (*Null, error)
 	TotalTodo            func(ctx context.Context, in *RequestInfo) (*ResponseInfo, error)
 	IsApproval           func(ctx context.Context, in *RequestInfo) (*ResponseInfo, error)
-	InitFlow             func(ctx context.Context, in *RequestInfo) (*WorkflowNull, error)
-	CreateRecord         func(ctx context.Context, in *RecordInfo) (*WorkflowNull, error)
+	InitFlow             func(ctx context.Context, in *RequestInfo) (*Null, error)
+	CreateRecord         func(ctx context.Context, in *RecordInfo) (*Null, error)
 	GetWorkflowSetting   func(ctx context.Context, in *RequestInfo) (*RequestInfo, error)
 }
 
@@ -10866,14 +10906,14 @@ func (c *workflowApiClient) AddFormIndex(ctx context.Context, in *RequestInfo, o
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/AddFormIndex", in, out)
 }
 
-func (c *workflowApiClient) UpdateFormIndex(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment) {
-	out := new(WorkflowNull)
+func (c *workflowApiClient) UpdateFormIndex(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpdateFormIndex", in, out)
 }
 
-func (c *workflowApiClient) FormIndexDelete(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment) {
-	out := new(WorkflowNull)
+func (c *workflowApiClient) FormIndexDelete(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/FormIndexDelete", in, out)
 }
@@ -10884,38 +10924,38 @@ func (c *workflowApiClient) CreateNode(ctx context.Context, in *FormInfo, opts .
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateNode", in, out)
 }
 
-func (c *workflowApiClient) ModifyNode(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment) {
-	out := new(WorkflowNull)
+func (c *workflowApiClient) ModifyNode(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ModifyNode", in, out)
 }
 
-func (c *workflowApiClient) DeleteNode(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment) {
-	out := new(WorkflowNull)
+func (c *workflowApiClient) DeleteNode(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteNode", in, out)
 }
 
-func (c *workflowApiClient) CreateTask(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment) {
-	out := new(WorkflowNull)
+func (c *workflowApiClient) CreateTask(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateTask", in, out)
 }
 
-func (c *workflowApiClient) DeleteTask(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment) {
-	out := new(WorkflowNull)
+func (c *workflowApiClient) DeleteTask(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteTask", in, out)
 }
 
-func (c *workflowApiClient) SetRecipient(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment) {
-	out := new(WorkflowNull)
+func (c *workflowApiClient) SetRecipient(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/SetRecipient", in, out)
 }
 
-func (c *workflowApiClient) SetSetting(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment) {
-	out := new(WorkflowNull)
+func (c *workflowApiClient) SetSetting(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/SetSetting", in, out)
 }
@@ -10932,8 +10972,8 @@ func (c *workflowApiClient) RecordInfo(ctx context.Context, in *RequestInfo, opt
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RecordInfo", in, out)
 }
 
-func (c *workflowApiClient) ModifyRecord(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment) {
-	out := new(WorkflowNull)
+func (c *workflowApiClient) ModifyRecord(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ModifyRecord", in, out)
 }
@@ -10950,8 +10990,8 @@ func (c *workflowApiClient) DefaultRecipients(ctx context.Context, in *RequestIn
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DefaultRecipients", in, out)
 }
 
-func (c *workflowApiClient) ModifyRecipient(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment) {
-	out := new(WorkflowNull)
+func (c *workflowApiClient) ModifyRecipient(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ModifyRecipient", in, out)
 }
@@ -10968,14 +11008,14 @@ func (c *workflowApiClient) IsApproval(ctx context.Context, in *RequestInfo, opt
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/IsApproval", in, out)
 }
 
-func (c *workflowApiClient) InitFlow(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment) {
-	out := new(WorkflowNull)
+func (c *workflowApiClient) InitFlow(ctx context.Context, in *RequestInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/InitFlow", in, out)
 }
 
-func (c *workflowApiClient) CreateRecord(ctx context.Context, in *RecordInfo, opts ...grpc_go.CallOption) (*WorkflowNull, common.ErrorWithAttachment) {
-	out := new(WorkflowNull)
+func (c *workflowApiClient) CreateRecord(ctx context.Context, in *RecordInfo, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateRecord", in, out)
 }
@@ -10993,25 +11033,25 @@ type WorkflowApiServer interface {
 	GetAvoidWorkFlowNode(context.Context, *RequestInfo) (*FormList, error)
 	FormIndex(context.Context, *RequestInfo) (*FormList, error)
 	AddFormIndex(context.Context, *RequestInfo) (*ResponseInfo, error)
-	UpdateFormIndex(context.Context, *RequestInfo) (*WorkflowNull, error)
-	FormIndexDelete(context.Context, *RequestInfo) (*WorkflowNull, error)
+	UpdateFormIndex(context.Context, *RequestInfo) (*Null, error)
+	FormIndexDelete(context.Context, *RequestInfo) (*Null, error)
 	CreateNode(context.Context, *FormInfo) (*ResponseInfo, error)
-	ModifyNode(context.Context, *RequestInfo) (*WorkflowNull, error)
-	DeleteNode(context.Context, *RequestInfo) (*WorkflowNull, error)
-	CreateTask(context.Context, *RequestInfo) (*WorkflowNull, error)
-	DeleteTask(context.Context, *RequestInfo) (*WorkflowNull, error)
-	SetRecipient(context.Context, *RequestInfo) (*WorkflowNull, error)
-	SetSetting(context.Context, *RequestInfo) (*WorkflowNull, error)
+	ModifyNode(context.Context, *RequestInfo) (*Null, error)
+	DeleteNode(context.Context, *RequestInfo) (*Null, error)
+	CreateTask(context.Context, *RequestInfo) (*Null, error)
+	DeleteTask(context.Context, *RequestInfo) (*Null, error)
+	SetRecipient(context.Context, *RequestInfo) (*Null, error)
+	SetSetting(context.Context, *RequestInfo) (*Null, error)
 	FlowInfo(context.Context, *RequestInfo) (*RequestInfo, error)
 	RecordInfo(context.Context, *RequestInfo) (*RecordInfo, error)
-	ModifyRecord(context.Context, *RequestInfo) (*WorkflowNull, error)
+	ModifyRecord(context.Context, *RequestInfo) (*Null, error)
 	RecipientByPk(context.Context, *RequestInfo) (*RequestInfo, error)
 	DefaultRecipients(context.Context, *RequestInfo) (*ResponseInfo, error)
-	ModifyRecipient(context.Context, *RequestInfo) (*WorkflowNull, error)
+	ModifyRecipient(context.Context, *RequestInfo) (*Null, error)
 	TotalTodo(context.Context, *RequestInfo) (*ResponseInfo, error)
 	IsApproval(context.Context, *RequestInfo) (*ResponseInfo, error)
-	InitFlow(context.Context, *RequestInfo) (*WorkflowNull, error)
-	CreateRecord(context.Context, *RecordInfo) (*WorkflowNull, error)
+	InitFlow(context.Context, *RequestInfo) (*Null, error)
+	CreateRecord(context.Context, *RecordInfo) (*Null, error)
 	GetWorkflowSetting(context.Context, *RequestInfo) (*RequestInfo, error)
 	mustEmbedUnimplementedWorkflowApiServer()
 }
@@ -11030,31 +11070,31 @@ func (UnimplementedWorkflowApiServer) FormIndex(context.Context, *RequestInfo) (
 func (UnimplementedWorkflowApiServer) AddFormIndex(context.Context, *RequestInfo) (*ResponseInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddFormIndex not implemented")
 }
-func (UnimplementedWorkflowApiServer) UpdateFormIndex(context.Context, *RequestInfo) (*WorkflowNull, error) {
+func (UnimplementedWorkflowApiServer) UpdateFormIndex(context.Context, *RequestInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFormIndex not implemented")
 }
-func (UnimplementedWorkflowApiServer) FormIndexDelete(context.Context, *RequestInfo) (*WorkflowNull, error) {
+func (UnimplementedWorkflowApiServer) FormIndexDelete(context.Context, *RequestInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FormIndexDelete not implemented")
 }
 func (UnimplementedWorkflowApiServer) CreateNode(context.Context, *FormInfo) (*ResponseInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNode not implemented")
 }
-func (UnimplementedWorkflowApiServer) ModifyNode(context.Context, *RequestInfo) (*WorkflowNull, error) {
+func (UnimplementedWorkflowApiServer) ModifyNode(context.Context, *RequestInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ModifyNode not implemented")
 }
-func (UnimplementedWorkflowApiServer) DeleteNode(context.Context, *RequestInfo) (*WorkflowNull, error) {
+func (UnimplementedWorkflowApiServer) DeleteNode(context.Context, *RequestInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteNode not implemented")
 }
-func (UnimplementedWorkflowApiServer) CreateTask(context.Context, *RequestInfo) (*WorkflowNull, error) {
+func (UnimplementedWorkflowApiServer) CreateTask(context.Context, *RequestInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTask not implemented")
 }
-func (UnimplementedWorkflowApiServer) DeleteTask(context.Context, *RequestInfo) (*WorkflowNull, error) {
+func (UnimplementedWorkflowApiServer) DeleteTask(context.Context, *RequestInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
 }
-func (UnimplementedWorkflowApiServer) SetRecipient(context.Context, *RequestInfo) (*WorkflowNull, error) {
+func (UnimplementedWorkflowApiServer) SetRecipient(context.Context, *RequestInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetRecipient not implemented")
 }
-func (UnimplementedWorkflowApiServer) SetSetting(context.Context, *RequestInfo) (*WorkflowNull, error) {
+func (UnimplementedWorkflowApiServer) SetSetting(context.Context, *RequestInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetSetting not implemented")
 }
 func (UnimplementedWorkflowApiServer) FlowInfo(context.Context, *RequestInfo) (*RequestInfo, error) {
@@ -11063,7 +11103,7 @@ func (UnimplementedWorkflowApiServer) FlowInfo(context.Context, *RequestInfo) (*
 func (UnimplementedWorkflowApiServer) RecordInfo(context.Context, *RequestInfo) (*RecordInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RecordInfo not implemented")
 }
-func (UnimplementedWorkflowApiServer) ModifyRecord(context.Context, *RequestInfo) (*WorkflowNull, error) {
+func (UnimplementedWorkflowApiServer) ModifyRecord(context.Context, *RequestInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ModifyRecord not implemented")
 }
 func (UnimplementedWorkflowApiServer) RecipientByPk(context.Context, *RequestInfo) (*RequestInfo, error) {
@@ -11072,7 +11112,7 @@ func (UnimplementedWorkflowApiServer) RecipientByPk(context.Context, *RequestInf
 func (UnimplementedWorkflowApiServer) DefaultRecipients(context.Context, *RequestInfo) (*ResponseInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DefaultRecipients not implemented")
 }
-func (UnimplementedWorkflowApiServer) ModifyRecipient(context.Context, *RequestInfo) (*WorkflowNull, error) {
+func (UnimplementedWorkflowApiServer) ModifyRecipient(context.Context, *RequestInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ModifyRecipient not implemented")
 }
 func (UnimplementedWorkflowApiServer) TotalTodo(context.Context, *RequestInfo) (*ResponseInfo, error) {
@@ -11081,10 +11121,10 @@ func (UnimplementedWorkflowApiServer) TotalTodo(context.Context, *RequestInfo) (
 func (UnimplementedWorkflowApiServer) IsApproval(context.Context, *RequestInfo) (*ResponseInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsApproval not implemented")
 }
-func (UnimplementedWorkflowApiServer) InitFlow(context.Context, *RequestInfo) (*WorkflowNull, error) {
+func (UnimplementedWorkflowApiServer) InitFlow(context.Context, *RequestInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InitFlow not implemented")
 }
-func (UnimplementedWorkflowApiServer) CreateRecord(context.Context, *RecordInfo) (*WorkflowNull, error) {
+func (UnimplementedWorkflowApiServer) CreateRecord(context.Context, *RecordInfo) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRecord not implemented")
 }
 func (UnimplementedWorkflowApiServer) GetWorkflowSetting(context.Context, *RequestInfo) (*RequestInfo, error) {
@@ -11134,7 +11174,7 @@ func _WorkflowApi_GetAvoidWorkFlowNode_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/GetAvoidWorkFlowNode",
+		FullMethod: "/main.workflowApi/GetAvoidWorkFlowNode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).GetAvoidWorkFlowNode(ctx, req.(*RequestInfo))
@@ -11162,7 +11202,7 @@ func _WorkflowApi_FormIndex_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/FormIndex",
+		FullMethod: "/main.workflowApi/FormIndex",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).FormIndex(ctx, req.(*RequestInfo))
@@ -11190,7 +11230,7 @@ func _WorkflowApi_AddFormIndex_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/AddFormIndex",
+		FullMethod: "/main.workflowApi/AddFormIndex",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).AddFormIndex(ctx, req.(*RequestInfo))
@@ -11218,7 +11258,7 @@ func _WorkflowApi_UpdateFormIndex_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/UpdateFormIndex",
+		FullMethod: "/main.workflowApi/UpdateFormIndex",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).UpdateFormIndex(ctx, req.(*RequestInfo))
@@ -11246,7 +11286,7 @@ func _WorkflowApi_FormIndexDelete_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/FormIndexDelete",
+		FullMethod: "/main.workflowApi/FormIndexDelete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).FormIndexDelete(ctx, req.(*RequestInfo))
@@ -11274,7 +11314,7 @@ func _WorkflowApi_CreateNode_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/CreateNode",
+		FullMethod: "/main.workflowApi/CreateNode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).CreateNode(ctx, req.(*FormInfo))
@@ -11302,7 +11342,7 @@ func _WorkflowApi_ModifyNode_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/ModifyNode",
+		FullMethod: "/main.workflowApi/ModifyNode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).ModifyNode(ctx, req.(*RequestInfo))
@@ -11330,7 +11370,7 @@ func _WorkflowApi_DeleteNode_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/DeleteNode",
+		FullMethod: "/main.workflowApi/DeleteNode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).DeleteNode(ctx, req.(*RequestInfo))
@@ -11358,7 +11398,7 @@ func _WorkflowApi_CreateTask_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/CreateTask",
+		FullMethod: "/main.workflowApi/CreateTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).CreateTask(ctx, req.(*RequestInfo))
@@ -11386,7 +11426,7 @@ func _WorkflowApi_DeleteTask_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/DeleteTask",
+		FullMethod: "/main.workflowApi/DeleteTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).DeleteTask(ctx, req.(*RequestInfo))
@@ -11414,7 +11454,7 @@ func _WorkflowApi_SetRecipient_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/SetRecipient",
+		FullMethod: "/main.workflowApi/SetRecipient",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).SetRecipient(ctx, req.(*RequestInfo))
@@ -11442,7 +11482,7 @@ func _WorkflowApi_SetSetting_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/SetSetting",
+		FullMethod: "/main.workflowApi/SetSetting",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).SetSetting(ctx, req.(*RequestInfo))
@@ -11470,7 +11510,7 @@ func _WorkflowApi_FlowInfo_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/FlowInfo",
+		FullMethod: "/main.workflowApi/FlowInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).FlowInfo(ctx, req.(*RequestInfo))
@@ -11498,7 +11538,7 @@ func _WorkflowApi_RecordInfo_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/RecordInfo",
+		FullMethod: "/main.workflowApi/RecordInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).RecordInfo(ctx, req.(*RequestInfo))
@@ -11526,7 +11566,7 @@ func _WorkflowApi_ModifyRecord_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/ModifyRecord",
+		FullMethod: "/main.workflowApi/ModifyRecord",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).ModifyRecord(ctx, req.(*RequestInfo))
@@ -11554,7 +11594,7 @@ func _WorkflowApi_RecipientByPk_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/RecipientByPk",
+		FullMethod: "/main.workflowApi/RecipientByPk",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).RecipientByPk(ctx, req.(*RequestInfo))
@@ -11582,7 +11622,7 @@ func _WorkflowApi_DefaultRecipients_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/DefaultRecipients",
+		FullMethod: "/main.workflowApi/DefaultRecipients",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).DefaultRecipients(ctx, req.(*RequestInfo))
@@ -11610,7 +11650,7 @@ func _WorkflowApi_ModifyRecipient_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/ModifyRecipient",
+		FullMethod: "/main.workflowApi/ModifyRecipient",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).ModifyRecipient(ctx, req.(*RequestInfo))
@@ -11638,7 +11678,7 @@ func _WorkflowApi_TotalTodo_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/TotalTodo",
+		FullMethod: "/main.workflowApi/TotalTodo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).TotalTodo(ctx, req.(*RequestInfo))
@@ -11666,7 +11706,7 @@ func _WorkflowApi_IsApproval_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/IsApproval",
+		FullMethod: "/main.workflowApi/IsApproval",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).IsApproval(ctx, req.(*RequestInfo))
@@ -11694,7 +11734,7 @@ func _WorkflowApi_InitFlow_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/InitFlow",
+		FullMethod: "/main.workflowApi/InitFlow",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).InitFlow(ctx, req.(*RequestInfo))
@@ -11722,7 +11762,7 @@ func _WorkflowApi_CreateRecord_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/CreateRecord",
+		FullMethod: "/main.workflowApi/CreateRecord",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).CreateRecord(ctx, req.(*RecordInfo))
@@ -11750,7 +11790,7 @@ func _WorkflowApi_GetWorkflowSetting_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc_go.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tecsun.workflowApi/GetWorkflowSetting",
+		FullMethod: "/main.workflowApi/GetWorkflowSetting",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowApiServer).GetWorkflowSetting(ctx, req.(*RequestInfo))
@@ -11762,7 +11802,7 @@ func _WorkflowApi_GetWorkflowSetting_Handler(srv interface{}, ctx context.Contex
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var WorkflowApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "tecsun.workflowApi",
+	ServiceName: "main.workflowApi",
 	HandlerType: (*WorkflowApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
 		{
