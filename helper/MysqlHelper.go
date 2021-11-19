@@ -23,3 +23,10 @@ func RegisterMysql() Model {
 	db.SetMaxIdleConns(5)
 	return Model{DataSource: os.Getenv("MYSQL"), Db: db}
 }
+
+func (m *Model) CloseMysql() {
+	err := m.Db.Close()
+	if err != nil {
+		panic(err)
+	}
+}
