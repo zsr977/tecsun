@@ -8213,427 +8213,6 @@ var QuestionnaireApi_ServiceDesc = grpc_go.ServiceDesc{
 	Metadata: "api.proto",
 }
 
-// TaskApiClient is the client API for TaskApi service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type TaskApiClient interface {
-	RegisterUser(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	CreateVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	DestroyVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	CreateExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	DestroyExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	CreateQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	DestroyQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	Task(ctx context.Context, in *AmqpTask, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-}
-
-type taskApiClient struct {
-	cc *triple.TripleConn
-}
-
-type TaskApiClientImpl struct {
-	RegisterUser    func(ctx context.Context, in *Amqp) (*Null, error)
-	CreateVhost     func(ctx context.Context, in *Amqp) (*Null, error)
-	DestroyVhost    func(ctx context.Context, in *Amqp) (*Null, error)
-	CreateExchange  func(ctx context.Context, in *Amqp) (*Null, error)
-	DestroyExchange func(ctx context.Context, in *Amqp) (*Null, error)
-	CreateQueue     func(ctx context.Context, in *Amqp) (*Null, error)
-	DestroyQueue    func(ctx context.Context, in *Amqp) (*Null, error)
-	Task            func(ctx context.Context, in *AmqpTask) (*Null, error)
-}
-
-func (c *TaskApiClientImpl) GetDubboStub(cc *triple.TripleConn) TaskApiClient {
-	return NewTaskApiClient(cc)
-}
-
-func NewTaskApiClient(cc *triple.TripleConn) TaskApiClient {
-	return &taskApiClient{cc}
-}
-
-func (c *taskApiClient) RegisterUser(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RegisterUser", in, out)
-}
-
-func (c *taskApiClient) CreateVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateVhost", in, out)
-}
-
-func (c *taskApiClient) DestroyVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DestroyVhost", in, out)
-}
-
-func (c *taskApiClient) CreateExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateExchange", in, out)
-}
-
-func (c *taskApiClient) DestroyExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DestroyExchange", in, out)
-}
-
-func (c *taskApiClient) CreateQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateQueue", in, out)
-}
-
-func (c *taskApiClient) DestroyQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DestroyQueue", in, out)
-}
-
-func (c *taskApiClient) Task(ctx context.Context, in *AmqpTask, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Task", in, out)
-}
-
-// TaskApiServer is the server API for TaskApi service.
-// All implementations must embed UnimplementedTaskApiServer
-// for forward compatibility
-type TaskApiServer interface {
-	RegisterUser(context.Context, *Amqp) (*Null, error)
-	CreateVhost(context.Context, *Amqp) (*Null, error)
-	DestroyVhost(context.Context, *Amqp) (*Null, error)
-	CreateExchange(context.Context, *Amqp) (*Null, error)
-	DestroyExchange(context.Context, *Amqp) (*Null, error)
-	CreateQueue(context.Context, *Amqp) (*Null, error)
-	DestroyQueue(context.Context, *Amqp) (*Null, error)
-	Task(context.Context, *AmqpTask) (*Null, error)
-	mustEmbedUnimplementedTaskApiServer()
-}
-
-// UnimplementedTaskApiServer must be embedded to have forward compatible implementations.
-type UnimplementedTaskApiServer struct {
-	proxyImpl protocol.Invoker
-}
-
-func (UnimplementedTaskApiServer) RegisterUser(context.Context, *Amqp) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RegisterUser not implemented")
-}
-func (UnimplementedTaskApiServer) CreateVhost(context.Context, *Amqp) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateVhost not implemented")
-}
-func (UnimplementedTaskApiServer) DestroyVhost(context.Context, *Amqp) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DestroyVhost not implemented")
-}
-func (UnimplementedTaskApiServer) CreateExchange(context.Context, *Amqp) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateExchange not implemented")
-}
-func (UnimplementedTaskApiServer) DestroyExchange(context.Context, *Amqp) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DestroyExchange not implemented")
-}
-func (UnimplementedTaskApiServer) CreateQueue(context.Context, *Amqp) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateQueue not implemented")
-}
-func (UnimplementedTaskApiServer) DestroyQueue(context.Context, *Amqp) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DestroyQueue not implemented")
-}
-func (UnimplementedTaskApiServer) Task(context.Context, *AmqpTask) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Task not implemented")
-}
-func (s *UnimplementedTaskApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
-	s.proxyImpl = impl
-}
-
-func (s *UnimplementedTaskApiServer) XXX_GetProxyImpl() protocol.Invoker {
-	return s.proxyImpl
-}
-
-func (s *UnimplementedTaskApiServer) XXX_ServiceDesc() *grpc_go.ServiceDesc {
-	return &TaskApi_ServiceDesc
-}
-func (UnimplementedTaskApiServer) mustEmbedUnimplementedTaskApiServer() {}
-
-// UnsafeTaskApiServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TaskApiServer will
-// result in compilation errors.
-type UnsafeTaskApiServer interface {
-	mustEmbedUnimplementedTaskApiServer()
-}
-
-func RegisterTaskApiServer(s grpc_go.ServiceRegistrar, srv TaskApiServer) {
-	s.RegisterService(&TaskApi_ServiceDesc, srv)
-}
-
-func _TaskApi_RegisterUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Amqp)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("RegisterUser", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.TaskApi/RegisterUser",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskApiServer).RegisterUser(ctx, req.(*Amqp))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TaskApi_CreateVhost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Amqp)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("CreateVhost", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.TaskApi/CreateVhost",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskApiServer).CreateVhost(ctx, req.(*Amqp))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TaskApi_DestroyVhost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Amqp)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("DestroyVhost", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.TaskApi/DestroyVhost",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskApiServer).DestroyVhost(ctx, req.(*Amqp))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TaskApi_CreateExchange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Amqp)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("CreateExchange", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.TaskApi/CreateExchange",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskApiServer).CreateExchange(ctx, req.(*Amqp))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TaskApi_DestroyExchange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Amqp)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("DestroyExchange", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.TaskApi/DestroyExchange",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskApiServer).DestroyExchange(ctx, req.(*Amqp))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TaskApi_CreateQueue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Amqp)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("CreateQueue", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.TaskApi/CreateQueue",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskApiServer).CreateQueue(ctx, req.(*Amqp))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TaskApi_DestroyQueue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Amqp)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("DestroyQueue", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.TaskApi/DestroyQueue",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskApiServer).DestroyQueue(ctx, req.(*Amqp))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TaskApi_Task_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AmqpTask)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("Task", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.TaskApi/Task",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskApiServer).Task(ctx, req.(*AmqpTask))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// TaskApi_ServiceDesc is the grpc_go.ServiceDesc for TaskApi service.
-// It's only intended for direct use with grpc_go.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var TaskApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "main.TaskApi",
-	HandlerType: (*TaskApiServer)(nil),
-	Methods: []grpc_go.MethodDesc{
-		{
-			MethodName: "RegisterUser",
-			Handler:    _TaskApi_RegisterUser_Handler,
-		},
-		{
-			MethodName: "CreateVhost",
-			Handler:    _TaskApi_CreateVhost_Handler,
-		},
-		{
-			MethodName: "DestroyVhost",
-			Handler:    _TaskApi_DestroyVhost_Handler,
-		},
-		{
-			MethodName: "CreateExchange",
-			Handler:    _TaskApi_CreateExchange_Handler,
-		},
-		{
-			MethodName: "DestroyExchange",
-			Handler:    _TaskApi_DestroyExchange_Handler,
-		},
-		{
-			MethodName: "CreateQueue",
-			Handler:    _TaskApi_CreateQueue_Handler,
-		},
-		{
-			MethodName: "DestroyQueue",
-			Handler:    _TaskApi_DestroyQueue_Handler,
-		},
-		{
-			MethodName: "Task",
-			Handler:    _TaskApi_Task_Handler,
-		},
-	},
-	Streams:  []grpc_go.StreamDesc{},
-	Metadata: "api.proto",
-}
-
 // TenantApiClient is the client API for TenantApi service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
@@ -10128,6 +9707,14 @@ type ToolApiClient interface {
 	CreateRemoteFile(ctx context.Context, in *File, opts ...grpc_go.CallOption) (*File, common.ErrorWithAttachment)
 	GetFile(ctx context.Context, in *File, opts ...grpc_go.CallOption) (*File, common.ErrorWithAttachment)
 	DeleteFile(ctx context.Context, in *File, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	RegisterUser(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	CreateVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DestroyVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	CreateExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DestroyExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	CreateQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	DestroyQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	Task(ctx context.Context, in *AmqpTask, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 }
 
 type toolApiClient struct {
@@ -10148,6 +9735,14 @@ type ToolApiClientImpl struct {
 	CreateRemoteFile func(ctx context.Context, in *File) (*File, error)
 	GetFile          func(ctx context.Context, in *File) (*File, error)
 	DeleteFile       func(ctx context.Context, in *File) (*Null, error)
+	RegisterUser     func(ctx context.Context, in *Amqp) (*Null, error)
+	CreateVhost      func(ctx context.Context, in *Amqp) (*Null, error)
+	DestroyVhost     func(ctx context.Context, in *Amqp) (*Null, error)
+	CreateExchange   func(ctx context.Context, in *Amqp) (*Null, error)
+	DestroyExchange  func(ctx context.Context, in *Amqp) (*Null, error)
+	CreateQueue      func(ctx context.Context, in *Amqp) (*Null, error)
+	DestroyQueue     func(ctx context.Context, in *Amqp) (*Null, error)
+	Task             func(ctx context.Context, in *AmqpTask) (*Null, error)
 }
 
 func (c *ToolApiClientImpl) GetDubboStub(cc *triple.TripleConn) ToolApiClient {
@@ -10236,6 +9831,54 @@ func (c *toolApiClient) DeleteFile(ctx context.Context, in *File, opts ...grpc_g
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteFile", in, out)
 }
 
+func (c *toolApiClient) RegisterUser(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RegisterUser", in, out)
+}
+
+func (c *toolApiClient) CreateVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateVhost", in, out)
+}
+
+func (c *toolApiClient) DestroyVhost(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DestroyVhost", in, out)
+}
+
+func (c *toolApiClient) CreateExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateExchange", in, out)
+}
+
+func (c *toolApiClient) DestroyExchange(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DestroyExchange", in, out)
+}
+
+func (c *toolApiClient) CreateQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateQueue", in, out)
+}
+
+func (c *toolApiClient) DestroyQueue(ctx context.Context, in *Amqp, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DestroyQueue", in, out)
+}
+
+func (c *toolApiClient) Task(ctx context.Context, in *AmqpTask, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Task", in, out)
+}
+
 // ToolApiServer is the server API for ToolApi service.
 // All implementations must embed UnimplementedToolApiServer
 // for forward compatibility
@@ -10253,6 +9896,14 @@ type ToolApiServer interface {
 	CreateRemoteFile(context.Context, *File) (*File, error)
 	GetFile(context.Context, *File) (*File, error)
 	DeleteFile(context.Context, *File) (*Null, error)
+	RegisterUser(context.Context, *Amqp) (*Null, error)
+	CreateVhost(context.Context, *Amqp) (*Null, error)
+	DestroyVhost(context.Context, *Amqp) (*Null, error)
+	CreateExchange(context.Context, *Amqp) (*Null, error)
+	DestroyExchange(context.Context, *Amqp) (*Null, error)
+	CreateQueue(context.Context, *Amqp) (*Null, error)
+	DestroyQueue(context.Context, *Amqp) (*Null, error)
+	Task(context.Context, *AmqpTask) (*Null, error)
 	mustEmbedUnimplementedToolApiServer()
 }
 
@@ -10299,6 +9950,30 @@ func (UnimplementedToolApiServer) GetFile(context.Context, *File) (*File, error)
 }
 func (UnimplementedToolApiServer) DeleteFile(context.Context, *File) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFile not implemented")
+}
+func (UnimplementedToolApiServer) RegisterUser(context.Context, *Amqp) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterUser not implemented")
+}
+func (UnimplementedToolApiServer) CreateVhost(context.Context, *Amqp) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateVhost not implemented")
+}
+func (UnimplementedToolApiServer) DestroyVhost(context.Context, *Amqp) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DestroyVhost not implemented")
+}
+func (UnimplementedToolApiServer) CreateExchange(context.Context, *Amqp) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateExchange not implemented")
+}
+func (UnimplementedToolApiServer) DestroyExchange(context.Context, *Amqp) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DestroyExchange not implemented")
+}
+func (UnimplementedToolApiServer) CreateQueue(context.Context, *Amqp) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateQueue not implemented")
+}
+func (UnimplementedToolApiServer) DestroyQueue(context.Context, *Amqp) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DestroyQueue not implemented")
+}
+func (UnimplementedToolApiServer) Task(context.Context, *AmqpTask) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Task not implemented")
 }
 func (s *UnimplementedToolApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
 	s.proxyImpl = impl
@@ -10688,6 +10363,230 @@ func _ToolApi_DeleteFile_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ToolApi_RegisterUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Amqp)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("RegisterUser", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.ToolApi/RegisterUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ToolApiServer).RegisterUser(ctx, req.(*Amqp))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ToolApi_CreateVhost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Amqp)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("CreateVhost", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.ToolApi/CreateVhost",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ToolApiServer).CreateVhost(ctx, req.(*Amqp))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ToolApi_DestroyVhost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Amqp)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("DestroyVhost", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.ToolApi/DestroyVhost",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ToolApiServer).DestroyVhost(ctx, req.(*Amqp))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ToolApi_CreateExchange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Amqp)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("CreateExchange", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.ToolApi/CreateExchange",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ToolApiServer).CreateExchange(ctx, req.(*Amqp))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ToolApi_DestroyExchange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Amqp)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("DestroyExchange", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.ToolApi/DestroyExchange",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ToolApiServer).DestroyExchange(ctx, req.(*Amqp))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ToolApi_CreateQueue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Amqp)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("CreateQueue", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.ToolApi/CreateQueue",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ToolApiServer).CreateQueue(ctx, req.(*Amqp))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ToolApi_DestroyQueue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Amqp)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("DestroyQueue", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.ToolApi/DestroyQueue",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ToolApiServer).DestroyQueue(ctx, req.(*Amqp))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ToolApi_Task_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AmqpTask)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("Task", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.ToolApi/Task",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ToolApiServer).Task(ctx, req.(*AmqpTask))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ToolApi_ServiceDesc is the grpc_go.ServiceDesc for ToolApi service.
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -10746,6 +10645,38 @@ var ToolApi_ServiceDesc = grpc_go.ServiceDesc{
 		{
 			MethodName: "DeleteFile",
 			Handler:    _ToolApi_DeleteFile_Handler,
+		},
+		{
+			MethodName: "RegisterUser",
+			Handler:    _ToolApi_RegisterUser_Handler,
+		},
+		{
+			MethodName: "CreateVhost",
+			Handler:    _ToolApi_CreateVhost_Handler,
+		},
+		{
+			MethodName: "DestroyVhost",
+			Handler:    _ToolApi_DestroyVhost_Handler,
+		},
+		{
+			MethodName: "CreateExchange",
+			Handler:    _ToolApi_CreateExchange_Handler,
+		},
+		{
+			MethodName: "DestroyExchange",
+			Handler:    _ToolApi_DestroyExchange_Handler,
+		},
+		{
+			MethodName: "CreateQueue",
+			Handler:    _ToolApi_CreateQueue_Handler,
+		},
+		{
+			MethodName: "DestroyQueue",
+			Handler:    _ToolApi_DestroyQueue_Handler,
+		},
+		{
+			MethodName: "Task",
+			Handler:    _ToolApi_Task_Handler,
 		},
 	},
 	Streams:  []grpc_go.StreamDesc{},

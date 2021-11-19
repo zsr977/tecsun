@@ -1374,17 +1374,6 @@ service QuestionnaireApi {
   rpc DeleteUAnswerByQN(answerInfo) returns (Null){}
 }
 
-service TaskApi {
-  rpc RegisterUser (Amqp) returns (Null){}
-  rpc CreateVhost (Amqp) returns (Null){}
-  rpc DestroyVhost (Amqp) returns (Null){}
-  rpc CreateExchange (Amqp) returns (Null){}
-  rpc DestroyExchange (Amqp) returns (Null){}
-  rpc CreateQueue (Amqp) returns (Null){}
-  rpc DestroyQueue (Amqp) returns (Null){}
-  rpc Task (AmqpTask) returns (Null){}
-}
-
 service TenantApi {
   rpc RefTenantReshRedis (Null) returns (Null){}
   rpc ClientByUuid (TenantReq) returns (TenantRes){}
@@ -1434,6 +1423,14 @@ service ToolApi {
   rpc CreateRemoteFile (File) returns (File){}
   rpc GetFile (File) returns (File){}
   rpc DeleteFile (File) returns (Null){}
+  rpc RegisterUser (Amqp) returns (Null){}
+  rpc CreateVhost (Amqp) returns (Null){}
+  rpc DestroyVhost (Amqp) returns (Null){}
+  rpc CreateExchange (Amqp) returns (Null){}
+  rpc DestroyExchange (Amqp) returns (Null){}
+  rpc CreateQueue (Amqp) returns (Null){}
+  rpc DestroyQueue (Amqp) returns (Null){}
+  rpc Task (AmqpTask) returns (Null){}
 }
 
 service workflowApi {
