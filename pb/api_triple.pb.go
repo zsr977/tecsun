@@ -30,7 +30,7 @@ const _ = grpc_go.SupportPackageIsVersion7
 type BillboardApiClient interface {
 	CreateBillboard(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	DeleteBillboard(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	GetBillboardList(ctx context.Context, in *Null, opts ...grpc_go.CallOption) (*BillboardList, common.ErrorWithAttachment)
+	GetBillboardList(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*BillboardList, common.ErrorWithAttachment)
 	CreateBillboardItem(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 	UpdateBillboardItem(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 }
@@ -42,7 +42,7 @@ type billboardApiClient struct {
 type BillboardApiClientImpl struct {
 	CreateBillboard     func(ctx context.Context, in *OneBillboard) (*Null, error)
 	DeleteBillboard     func(ctx context.Context, in *OneBillboard) (*Null, error)
-	GetBillboardList    func(ctx context.Context, in *Null) (*BillboardList, error)
+	GetBillboardList    func(ctx context.Context, in *OneBillboard) (*BillboardList, error)
 	CreateBillboardItem func(ctx context.Context, in *OneBillboard) (*Null, error)
 	UpdateBillboardItem func(ctx context.Context, in *OneBillboard) (*Null, error)
 }
@@ -67,7 +67,7 @@ func (c *billboardApiClient) DeleteBillboard(ctx context.Context, in *OneBillboa
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteBillboard", in, out)
 }
 
-func (c *billboardApiClient) GetBillboardList(ctx context.Context, in *Null, opts ...grpc_go.CallOption) (*BillboardList, common.ErrorWithAttachment) {
+func (c *billboardApiClient) GetBillboardList(ctx context.Context, in *OneBillboard, opts ...grpc_go.CallOption) (*BillboardList, common.ErrorWithAttachment) {
 	out := new(BillboardList)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetBillboardList", in, out)
@@ -91,7 +91,7 @@ func (c *billboardApiClient) UpdateBillboardItem(ctx context.Context, in *OneBil
 type BillboardApiServer interface {
 	CreateBillboard(context.Context, *OneBillboard) (*Null, error)
 	DeleteBillboard(context.Context, *OneBillboard) (*Null, error)
-	GetBillboardList(context.Context, *Null) (*BillboardList, error)
+	GetBillboardList(context.Context, *OneBillboard) (*BillboardList, error)
 	CreateBillboardItem(context.Context, *OneBillboard) (*Null, error)
 	UpdateBillboardItem(context.Context, *OneBillboard) (*Null, error)
 	mustEmbedUnimplementedBillboardApiServer()
@@ -108,7 +108,7 @@ func (UnimplementedBillboardApiServer) CreateBillboard(context.Context, *OneBill
 func (UnimplementedBillboardApiServer) DeleteBillboard(context.Context, *OneBillboard) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteBillboard not implemented")
 }
-func (UnimplementedBillboardApiServer) GetBillboardList(context.Context, *Null) (*BillboardList, error) {
+func (UnimplementedBillboardApiServer) GetBillboardList(context.Context, *OneBillboard) (*BillboardList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBillboardList not implemented")
 }
 func (UnimplementedBillboardApiServer) CreateBillboardItem(context.Context, *OneBillboard) (*Null, error) {
@@ -198,7 +198,7 @@ func _BillboardApi_DeleteBillboard_Handler(srv interface{}, ctx context.Context,
 }
 
 func _BillboardApi_GetBillboardList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Null)
+	in := new(OneBillboard)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -220,7 +220,7 @@ func _BillboardApi_GetBillboardList_Handler(srv interface{}, ctx context.Context
 		FullMethod: "/main.BillboardApi/GetBillboardList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillboardApiServer).GetBillboardList(ctx, req.(*Null))
+		return srv.(BillboardApiServer).GetBillboardList(ctx, req.(*OneBillboard))
 	}
 	return interceptor(ctx, in, info, handler)
 }

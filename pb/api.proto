@@ -1178,7 +1178,7 @@ message recordDetail{
 service BillboardApi {
   rpc CreateBillboard(OneBillboard) returns (Null){}
   rpc DeleteBillboard(OneBillboard) returns (Null){}
-  rpc GetBillboardList(Null) returns (BillboardList){}
+  rpc GetBillboardList(OneBillboard) returns (BillboardList){}
   rpc CreateBillboardItem(OneBillboard) returns (Null){}
   rpc UpdateBillboardItem(OneBillboard) returns (Null){}
 }
