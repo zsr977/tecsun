@@ -8,6 +8,7 @@ import (
 type Model struct {
 	DataSource string
 	Db         *sql.DB
+	Tx         *sql.Tx
 }
 
 func RegisterMysql() Model {
