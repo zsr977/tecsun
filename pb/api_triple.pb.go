@@ -4,7 +4,7 @@
 // - protoc             v3.19.1
 // source: api.proto
 
-package api
+package pb
 
 import (
 	context "context"
