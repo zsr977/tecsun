@@ -1374,12 +1374,6 @@ service QuestionnaireApi {
   rpc DeleteUAnswerByQN(answerInfo) returns (Null){}
 }
 
-service SecureApi {
-  rpc GenerateToken (Jwt) returns (Jwt){}
-  rpc ParseToken (Jwt) returns (Jwt){}
-  rpc RefreshToken (Jwt) returns (Jwt){}
-}
-
 service TaskApi {
   rpc RegisterUser (Amqp) returns (Null){}
   rpc CreateVhost (Amqp) returns (Null){}
@@ -1427,6 +1421,9 @@ service TenantApi {
 }
 
 service ToolApi {
+  rpc GenerateToken (Jwt) returns (Jwt){}
+  rpc ParseToken (Jwt) returns (Jwt){}
+  rpc RefreshToken (Jwt) returns (Jwt){}
   rpc ShortUrl (Url) returns (Url){}
   rpc LongUrl (Url) returns (Url){}
   rpc GetDomainUrl (Req) returns (Url){}

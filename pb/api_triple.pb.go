@@ -8213,207 +8213,6 @@ var QuestionnaireApi_ServiceDesc = grpc_go.ServiceDesc{
 	Metadata: "api.proto",
 }
 
-// SecureApiClient is the client API for SecureApi service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type SecureApiClient interface {
-	GenerateToken(ctx context.Context, in *Jwt, opts ...grpc_go.CallOption) (*Jwt, common.ErrorWithAttachment)
-	ParseToken(ctx context.Context, in *Jwt, opts ...grpc_go.CallOption) (*Jwt, common.ErrorWithAttachment)
-	RefreshToken(ctx context.Context, in *Jwt, opts ...grpc_go.CallOption) (*Jwt, common.ErrorWithAttachment)
-}
-
-type secureApiClient struct {
-	cc *triple.TripleConn
-}
-
-type SecureApiClientImpl struct {
-	GenerateToken func(ctx context.Context, in *Jwt) (*Jwt, error)
-	ParseToken    func(ctx context.Context, in *Jwt) (*Jwt, error)
-	RefreshToken  func(ctx context.Context, in *Jwt) (*Jwt, error)
-}
-
-func (c *SecureApiClientImpl) GetDubboStub(cc *triple.TripleConn) SecureApiClient {
-	return NewSecureApiClient(cc)
-}
-
-func NewSecureApiClient(cc *triple.TripleConn) SecureApiClient {
-	return &secureApiClient{cc}
-}
-
-func (c *secureApiClient) GenerateToken(ctx context.Context, in *Jwt, opts ...grpc_go.CallOption) (*Jwt, common.ErrorWithAttachment) {
-	out := new(Jwt)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GenerateToken", in, out)
-}
-
-func (c *secureApiClient) ParseToken(ctx context.Context, in *Jwt, opts ...grpc_go.CallOption) (*Jwt, common.ErrorWithAttachment) {
-	out := new(Jwt)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ParseToken", in, out)
-}
-
-func (c *secureApiClient) RefreshToken(ctx context.Context, in *Jwt, opts ...grpc_go.CallOption) (*Jwt, common.ErrorWithAttachment) {
-	out := new(Jwt)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RefreshToken", in, out)
-}
-
-// SecureApiServer is the server API for SecureApi service.
-// All implementations must embed UnimplementedSecureApiServer
-// for forward compatibility
-type SecureApiServer interface {
-	GenerateToken(context.Context, *Jwt) (*Jwt, error)
-	ParseToken(context.Context, *Jwt) (*Jwt, error)
-	RefreshToken(context.Context, *Jwt) (*Jwt, error)
-	mustEmbedUnimplementedSecureApiServer()
-}
-
-// UnimplementedSecureApiServer must be embedded to have forward compatible implementations.
-type UnimplementedSecureApiServer struct {
-	proxyImpl protocol.Invoker
-}
-
-func (UnimplementedSecureApiServer) GenerateToken(context.Context, *Jwt) (*Jwt, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GenerateToken not implemented")
-}
-func (UnimplementedSecureApiServer) ParseToken(context.Context, *Jwt) (*Jwt, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ParseToken not implemented")
-}
-func (UnimplementedSecureApiServer) RefreshToken(context.Context, *Jwt) (*Jwt, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
-}
-func (s *UnimplementedSecureApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
-	s.proxyImpl = impl
-}
-
-func (s *UnimplementedSecureApiServer) XXX_GetProxyImpl() protocol.Invoker {
-	return s.proxyImpl
-}
-
-func (s *UnimplementedSecureApiServer) XXX_ServiceDesc() *grpc_go.ServiceDesc {
-	return &SecureApi_ServiceDesc
-}
-func (UnimplementedSecureApiServer) mustEmbedUnimplementedSecureApiServer() {}
-
-// UnsafeSecureApiServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to SecureApiServer will
-// result in compilation errors.
-type UnsafeSecureApiServer interface {
-	mustEmbedUnimplementedSecureApiServer()
-}
-
-func RegisterSecureApiServer(s grpc_go.ServiceRegistrar, srv SecureApiServer) {
-	s.RegisterService(&SecureApi_ServiceDesc, srv)
-}
-
-func _SecureApi_GenerateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Jwt)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("GenerateToken", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.SecureApi/GenerateToken",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SecureApiServer).GenerateToken(ctx, req.(*Jwt))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SecureApi_ParseToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Jwt)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("ParseToken", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.SecureApi/ParseToken",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SecureApiServer).ParseToken(ctx, req.(*Jwt))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SecureApi_RefreshToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Jwt)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("RefreshToken", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.SecureApi/RefreshToken",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SecureApiServer).RefreshToken(ctx, req.(*Jwt))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// SecureApi_ServiceDesc is the grpc_go.ServiceDesc for SecureApi service.
-// It's only intended for direct use with grpc_go.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var SecureApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "main.SecureApi",
-	HandlerType: (*SecureApiServer)(nil),
-	Methods: []grpc_go.MethodDesc{
-		{
-			MethodName: "GenerateToken",
-			Handler:    _SecureApi_GenerateToken_Handler,
-		},
-		{
-			MethodName: "ParseToken",
-			Handler:    _SecureApi_ParseToken_Handler,
-		},
-		{
-			MethodName: "RefreshToken",
-			Handler:    _SecureApi_RefreshToken_Handler,
-		},
-	},
-	Streams:  []grpc_go.StreamDesc{},
-	Metadata: "api.proto",
-}
-
 // TaskApiClient is the client API for TaskApi service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
@@ -10316,6 +10115,9 @@ var TenantApi_ServiceDesc = grpc_go.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ToolApiClient interface {
+	GenerateToken(ctx context.Context, in *Jwt, opts ...grpc_go.CallOption) (*Jwt, common.ErrorWithAttachment)
+	ParseToken(ctx context.Context, in *Jwt, opts ...grpc_go.CallOption) (*Jwt, common.ErrorWithAttachment)
+	RefreshToken(ctx context.Context, in *Jwt, opts ...grpc_go.CallOption) (*Jwt, common.ErrorWithAttachment)
 	ShortUrl(ctx context.Context, in *Url, opts ...grpc_go.CallOption) (*Url, common.ErrorWithAttachment)
 	LongUrl(ctx context.Context, in *Url, opts ...grpc_go.CallOption) (*Url, common.ErrorWithAttachment)
 	GetDomainUrl(ctx context.Context, in *Req, opts ...grpc_go.CallOption) (*Url, common.ErrorWithAttachment)
@@ -10333,6 +10135,9 @@ type toolApiClient struct {
 }
 
 type ToolApiClientImpl struct {
+	GenerateToken    func(ctx context.Context, in *Jwt) (*Jwt, error)
+	ParseToken       func(ctx context.Context, in *Jwt) (*Jwt, error)
+	RefreshToken     func(ctx context.Context, in *Jwt) (*Jwt, error)
 	ShortUrl         func(ctx context.Context, in *Url) (*Url, error)
 	LongUrl          func(ctx context.Context, in *Url) (*Url, error)
 	GetDomainUrl     func(ctx context.Context, in *Req) (*Url, error)
@@ -10351,6 +10156,24 @@ func (c *ToolApiClientImpl) GetDubboStub(cc *triple.TripleConn) ToolApiClient {
 
 func NewToolApiClient(cc *triple.TripleConn) ToolApiClient {
 	return &toolApiClient{cc}
+}
+
+func (c *toolApiClient) GenerateToken(ctx context.Context, in *Jwt, opts ...grpc_go.CallOption) (*Jwt, common.ErrorWithAttachment) {
+	out := new(Jwt)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GenerateToken", in, out)
+}
+
+func (c *toolApiClient) ParseToken(ctx context.Context, in *Jwt, opts ...grpc_go.CallOption) (*Jwt, common.ErrorWithAttachment) {
+	out := new(Jwt)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ParseToken", in, out)
+}
+
+func (c *toolApiClient) RefreshToken(ctx context.Context, in *Jwt, opts ...grpc_go.CallOption) (*Jwt, common.ErrorWithAttachment) {
+	out := new(Jwt)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RefreshToken", in, out)
 }
 
 func (c *toolApiClient) ShortUrl(ctx context.Context, in *Url, opts ...grpc_go.CallOption) (*Url, common.ErrorWithAttachment) {
@@ -10417,6 +10240,9 @@ func (c *toolApiClient) DeleteFile(ctx context.Context, in *File, opts ...grpc_g
 // All implementations must embed UnimplementedToolApiServer
 // for forward compatibility
 type ToolApiServer interface {
+	GenerateToken(context.Context, *Jwt) (*Jwt, error)
+	ParseToken(context.Context, *Jwt) (*Jwt, error)
+	RefreshToken(context.Context, *Jwt) (*Jwt, error)
 	ShortUrl(context.Context, *Url) (*Url, error)
 	LongUrl(context.Context, *Url) (*Url, error)
 	GetDomainUrl(context.Context, *Req) (*Url, error)
@@ -10435,6 +10261,15 @@ type UnimplementedToolApiServer struct {
 	proxyImpl protocol.Invoker
 }
 
+func (UnimplementedToolApiServer) GenerateToken(context.Context, *Jwt) (*Jwt, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GenerateToken not implemented")
+}
+func (UnimplementedToolApiServer) ParseToken(context.Context, *Jwt) (*Jwt, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ParseToken not implemented")
+}
+func (UnimplementedToolApiServer) RefreshToken(context.Context, *Jwt) (*Jwt, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
+}
 func (UnimplementedToolApiServer) ShortUrl(context.Context, *Url) (*Url, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ShortUrl not implemented")
 }
@@ -10487,6 +10322,90 @@ type UnsafeToolApiServer interface {
 
 func RegisterToolApiServer(s grpc_go.ServiceRegistrar, srv ToolApiServer) {
 	s.RegisterService(&ToolApi_ServiceDesc, srv)
+}
+
+func _ToolApi_GenerateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Jwt)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("GenerateToken", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.ToolApi/GenerateToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ToolApiServer).GenerateToken(ctx, req.(*Jwt))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ToolApi_ParseToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Jwt)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("ParseToken", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.ToolApi/ParseToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ToolApiServer).ParseToken(ctx, req.(*Jwt))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ToolApi_RefreshToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Jwt)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("RefreshToken", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.ToolApi/RefreshToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ToolApiServer).RefreshToken(ctx, req.(*Jwt))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _ToolApi_ShortUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
@@ -10776,6 +10695,18 @@ var ToolApi_ServiceDesc = grpc_go.ServiceDesc{
 	ServiceName: "main.ToolApi",
 	HandlerType: (*ToolApiServer)(nil),
 	Methods: []grpc_go.MethodDesc{
+		{
+			MethodName: "GenerateToken",
+			Handler:    _ToolApi_GenerateToken_Handler,
+		},
+		{
+			MethodName: "ParseToken",
+			Handler:    _ToolApi_ParseToken_Handler,
+		},
+		{
+			MethodName: "RefreshToken",
+			Handler:    _ToolApi_RefreshToken_Handler,
+		},
 		{
 			MethodName: "ShortUrl",
 			Handler:    _ToolApi_ShortUrl_Handler,
