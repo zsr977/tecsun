@@ -14,7 +14,7 @@ message OneBillboard {
   string uuid = 1;
   string title = 2;
   string content = 3;
-  int32 count  =4;
+  int32 count = 4;
   int32 read_num = 5;
   int32 unread_num = 6;
   int32 useful_num = 7;
@@ -28,10 +28,10 @@ message OneBillboard {
 }
 
 message BillboardList {
-  repeated OneBillboard rows= 1;
+  repeated OneBillboard rows = 1;
   int32  total = 2;
-  int32 size =3;
-  int32  pages= 4;
+  int32 size = 3;
+  int32  pages = 4;
 }
 
 message ClientCompanyInfo {
@@ -86,7 +86,7 @@ message userInfo {
   string mobileNo = 8;
   string userName = 9;
   string iDcard = 10;
-  string openId =11;
+  string openId = 11;
 }
 
 message messageInfo {
@@ -104,7 +104,7 @@ message messageInfo {
   string ticket = 12;
   string corpId = 13;
   string agentId = 14;
-  string msg =15;
+  string msg = 15;
 }
 
 message mediaInfo {
@@ -132,7 +132,7 @@ message mecList {
 }
 
 message DeviceUserInfo {
-  string uuid  =1 ;
+  string uuid = 1 ;
   string code = 2 ;
   string phone = 3;
   string card = 4;
@@ -816,14 +816,14 @@ message answerInfo {
   string create_time = 4;
   bool action = 5;
   string question_uuid = 6;
-  string user_uuid =7;
+  string user_uuid = 7;
   bool require = 8;
   string type = 9;
   string data = 10;
   string name = 11;
   string title = 12;
   string describe = 13;
-  string naire_uuid =14;
+  string naire_uuid = 14;
   string page = 15;
   string size = 16;
   string tenant = 17;
@@ -1241,20 +1241,6 @@ service HelperApi {
   rpc GetHelpCenterList (faqs) returns (faqs){}
 }
 
-service ManagerApi {
-  rpc RegisterManager (RegisterManagerReq) returns (RegisterManagerRes) {}
-  rpc ChangeName (ChangeNameReq)returns (Null) {}
-  rpc ChangeTFA (ChangeTFAReq)returns (Null) {}
-  rpc ChangePhone (ChangePhoneReq)returns (Null) {}
-  rpc ChangePassword (ChangePasswordReq)returns (Null) {}
-  rpc ChangeAccountAndPassword (ChangeAccountAndPasswordReq)returns (Null) {}
-  rpc ChangePasswordByPhone (ChangePasswordByPhoneReq)returns (Null) {}
-  rpc LoginByPhone (LoginByPhoneReq)returns (LoginByPhoneRes) {}
-  rpc GetLoginManager (GetLoginManagerReq)returns (GetLoginManagerRes) {}
-  rpc DeleteAccount (DeleteAccountReq)returns (Null) {}
-  rpc CreateTeam (CreateTeamReq)returns (Null) {}
-}
-
 service MessageApi {
   rpc GenerateAndroidMsg (androidMsg) returns (Null){}
   rpc GenerateCheckCode (checkCode) returns (Null){}
@@ -1407,6 +1393,17 @@ service TenantApi {
   rpc SystemBase (TenantReq) returns (System){}
   rpc SystemInfo (TenantReq) returns (System){}
   rpc UpgradeSystem (TenantReq) returns (Null){}
+  rpc RegisterManager (RegisterManagerReq) returns (RegisterManagerRes) {}
+  rpc ChangeManagerName (ChangeNameReq)returns (Null) {}
+  rpc ChangeManagerTFA (ChangeTFAReq)returns (Null) {}
+  rpc ChangeManagerPhone (ChangePhoneReq)returns (Null) {}
+  rpc ChangeManagerPassword (ChangePasswordReq)returns (Null) {}
+  rpc ChangeManagerAccountAndPassword (ChangeAccountAndPasswordReq)returns (Null) {}
+  rpc ChangeManagerPasswordByPhone (ChangePasswordByPhoneReq)returns (Null) {}
+  rpc ManagerLoginByPhone (LoginByPhoneReq)returns (LoginByPhoneRes) {}
+  rpc GetLoginManager (GetLoginManagerReq)returns (GetLoginManagerRes) {}
+  rpc DeleteManagerAccount (DeleteAccountReq)returns (Null) {}
+  rpc CreateManagerTeam (CreateTeamReq)returns (Null) {}
 }
 
 service ToolApi {

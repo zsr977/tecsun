@@ -2676,559 +2676,6 @@ var HelperApi_ServiceDesc = grpc_go.ServiceDesc{
 	Metadata: "api.proto",
 }
 
-// ManagerApiClient is the client API for ManagerApi service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ManagerApiClient interface {
-	RegisterManager(ctx context.Context, in *RegisterManagerReq, opts ...grpc_go.CallOption) (*RegisterManagerRes, common.ErrorWithAttachment)
-	ChangeName(ctx context.Context, in *ChangeNameReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	ChangeTFA(ctx context.Context, in *ChangeTFAReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	ChangePhone(ctx context.Context, in *ChangePhoneReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	ChangePassword(ctx context.Context, in *ChangePasswordReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	ChangeAccountAndPassword(ctx context.Context, in *ChangeAccountAndPasswordReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	ChangePasswordByPhone(ctx context.Context, in *ChangePasswordByPhoneReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	LoginByPhone(ctx context.Context, in *LoginByPhoneReq, opts ...grpc_go.CallOption) (*LoginByPhoneRes, common.ErrorWithAttachment)
-	GetLoginManager(ctx context.Context, in *GetLoginManagerReq, opts ...grpc_go.CallOption) (*GetLoginManagerRes, common.ErrorWithAttachment)
-	DeleteAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-	CreateTeam(ctx context.Context, in *CreateTeamReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
-}
-
-type managerApiClient struct {
-	cc *triple.TripleConn
-}
-
-type ManagerApiClientImpl struct {
-	RegisterManager          func(ctx context.Context, in *RegisterManagerReq) (*RegisterManagerRes, error)
-	ChangeName               func(ctx context.Context, in *ChangeNameReq) (*Null, error)
-	ChangeTFA                func(ctx context.Context, in *ChangeTFAReq) (*Null, error)
-	ChangePhone              func(ctx context.Context, in *ChangePhoneReq) (*Null, error)
-	ChangePassword           func(ctx context.Context, in *ChangePasswordReq) (*Null, error)
-	ChangeAccountAndPassword func(ctx context.Context, in *ChangeAccountAndPasswordReq) (*Null, error)
-	ChangePasswordByPhone    func(ctx context.Context, in *ChangePasswordByPhoneReq) (*Null, error)
-	LoginByPhone             func(ctx context.Context, in *LoginByPhoneReq) (*LoginByPhoneRes, error)
-	GetLoginManager          func(ctx context.Context, in *GetLoginManagerReq) (*GetLoginManagerRes, error)
-	DeleteAccount            func(ctx context.Context, in *DeleteAccountReq) (*Null, error)
-	CreateTeam               func(ctx context.Context, in *CreateTeamReq) (*Null, error)
-}
-
-func (c *ManagerApiClientImpl) GetDubboStub(cc *triple.TripleConn) ManagerApiClient {
-	return NewManagerApiClient(cc)
-}
-
-func NewManagerApiClient(cc *triple.TripleConn) ManagerApiClient {
-	return &managerApiClient{cc}
-}
-
-func (c *managerApiClient) RegisterManager(ctx context.Context, in *RegisterManagerReq, opts ...grpc_go.CallOption) (*RegisterManagerRes, common.ErrorWithAttachment) {
-	out := new(RegisterManagerRes)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RegisterManager", in, out)
-}
-
-func (c *managerApiClient) ChangeName(ctx context.Context, in *ChangeNameReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeName", in, out)
-}
-
-func (c *managerApiClient) ChangeTFA(ctx context.Context, in *ChangeTFAReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeTFA", in, out)
-}
-
-func (c *managerApiClient) ChangePhone(ctx context.Context, in *ChangePhoneReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangePhone", in, out)
-}
-
-func (c *managerApiClient) ChangePassword(ctx context.Context, in *ChangePasswordReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangePassword", in, out)
-}
-
-func (c *managerApiClient) ChangeAccountAndPassword(ctx context.Context, in *ChangeAccountAndPasswordReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeAccountAndPassword", in, out)
-}
-
-func (c *managerApiClient) ChangePasswordByPhone(ctx context.Context, in *ChangePasswordByPhoneReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangePasswordByPhone", in, out)
-}
-
-func (c *managerApiClient) LoginByPhone(ctx context.Context, in *LoginByPhoneReq, opts ...grpc_go.CallOption) (*LoginByPhoneRes, common.ErrorWithAttachment) {
-	out := new(LoginByPhoneRes)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/LoginByPhone", in, out)
-}
-
-func (c *managerApiClient) GetLoginManager(ctx context.Context, in *GetLoginManagerReq, opts ...grpc_go.CallOption) (*GetLoginManagerRes, common.ErrorWithAttachment) {
-	out := new(GetLoginManagerRes)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetLoginManager", in, out)
-}
-
-func (c *managerApiClient) DeleteAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteAccount", in, out)
-}
-
-func (c *managerApiClient) CreateTeam(ctx context.Context, in *CreateTeamReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
-	out := new(Null)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateTeam", in, out)
-}
-
-// ManagerApiServer is the server API for ManagerApi service.
-// All implementations must embed UnimplementedManagerApiServer
-// for forward compatibility
-type ManagerApiServer interface {
-	RegisterManager(context.Context, *RegisterManagerReq) (*RegisterManagerRes, error)
-	ChangeName(context.Context, *ChangeNameReq) (*Null, error)
-	ChangeTFA(context.Context, *ChangeTFAReq) (*Null, error)
-	ChangePhone(context.Context, *ChangePhoneReq) (*Null, error)
-	ChangePassword(context.Context, *ChangePasswordReq) (*Null, error)
-	ChangeAccountAndPassword(context.Context, *ChangeAccountAndPasswordReq) (*Null, error)
-	ChangePasswordByPhone(context.Context, *ChangePasswordByPhoneReq) (*Null, error)
-	LoginByPhone(context.Context, *LoginByPhoneReq) (*LoginByPhoneRes, error)
-	GetLoginManager(context.Context, *GetLoginManagerReq) (*GetLoginManagerRes, error)
-	DeleteAccount(context.Context, *DeleteAccountReq) (*Null, error)
-	CreateTeam(context.Context, *CreateTeamReq) (*Null, error)
-	mustEmbedUnimplementedManagerApiServer()
-}
-
-// UnimplementedManagerApiServer must be embedded to have forward compatible implementations.
-type UnimplementedManagerApiServer struct {
-	proxyImpl protocol.Invoker
-}
-
-func (UnimplementedManagerApiServer) RegisterManager(context.Context, *RegisterManagerReq) (*RegisterManagerRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RegisterManager not implemented")
-}
-func (UnimplementedManagerApiServer) ChangeName(context.Context, *ChangeNameReq) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ChangeName not implemented")
-}
-func (UnimplementedManagerApiServer) ChangeTFA(context.Context, *ChangeTFAReq) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ChangeTFA not implemented")
-}
-func (UnimplementedManagerApiServer) ChangePhone(context.Context, *ChangePhoneReq) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ChangePhone not implemented")
-}
-func (UnimplementedManagerApiServer) ChangePassword(context.Context, *ChangePasswordReq) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ChangePassword not implemented")
-}
-func (UnimplementedManagerApiServer) ChangeAccountAndPassword(context.Context, *ChangeAccountAndPasswordReq) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ChangeAccountAndPassword not implemented")
-}
-func (UnimplementedManagerApiServer) ChangePasswordByPhone(context.Context, *ChangePasswordByPhoneReq) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ChangePasswordByPhone not implemented")
-}
-func (UnimplementedManagerApiServer) LoginByPhone(context.Context, *LoginByPhoneReq) (*LoginByPhoneRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LoginByPhone not implemented")
-}
-func (UnimplementedManagerApiServer) GetLoginManager(context.Context, *GetLoginManagerReq) (*GetLoginManagerRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetLoginManager not implemented")
-}
-func (UnimplementedManagerApiServer) DeleteAccount(context.Context, *DeleteAccountReq) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteAccount not implemented")
-}
-func (UnimplementedManagerApiServer) CreateTeam(context.Context, *CreateTeamReq) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateTeam not implemented")
-}
-func (s *UnimplementedManagerApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
-	s.proxyImpl = impl
-}
-
-func (s *UnimplementedManagerApiServer) XXX_GetProxyImpl() protocol.Invoker {
-	return s.proxyImpl
-}
-
-func (s *UnimplementedManagerApiServer) XXX_ServiceDesc() *grpc_go.ServiceDesc {
-	return &ManagerApi_ServiceDesc
-}
-func (UnimplementedManagerApiServer) mustEmbedUnimplementedManagerApiServer() {}
-
-// UnsafeManagerApiServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ManagerApiServer will
-// result in compilation errors.
-type UnsafeManagerApiServer interface {
-	mustEmbedUnimplementedManagerApiServer()
-}
-
-func RegisterManagerApiServer(s grpc_go.ServiceRegistrar, srv ManagerApiServer) {
-	s.RegisterService(&ManagerApi_ServiceDesc, srv)
-}
-
-func _ManagerApi_RegisterManager_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterManagerReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("RegisterManager", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.ManagerApi/RegisterManager",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerApiServer).RegisterManager(ctx, req.(*RegisterManagerReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ManagerApi_ChangeName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ChangeNameReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("ChangeName", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.ManagerApi/ChangeName",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerApiServer).ChangeName(ctx, req.(*ChangeNameReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ManagerApi_ChangeTFA_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ChangeTFAReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("ChangeTFA", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.ManagerApi/ChangeTFA",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerApiServer).ChangeTFA(ctx, req.(*ChangeTFAReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ManagerApi_ChangePhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ChangePhoneReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("ChangePhone", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.ManagerApi/ChangePhone",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerApiServer).ChangePhone(ctx, req.(*ChangePhoneReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ManagerApi_ChangePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ChangePasswordReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("ChangePassword", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.ManagerApi/ChangePassword",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerApiServer).ChangePassword(ctx, req.(*ChangePasswordReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ManagerApi_ChangeAccountAndPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ChangeAccountAndPasswordReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("ChangeAccountAndPassword", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.ManagerApi/ChangeAccountAndPassword",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerApiServer).ChangeAccountAndPassword(ctx, req.(*ChangeAccountAndPasswordReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ManagerApi_ChangePasswordByPhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ChangePasswordByPhoneReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("ChangePasswordByPhone", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.ManagerApi/ChangePasswordByPhone",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerApiServer).ChangePasswordByPhone(ctx, req.(*ChangePasswordByPhoneReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ManagerApi_LoginByPhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoginByPhoneReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("LoginByPhone", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.ManagerApi/LoginByPhone",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerApiServer).LoginByPhone(ctx, req.(*LoginByPhoneReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ManagerApi_GetLoginManager_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetLoginManagerReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("GetLoginManager", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.ManagerApi/GetLoginManager",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerApiServer).GetLoginManager(ctx, req.(*GetLoginManagerReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ManagerApi_DeleteAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteAccountReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("DeleteAccount", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.ManagerApi/DeleteAccount",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerApiServer).DeleteAccount(ctx, req.(*DeleteAccountReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ManagerApi_CreateTeam_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateTeamReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	md, _ := metadata.FromIncomingContext(ctx)
-	invAttachment := make(map[string]interface{}, len(md))
-	for k, v := range md {
-		invAttachment[k] = v
-	}
-	invo := invocation.NewRPCInvocation("CreateTeam", args, invAttachment)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc_go.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/main.ManagerApi/CreateTeam",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerApiServer).CreateTeam(ctx, req.(*CreateTeamReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// ManagerApi_ServiceDesc is the grpc_go.ServiceDesc for ManagerApi service.
-// It's only intended for direct use with grpc_go.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var ManagerApi_ServiceDesc = grpc_go.ServiceDesc{
-	ServiceName: "main.ManagerApi",
-	HandlerType: (*ManagerApiServer)(nil),
-	Methods: []grpc_go.MethodDesc{
-		{
-			MethodName: "RegisterManager",
-			Handler:    _ManagerApi_RegisterManager_Handler,
-		},
-		{
-			MethodName: "ChangeName",
-			Handler:    _ManagerApi_ChangeName_Handler,
-		},
-		{
-			MethodName: "ChangeTFA",
-			Handler:    _ManagerApi_ChangeTFA_Handler,
-		},
-		{
-			MethodName: "ChangePhone",
-			Handler:    _ManagerApi_ChangePhone_Handler,
-		},
-		{
-			MethodName: "ChangePassword",
-			Handler:    _ManagerApi_ChangePassword_Handler,
-		},
-		{
-			MethodName: "ChangeAccountAndPassword",
-			Handler:    _ManagerApi_ChangeAccountAndPassword_Handler,
-		},
-		{
-			MethodName: "ChangePasswordByPhone",
-			Handler:    _ManagerApi_ChangePasswordByPhone_Handler,
-		},
-		{
-			MethodName: "LoginByPhone",
-			Handler:    _ManagerApi_LoginByPhone_Handler,
-		},
-		{
-			MethodName: "GetLoginManager",
-			Handler:    _ManagerApi_GetLoginManager_Handler,
-		},
-		{
-			MethodName: "DeleteAccount",
-			Handler:    _ManagerApi_DeleteAccount_Handler,
-		},
-		{
-			MethodName: "CreateTeam",
-			Handler:    _ManagerApi_CreateTeam_Handler,
-		},
-	},
-	Streams:  []grpc_go.StreamDesc{},
-	Metadata: "api.proto",
-}
-
 // MessageApiClient is the client API for MessageApi service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
@@ -8249,6 +7696,17 @@ type TenantApiClient interface {
 	SystemBase(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*System, common.ErrorWithAttachment)
 	SystemInfo(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*System, common.ErrorWithAttachment)
 	UpgradeSystem(ctx context.Context, in *TenantReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	RegisterManager(ctx context.Context, in *RegisterManagerReq, opts ...grpc_go.CallOption) (*RegisterManagerRes, common.ErrorWithAttachment)
+	ChangeManagerName(ctx context.Context, in *ChangeNameReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangeManagerTFA(ctx context.Context, in *ChangeTFAReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangeManagerPhone(ctx context.Context, in *ChangePhoneReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangeManagerPassword(ctx context.Context, in *ChangePasswordReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangeManagerAccountAndPassword(ctx context.Context, in *ChangeAccountAndPasswordReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ChangeManagerPasswordByPhone(ctx context.Context, in *ChangePasswordByPhoneReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	ManagerLoginByPhone(ctx context.Context, in *LoginByPhoneReq, opts ...grpc_go.CallOption) (*LoginByPhoneRes, common.ErrorWithAttachment)
+	GetLoginManager(ctx context.Context, in *GetLoginManagerReq, opts ...grpc_go.CallOption) (*GetLoginManagerRes, common.ErrorWithAttachment)
+	DeleteManagerAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
+	CreateManagerTeam(ctx context.Context, in *CreateTeamReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment)
 }
 
 type tenantApiClient struct {
@@ -8256,38 +7714,49 @@ type tenantApiClient struct {
 }
 
 type TenantApiClientImpl struct {
-	RefTenantReshRedis  func(ctx context.Context, in *Null) (*Null, error)
-	ClientByUuid        func(ctx context.Context, in *TenantReq) (*TenantRes, error)
-	ClientByOrgId       func(ctx context.Context, in *TenantReq) (*TenantRes, error)
-	SettingByUuid       func(ctx context.Context, in *TenantReq) (*Tenant, error)
-	AccountByPhone      func(ctx context.Context, in *TenantReq) (*TenantRes, error)
-	AuthByDevice        func(ctx context.Context, in *TenantReq) (*TenantRes, error)
-	PhoneByAccount      func(ctx context.Context, in *TenantReq) (*TenantRes, error)
-	InfoByUuid          func(ctx context.Context, in *TenantReq) (*Tenant, error)
-	InfoByOrgId         func(ctx context.Context, in *TenantReq) (*Tenant, error)
-	InfoByPassword      func(ctx context.Context, in *TenantReq) (*Tenant, error)
-	ListTenant          func(ctx context.Context, in *TenantReq) (*TenantResMap, error)
-	RegisterTenant      func(ctx context.Context, in *TenantReq) (*Tenant, error)
-	GenerateTenant      func(ctx context.Context, in *TenantReq) (*Tenant, error)
-	TenantResetPassword func(ctx context.Context, in *TenantReq) (*Null, error)
-	ChangePassword      func(ctx context.Context, in *TenantReq) (*Null, error)
-	RecoveryPassword    func(ctx context.Context, in *TenantReq) (*Null, error)
-	ChangeDevice        func(ctx context.Context, in *TenantReq) (*Null, error)
-	ChangeContact       func(ctx context.Context, in *TenantReq) (*Null, error)
-	ChangeSelf          func(ctx context.Context, in *TenantReq) (*Null, error)
-	ChangeBanner        func(ctx context.Context, in *TenantReq) (*Null, error)
-	ChangePhone         func(ctx context.Context, in *TenantReq) (*Null, error)
-	ChangeExpireIn      func(ctx context.Context, in *TenantReq) (*Null, error)
-	IsAdmin             func(ctx context.Context, in *TenantReq) (*Null, error)
-	SetWeChat           func(ctx context.Context, in *TenantReq) (*Null, error)
-	SetWork             func(ctx context.Context, in *TenantReq) (*Null, error)
-	SetDingTalk         func(ctx context.Context, in *TenantReq) (*Null, error)
-	SetLark             func(ctx context.Context, in *TenantReq) (*Null, error)
-	SetSetting          func(ctx context.Context, in *TenantReq) (*Null, error)
-	DebugSetting        func(ctx context.Context, in *TenantReq) (*Null, error)
-	SystemBase          func(ctx context.Context, in *TenantReq) (*System, error)
-	SystemInfo          func(ctx context.Context, in *TenantReq) (*System, error)
-	UpgradeSystem       func(ctx context.Context, in *TenantReq) (*Null, error)
+	RefTenantReshRedis              func(ctx context.Context, in *Null) (*Null, error)
+	ClientByUuid                    func(ctx context.Context, in *TenantReq) (*TenantRes, error)
+	ClientByOrgId                   func(ctx context.Context, in *TenantReq) (*TenantRes, error)
+	SettingByUuid                   func(ctx context.Context, in *TenantReq) (*Tenant, error)
+	AccountByPhone                  func(ctx context.Context, in *TenantReq) (*TenantRes, error)
+	AuthByDevice                    func(ctx context.Context, in *TenantReq) (*TenantRes, error)
+	PhoneByAccount                  func(ctx context.Context, in *TenantReq) (*TenantRes, error)
+	InfoByUuid                      func(ctx context.Context, in *TenantReq) (*Tenant, error)
+	InfoByOrgId                     func(ctx context.Context, in *TenantReq) (*Tenant, error)
+	InfoByPassword                  func(ctx context.Context, in *TenantReq) (*Tenant, error)
+	ListTenant                      func(ctx context.Context, in *TenantReq) (*TenantResMap, error)
+	RegisterTenant                  func(ctx context.Context, in *TenantReq) (*Tenant, error)
+	GenerateTenant                  func(ctx context.Context, in *TenantReq) (*Tenant, error)
+	TenantResetPassword             func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangePassword                  func(ctx context.Context, in *TenantReq) (*Null, error)
+	RecoveryPassword                func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangeDevice                    func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangeContact                   func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangeSelf                      func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangeBanner                    func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangePhone                     func(ctx context.Context, in *TenantReq) (*Null, error)
+	ChangeExpireIn                  func(ctx context.Context, in *TenantReq) (*Null, error)
+	IsAdmin                         func(ctx context.Context, in *TenantReq) (*Null, error)
+	SetWeChat                       func(ctx context.Context, in *TenantReq) (*Null, error)
+	SetWork                         func(ctx context.Context, in *TenantReq) (*Null, error)
+	SetDingTalk                     func(ctx context.Context, in *TenantReq) (*Null, error)
+	SetLark                         func(ctx context.Context, in *TenantReq) (*Null, error)
+	SetSetting                      func(ctx context.Context, in *TenantReq) (*Null, error)
+	DebugSetting                    func(ctx context.Context, in *TenantReq) (*Null, error)
+	SystemBase                      func(ctx context.Context, in *TenantReq) (*System, error)
+	SystemInfo                      func(ctx context.Context, in *TenantReq) (*System, error)
+	UpgradeSystem                   func(ctx context.Context, in *TenantReq) (*Null, error)
+	RegisterManager                 func(ctx context.Context, in *RegisterManagerReq) (*RegisterManagerRes, error)
+	ChangeManagerName               func(ctx context.Context, in *ChangeNameReq) (*Null, error)
+	ChangeManagerTFA                func(ctx context.Context, in *ChangeTFAReq) (*Null, error)
+	ChangeManagerPhone              func(ctx context.Context, in *ChangePhoneReq) (*Null, error)
+	ChangeManagerPassword           func(ctx context.Context, in *ChangePasswordReq) (*Null, error)
+	ChangeManagerAccountAndPassword func(ctx context.Context, in *ChangeAccountAndPasswordReq) (*Null, error)
+	ChangeManagerPasswordByPhone    func(ctx context.Context, in *ChangePasswordByPhoneReq) (*Null, error)
+	ManagerLoginByPhone             func(ctx context.Context, in *LoginByPhoneReq) (*LoginByPhoneRes, error)
+	GetLoginManager                 func(ctx context.Context, in *GetLoginManagerReq) (*GetLoginManagerRes, error)
+	DeleteManagerAccount            func(ctx context.Context, in *DeleteAccountReq) (*Null, error)
+	CreateManagerTeam               func(ctx context.Context, in *CreateTeamReq) (*Null, error)
 }
 
 func (c *TenantApiClientImpl) GetDubboStub(cc *triple.TripleConn) TenantApiClient {
@@ -8490,6 +7959,72 @@ func (c *tenantApiClient) UpgradeSystem(ctx context.Context, in *TenantReq, opts
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpgradeSystem", in, out)
 }
 
+func (c *tenantApiClient) RegisterManager(ctx context.Context, in *RegisterManagerReq, opts ...grpc_go.CallOption) (*RegisterManagerRes, common.ErrorWithAttachment) {
+	out := new(RegisterManagerRes)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/RegisterManager", in, out)
+}
+
+func (c *tenantApiClient) ChangeManagerName(ctx context.Context, in *ChangeNameReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeManagerName", in, out)
+}
+
+func (c *tenantApiClient) ChangeManagerTFA(ctx context.Context, in *ChangeTFAReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeManagerTFA", in, out)
+}
+
+func (c *tenantApiClient) ChangeManagerPhone(ctx context.Context, in *ChangePhoneReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeManagerPhone", in, out)
+}
+
+func (c *tenantApiClient) ChangeManagerPassword(ctx context.Context, in *ChangePasswordReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeManagerPassword", in, out)
+}
+
+func (c *tenantApiClient) ChangeManagerAccountAndPassword(ctx context.Context, in *ChangeAccountAndPasswordReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeManagerAccountAndPassword", in, out)
+}
+
+func (c *tenantApiClient) ChangeManagerPasswordByPhone(ctx context.Context, in *ChangePasswordByPhoneReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangeManagerPasswordByPhone", in, out)
+}
+
+func (c *tenantApiClient) ManagerLoginByPhone(ctx context.Context, in *LoginByPhoneReq, opts ...grpc_go.CallOption) (*LoginByPhoneRes, common.ErrorWithAttachment) {
+	out := new(LoginByPhoneRes)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ManagerLoginByPhone", in, out)
+}
+
+func (c *tenantApiClient) GetLoginManager(ctx context.Context, in *GetLoginManagerReq, opts ...grpc_go.CallOption) (*GetLoginManagerRes, common.ErrorWithAttachment) {
+	out := new(GetLoginManagerRes)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetLoginManager", in, out)
+}
+
+func (c *tenantApiClient) DeleteManagerAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DeleteManagerAccount", in, out)
+}
+
+func (c *tenantApiClient) CreateManagerTeam(ctx context.Context, in *CreateTeamReq, opts ...grpc_go.CallOption) (*Null, common.ErrorWithAttachment) {
+	out := new(Null)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/CreateManagerTeam", in, out)
+}
+
 // TenantApiServer is the server API for TenantApi service.
 // All implementations must embed UnimplementedTenantApiServer
 // for forward compatibility
@@ -8526,6 +8061,17 @@ type TenantApiServer interface {
 	SystemBase(context.Context, *TenantReq) (*System, error)
 	SystemInfo(context.Context, *TenantReq) (*System, error)
 	UpgradeSystem(context.Context, *TenantReq) (*Null, error)
+	RegisterManager(context.Context, *RegisterManagerReq) (*RegisterManagerRes, error)
+	ChangeManagerName(context.Context, *ChangeNameReq) (*Null, error)
+	ChangeManagerTFA(context.Context, *ChangeTFAReq) (*Null, error)
+	ChangeManagerPhone(context.Context, *ChangePhoneReq) (*Null, error)
+	ChangeManagerPassword(context.Context, *ChangePasswordReq) (*Null, error)
+	ChangeManagerAccountAndPassword(context.Context, *ChangeAccountAndPasswordReq) (*Null, error)
+	ChangeManagerPasswordByPhone(context.Context, *ChangePasswordByPhoneReq) (*Null, error)
+	ManagerLoginByPhone(context.Context, *LoginByPhoneReq) (*LoginByPhoneRes, error)
+	GetLoginManager(context.Context, *GetLoginManagerReq) (*GetLoginManagerRes, error)
+	DeleteManagerAccount(context.Context, *DeleteAccountReq) (*Null, error)
+	CreateManagerTeam(context.Context, *CreateTeamReq) (*Null, error)
 	mustEmbedUnimplementedTenantApiServer()
 }
 
@@ -8629,6 +8175,39 @@ func (UnimplementedTenantApiServer) SystemInfo(context.Context, *TenantReq) (*Sy
 }
 func (UnimplementedTenantApiServer) UpgradeSystem(context.Context, *TenantReq) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpgradeSystem not implemented")
+}
+func (UnimplementedTenantApiServer) RegisterManager(context.Context, *RegisterManagerReq) (*RegisterManagerRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterManager not implemented")
+}
+func (UnimplementedTenantApiServer) ChangeManagerName(context.Context, *ChangeNameReq) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeManagerName not implemented")
+}
+func (UnimplementedTenantApiServer) ChangeManagerTFA(context.Context, *ChangeTFAReq) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeManagerTFA not implemented")
+}
+func (UnimplementedTenantApiServer) ChangeManagerPhone(context.Context, *ChangePhoneReq) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeManagerPhone not implemented")
+}
+func (UnimplementedTenantApiServer) ChangeManagerPassword(context.Context, *ChangePasswordReq) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeManagerPassword not implemented")
+}
+func (UnimplementedTenantApiServer) ChangeManagerAccountAndPassword(context.Context, *ChangeAccountAndPasswordReq) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeManagerAccountAndPassword not implemented")
+}
+func (UnimplementedTenantApiServer) ChangeManagerPasswordByPhone(context.Context, *ChangePasswordByPhoneReq) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeManagerPasswordByPhone not implemented")
+}
+func (UnimplementedTenantApiServer) ManagerLoginByPhone(context.Context, *LoginByPhoneReq) (*LoginByPhoneRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ManagerLoginByPhone not implemented")
+}
+func (UnimplementedTenantApiServer) GetLoginManager(context.Context, *GetLoginManagerReq) (*GetLoginManagerRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLoginManager not implemented")
+}
+func (UnimplementedTenantApiServer) DeleteManagerAccount(context.Context, *DeleteAccountReq) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteManagerAccount not implemented")
+}
+func (UnimplementedTenantApiServer) CreateManagerTeam(context.Context, *CreateTeamReq) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateManagerTeam not implemented")
 }
 func (s *UnimplementedTenantApiServer) XXX_SetProxyImpl(impl protocol.Invoker) {
 	s.proxyImpl = impl
@@ -9550,6 +9129,314 @@ func _TenantApi_UpgradeSystem_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TenantApi_RegisterManager_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterManagerReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("RegisterManager", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.TenantApi/RegisterManager",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantApiServer).RegisterManager(ctx, req.(*RegisterManagerReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TenantApi_ChangeManagerName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangeNameReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("ChangeManagerName", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.TenantApi/ChangeManagerName",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantApiServer).ChangeManagerName(ctx, req.(*ChangeNameReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TenantApi_ChangeManagerTFA_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangeTFAReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("ChangeManagerTFA", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.TenantApi/ChangeManagerTFA",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantApiServer).ChangeManagerTFA(ctx, req.(*ChangeTFAReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TenantApi_ChangeManagerPhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangePhoneReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("ChangeManagerPhone", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.TenantApi/ChangeManagerPhone",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantApiServer).ChangeManagerPhone(ctx, req.(*ChangePhoneReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TenantApi_ChangeManagerPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangePasswordReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("ChangeManagerPassword", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.TenantApi/ChangeManagerPassword",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantApiServer).ChangeManagerPassword(ctx, req.(*ChangePasswordReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TenantApi_ChangeManagerAccountAndPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangeAccountAndPasswordReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("ChangeManagerAccountAndPassword", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.TenantApi/ChangeManagerAccountAndPassword",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantApiServer).ChangeManagerAccountAndPassword(ctx, req.(*ChangeAccountAndPasswordReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TenantApi_ChangeManagerPasswordByPhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangePasswordByPhoneReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("ChangeManagerPasswordByPhone", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.TenantApi/ChangeManagerPasswordByPhone",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantApiServer).ChangeManagerPasswordByPhone(ctx, req.(*ChangePasswordByPhoneReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TenantApi_ManagerLoginByPhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginByPhoneReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("ManagerLoginByPhone", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.TenantApi/ManagerLoginByPhone",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantApiServer).ManagerLoginByPhone(ctx, req.(*LoginByPhoneReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TenantApi_GetLoginManager_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLoginManagerReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("GetLoginManager", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.TenantApi/GetLoginManager",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantApiServer).GetLoginManager(ctx, req.(*GetLoginManagerReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TenantApi_DeleteManagerAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAccountReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("DeleteManagerAccount", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.TenantApi/DeleteManagerAccount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantApiServer).DeleteManagerAccount(ctx, req.(*DeleteAccountReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TenantApi_CreateManagerTeam_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTeamReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("CreateManagerTeam", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.TenantApi/CreateManagerTeam",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantApiServer).CreateManagerTeam(ctx, req.(*CreateTeamReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TenantApi_ServiceDesc is the grpc_go.ServiceDesc for TenantApi service.
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -9684,6 +9571,50 @@ var TenantApi_ServiceDesc = grpc_go.ServiceDesc{
 		{
 			MethodName: "UpgradeSystem",
 			Handler:    _TenantApi_UpgradeSystem_Handler,
+		},
+		{
+			MethodName: "RegisterManager",
+			Handler:    _TenantApi_RegisterManager_Handler,
+		},
+		{
+			MethodName: "ChangeManagerName",
+			Handler:    _TenantApi_ChangeManagerName_Handler,
+		},
+		{
+			MethodName: "ChangeManagerTFA",
+			Handler:    _TenantApi_ChangeManagerTFA_Handler,
+		},
+		{
+			MethodName: "ChangeManagerPhone",
+			Handler:    _TenantApi_ChangeManagerPhone_Handler,
+		},
+		{
+			MethodName: "ChangeManagerPassword",
+			Handler:    _TenantApi_ChangeManagerPassword_Handler,
+		},
+		{
+			MethodName: "ChangeManagerAccountAndPassword",
+			Handler:    _TenantApi_ChangeManagerAccountAndPassword_Handler,
+		},
+		{
+			MethodName: "ChangeManagerPasswordByPhone",
+			Handler:    _TenantApi_ChangeManagerPasswordByPhone_Handler,
+		},
+		{
+			MethodName: "ManagerLoginByPhone",
+			Handler:    _TenantApi_ManagerLoginByPhone_Handler,
+		},
+		{
+			MethodName: "GetLoginManager",
+			Handler:    _TenantApi_GetLoginManager_Handler,
+		},
+		{
+			MethodName: "DeleteManagerAccount",
+			Handler:    _TenantApi_DeleteManagerAccount_Handler,
+		},
+		{
+			MethodName: "CreateManagerTeam",
+			Handler:    _TenantApi_CreateManagerTeam_Handler,
 		},
 	},
 	Streams:  []grpc_go.StreamDesc{},
