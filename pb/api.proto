@@ -46,7 +46,7 @@ message clientInfo {
   string type = 2;
   string url = 3;
   string code = 4;
-  string state = 5;
+  int32 status = 5;
   string key = 6;
   string templateId = 7;
   string content = 8;
