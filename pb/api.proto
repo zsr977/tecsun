@@ -118,16 +118,16 @@ message mediaInfo {
 }
 
 message companyList {
-  int64 page = 1;
-  int64 size = 2;
-  int64 total = 3;
+  int32 page = 1;
+  int32 size = 2;
+  int32 total = 3;
   repeated companyInfo rows = 4;
 }
 
 message mecList {
-  int64 page = 1;
-  int64 size = 2;
-  int64 total = 3;
+  int32 page = 1;
+  int32 size = 2;
+  int32 total = 3;
   repeated mecInfo rows = 4;
 }
 
@@ -149,19 +149,19 @@ message companyInfo {
   string directions = 7;
   string area = 8;
   string  url = 9;
-  int64 page = 10;
-  int64 size = 11;
+  int32 page = 10;
+  int32 size = 11;
   string create_time = 12;
   string update_time = 13;
   string passage = 14;
 }
 
 message trafficList {
-  int64 pages = 1;
-  int64 size = 2;
-  int64 total = 3;
+  int32 pages = 1;
+  int32 size = 2;
+  int32 total = 3;
   repeated trafficInfo rows = 4;
-  int64 current = 5;
+  int32 current = 5;
 }
 
 message trafficInfo {
@@ -267,11 +267,11 @@ message passageInfo {
 }
 
 message recordList {
-  int64 pages = 1;
-  int64 size = 2;
-  int64 total = 3;
+  int32 pages = 1;
+  int32 size = 2;
+  int32 total = 3;
   repeated DeviceRecordInfo rows = 4;
-  int64 current = 5;
+  int32 current = 5;
 }
 
 message DeviceRecordInfo {
@@ -312,7 +312,7 @@ message faq {
 
 message faqs {
   int32 total = 1;
-  int64 pages = 2;
+  int32 pages = 2;
   string page = 3;
   string size = 4;
   repeated faq rows = 5;
@@ -405,7 +405,7 @@ message checkCode {
 
 message totalMsg{
   string tenant = 1;
-  int64 total = 2;
+  int32 total = 2;
 }
 
 message OrgReq {
@@ -462,18 +462,18 @@ message OrgRes {
 }
 
 message AllUserMap {
-  int64 total = 1;
-  int64 size = 2;
-  int64 pages = 3;
-  int64 current = 4;
+  int32 total = 1;
+  int32 size = 2;
+  int32 pages = 3;
+  int32 current = 4;
   repeated AllUser  records = 5;
 }
 
 message ChildUnitMap {
-  int64 total = 1;
-  int64 size = 2;
-  int64 pages = 3;
-  int64 current = 4;
+  int32 total = 1;
+  int32 size = 2;
+  int32 pages = 3;
+  int32 current = 4;
   repeated ChildUnit  records = 5;
 }
 
@@ -615,16 +615,16 @@ message PassageRes {
   repeated string msg = 13;
   string message = 14;
   Passage passage = 15;
-  int64  count = 16;
+  int32  count = 16;
   bytes  stream = 17;
   PassageSpot passageSpot = 18;
 }
 
 message PassageResMap {
-  int64 total = 1;
-  int64 size = 2;
-  int64 pages = 3;
-  int64 current = 4;
+  int32 total = 1;
+  int32 size = 2;
+  int32 pages = 3;
+  int32 current = 4;
   repeated MemberRecords records = 5;
   repeated InviteBatchResult  msg = 6;
   repeated  PassageUser userMap = 7;
@@ -632,18 +632,18 @@ message PassageResMap {
 }
 
 message PassageMap {
-  int64 total = 1;
-  int64 size = 2;
-  int64 pages = 3;
-  int64 current = 4;
+  int32 total = 1;
+  int32 size = 2;
+  int32 pages = 3;
+  int32 current = 4;
   repeated Passage  records = 8;
 }
 
 message PassageSpotMap {
-  int64 total = 1;
-  int64 size = 2;
-  int64 pages = 3;
-  int64 current = 4;
+  int32 total = 1;
+  int32 size = 2;
+  int32 pages = 3;
+  int32 current = 4;
   repeated PassageSpot  records = 8;
 }
 
@@ -749,7 +749,7 @@ message PassageSpot {
   string VisitedName = 7;
   string  VisitTime = 8;
   string  LeaveTime = 9;
-  int64  Status = 10;
+  int32  Status = 10;
   string  CardNo = 11;
   string  InDoorName = 12;
   string  OutDoorName = 13;
@@ -760,7 +760,7 @@ message PassageSpot {
   string  VisitorAddress = 18;
   string  BelongsList = 19;
   string  VisitorPhone = 20;
-  int64  VisitorCount = 21;
+  int32  VisitorCount = 21;
   string  VisitedSex = 22;
   string  VisitedCompany = 23;
   string  VisitedDept = 24;
@@ -779,10 +779,10 @@ message questionList {
   string uuid = 1;
   string title = 2;
   string describe = 3;
-  int64 total = 4;
+  int32 total = 4;
   repeated questionInfo rows = 5;
-  int64 pages = 6;
-  int64 size = 7;
+  int32 pages = 6;
+  int32 size = 7;
 }
 
 message questionInfo {
@@ -793,7 +793,7 @@ message questionInfo {
   int32 sort = 5;
   string data = 6;
   bool require = 7;
-  int64 total = 8;
+  int32 total = 8;
   string update_time = 9;
   string create_time = 10;
   bool action = 11;
@@ -803,10 +803,10 @@ message answerList {
   string uuid = 1;
   string title = 2;
   string describe = 3;
-  int64 total = 4;
+  int32 total = 4;
   repeated answerInfo rows = 5;
-  int64 pages = 6;
-  int64 size = 7;
+  int32 pages = 6;
+  int32 size = 7;
 }
 
 message answerInfo {
@@ -833,10 +833,10 @@ message naireList {
   string uuid = 1;
   string title = 2;
   string describe = 3;
-  int64 total = 4;
+  int32 total = 4;
   repeated naireInfo rows = 5;
-  int64 pages = 6;
-  int64 size = 7;
+  int32 pages = 6;
+  int32 size = 7;
 }
 
 message naireInfo {
@@ -856,7 +856,7 @@ message naireInfo {
 message Jwt {
   string accessToken = 1;
   string refreshToken = 2;
-  int64 expireIn = 3;
+  int32 expireIn = 3;
   string tenant = 4;
 }
 
@@ -884,8 +884,8 @@ message TenantReq {
   string aesKey = 8;
   string account = 9;
   string password = 10;
-  int64 page = 11;
-  int64 pageSize = 12;
+  int32 page = 11;
+  int32 pageSize = 12;
   string company = 13;
   string address = 14;
   string newPassword = 15;
@@ -893,7 +893,7 @@ message TenantReq {
   string guidance = 17;
   string signature = 18;
   string banner = 19;
-  int64 expireIn = 20;
+  int32 expireIn = 20;
   string wechatAppId = 21;
   string wechatSecret = 22;
   string openTM412462516 = 23;
@@ -963,7 +963,7 @@ message TenantRes {
   string  account = 2;
   string  uuid = 3;
   string  contact = 4;
-  int64  expireIn = 5;
+  int32  expireIn = 5;
   string  company = 6;
   string  address = 7;
   string  signature = 8;
@@ -972,9 +972,9 @@ message TenantRes {
 }
 
 message TenantResMap {
-  int64 page = 1;
-  int64  pageSize = 2;
-  int64  total = 3;
+  int32 page = 1;
+  int32  pageSize = 2;
+  int32  total = 3;
   repeated Tenant rows = 4;
 }
 
@@ -1024,7 +1024,7 @@ message Tenant {
   int32 isIdCard = 43;
   int32 IsDebug = 44;
   int32 Sync = 45;
-  int64 ExpireIn = 46;
+  int32 ExpireIn = 46;
   int32 Role = 47;
   int32 Source = 48;
   int32 IsFast = 49;
@@ -1034,9 +1034,9 @@ message Tenant {
   int32 IsGFace = 53;
   int32 IsGSkip = 54;
   int32 IsGIdCard = 55;
-  repeated int64 CertStyle = 56;
-  int64 BookNum = 57;
-  int64 InviteNum = 58;
+  repeated int32 CertStyle = 56;
+  int32 BookNum = 57;
+  int32 InviteNum = 58;
 }
 
 message System {
@@ -1118,10 +1118,10 @@ message requestInfo {
 message responseInfo {
   string uuid = 1;
   int32 type = 2;
-  int64 sort = 3;
+  int32 sort = 3;
   repeated taskInfo task = 4;
   repeated string recipients = 5;
-  int64 count = 6;
+  int32 count = 6;
   bool show_back = 7;
   bool show_check = 8;
   repeated string current = 9;
@@ -1168,7 +1168,7 @@ message recordDetail{
   string contact = 2;
   string sponsor = 3;
   string approval_uuid = 4;
-  int64 step = 5;
+  int32 step = 5;
   string name = 6;
   string remark = 7;
   string time = 8;
